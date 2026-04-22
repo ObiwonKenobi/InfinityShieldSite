@@ -1,53 +1,915 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/favicon.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Infinity Shield L.L.C.</title>
- <!-- Dissertation link styles -->
-    <style>
-      #dissertation-banner {
-        position: fixed;
-        bottom: 1.25rem;
-        right: 1.25rem;
-        z-index: 9999;
-        background: rgba(9, 9, 11, 0.92);
-        color: #f9fafb;
-        padding: 0.6rem 1rem;
-        border-radius: 9999px;
-        font-size: 0.85rem;
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-          sans-serif;
-        border: 1px solid rgba(148, 163, 184, 0.6);
-        box-shadow: 0 6px 18px rgba(15, 23, 42, 0.7);
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dr. Chris Opp, DIT, CISSP — Cloud Architecture &amp; Cybersecurity Leadership</title>
+  <meta name="description" content="Senior Cloud Architect and Cybersecurity Director with 24+ years of Federal and DoD experience. Specializing in FedRAMP, CMMC 2.0, Zero Trust, and cloud migration at enterprise scale." />
+  <link rel="icon" type="image/png" href="/favicon.png" />
 
-      #dissertation-banner a {
-        color: inherit;
-        text-decoration: none;
-        font-weight: 500;
-        white-space: nowrap;
-      }
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Public+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
 
-      #dissertation-banner a:hover {
-        text-decoration: underline;
-      }
-    </style>
-    
-    <script type="module" crossorigin src="/assets/index-BDz0ZJjl.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-DyTovY7o.css">
-  </head>
-  <body>
-        <!-- Floating dissertation link -->
-<div id="dissertation-banner">
-  <a href="/OppCapstoneFinal.pdf" target="_blank" rel="noopener">
-    NIST 800-171 Research (PDF)
-  </a>
-</div>
+  <style>
+    /* ─── Reset & Variables ─────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-<div id="root"></div>
+    :root {
+      --charcoal:   #2D2D2D;
+      --teal:       #1A7B72;
+      --teal-light: #23a396;
+      --teal-dim:   rgba(26,123,114,0.15);
+      --teal-glow:  rgba(26,123,114,0.35);
+      --ink:        #0f1a19;
+      --surface:    #1a2523;
+      --surface2:   #1f2e2c;
+      --muted:      #7a9490;
+      --text:       #dde8e6;
+      --text-dim:   #8faaa7;
+      --border:     rgba(26,123,114,0.25);
+      --ff-head:    'Inter', sans-serif;
+      --ff-body:    'Public Sans', sans-serif;
+    }
 
-    <div id="root"></div>
-  </body>
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--ink);
+      color: var(--text);
+      font-family: var(--ff-body);
+      font-weight: 400;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ─── Circuit Background ────────────────────────────────────── */
+    .circuit-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      opacity: 0.04;
+      background-image: url('/circuitry-bg-animated.svg');
+      background-size: cover;
+      background-position: center;
+      pointer-events: none;
+    }
+
+    /* ─── Nav ───────────────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2.5rem;
+      background: rgba(15,26,25,0.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+    }
+
+    .nav-logo img {
+      height: 36px;
+      width: auto;
+    }
+
+    .nav-wordmark {
+      font-family: var(--ff-head);
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--teal-light);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--ff-body);
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-dim);
+      text-decoration: none;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--teal-light); }
+
+    /* ─── Hero ──────────────────────────────────────────────────── */
+    #hero {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 8rem 2.5rem 5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--ff-body);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--teal-light);
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 2rem;
+      height: 1px;
+      background: var(--teal);
+    }
+
+    .hero-name {
+      font-family: var(--ff-head);
+      font-weight: 800;
+      font-size: clamp(2.4rem, 5vw, 4.2rem);
+      line-height: 1.08;
+      color: #e8f0ee;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.4rem;
+    }
+
+    .hero-name span {
+      color: var(--teal-light);
+    }
+
+    .hero-credentials {
+      font-family: var(--ff-head);
+      font-size: clamp(0.85rem, 1.5vw, 1.05rem);
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1.8rem;
+    }
+
+    .hero-title {
+      font-family: var(--ff-body);
+      font-size: clamp(1rem, 2vw, 1.3rem);
+      font-weight: 300;
+      color: var(--text-dim);
+      max-width: 580px;
+      margin-bottom: 2.5rem;
+      line-height: 1.6;
+    }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-bottom: 3rem;
+    }
+
+    .tag {
+      font-family: var(--ff-body);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.35rem 0.9rem;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      color: var(--teal-light);
+      background: var(--teal-dim);
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.8rem;
+      background: var(--teal);
+      color: #fff;
+      text-decoration: none;
+      font-family: var(--ff-head);
+      font-weight: 600;
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-radius: 2px;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .btn-primary:hover {
+      background: var(--teal-light);
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.8rem;
+      border: 1px solid var(--teal);
+      color: var(--teal-light);
+      text-decoration: none;
+      font-family: var(--ff-head);
+      font-weight: 600;
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-radius: 2px;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .btn-secondary:hover {
+      background: var(--teal-dim);
+      transform: translateY(-1px);
+    }
+
+    /* ─── Stat Bar ──────────────────────────────────────────────── */
+    .stat-bar {
+      position: relative;
+      z-index: 1;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 2.5rem;
+    }
+
+    .stat-bar-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1.5rem;
+      text-align: center;
+    }
+
+    .stat-item {
+      padding: 0.5rem;
+    }
+
+    .stat-number {
+      font-family: var(--ff-head);
+      font-weight: 800;
+      font-size: 2.2rem;
+      color: var(--teal-light);
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+
+    .stat-label {
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+
+    /* ─── Sections ──────────────────────────────────────────────── */
+    section {
+      position: relative;
+      z-index: 1;
+      padding: 6rem 2.5rem;
+    }
+
+    .section-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: var(--ff-body);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--teal-light);
+      margin-bottom: 0.6rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 1.5rem;
+      height: 1px;
+      background: var(--teal);
+    }
+
+    .section-heading {
+      font-family: var(--ff-head);
+      font-weight: 700;
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      color: #e8f0ee;
+      line-height: 1.15;
+      margin-bottom: 1.2rem;
+      letter-spacing: -0.01em;
+    }
+
+    .section-lead {
+      font-size: 1rem;
+      color: var(--text-dim);
+      max-width: 640px;
+      margin-bottom: 3.5rem;
+      line-height: 1.75;
+    }
+
+    /* ─── Expertise Grid ────────────────────────────────────────── */
+    #expertise { background: var(--surface); }
+
+    .expertise-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .expertise-card {
+      background: var(--surface2);
+      padding: 2rem;
+      transition: background 0.2s;
+    }
+
+    .expertise-card:hover {
+      background: #243330;
+    }
+
+    .expertise-icon {
+      width: 2.5rem;
+      height: 2.5rem;
+      margin-bottom: 1.2rem;
+      color: var(--teal-light);
+    }
+
+    .expertise-card h3 {
+      font-family: var(--ff-head);
+      font-weight: 700;
+      font-size: 1rem;
+      color: #dde8e6;
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.01em;
+    }
+
+    .expertise-card p {
+      font-size: 0.88rem;
+      color: var(--text-dim);
+      line-height: 1.65;
+    }
+
+    .expertise-card .tech-list {
+      margin-top: 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tech-pill {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.6rem;
+      background: var(--teal-dim);
+      border: 1px solid rgba(26,123,114,0.3);
+      color: var(--teal-light);
+      border-radius: 2px;
+    }
+
+    /* ─── Career Highlights ─────────────────────────────────────── */
+    .highlights-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    .highlight-item {
+      border-left: 2px solid var(--teal);
+      padding-left: 1.5rem;
+    }
+
+    .highlight-org {
+      font-family: var(--ff-head);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--teal-light);
+      margin-bottom: 0.3rem;
+    }
+
+    .highlight-item h3 {
+      font-family: var(--ff-head);
+      font-weight: 700;
+      font-size: 0.98rem;
+      color: #dde8e6;
+      margin-bottom: 0.5rem;
+      line-height: 1.35;
+    }
+
+    .highlight-item p {
+      font-size: 0.875rem;
+      color: var(--text-dim);
+      line-height: 1.65;
+    }
+
+    /* ─── Credentials Bar ───────────────────────────────────────── */
+    #credentials {
+      background: var(--surface);
+    }
+
+    .credentials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .credential-card {
+      background: var(--surface2);
+      padding: 1.75rem;
+    }
+
+    .credential-card .cred-label {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--teal-light);
+      margin-bottom: 0.4rem;
+    }
+
+    .credential-card .cred-value {
+      font-family: var(--ff-head);
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: #dde8e6;
+    }
+
+    /* ─── Research ──────────────────────────────────────────────── */
+    .research-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 2rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 2.5rem;
+      max-width: 700px;
+      border-radius: 2px;
+    }
+
+    .research-icon {
+      flex-shrink: 0;
+      width: 3rem;
+      height: 3rem;
+      color: var(--teal-light);
+    }
+
+    .research-card h3 {
+      font-family: var(--ff-head);
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #dde8e6;
+      margin-bottom: 0.5rem;
+    }
+
+    .research-card p {
+      font-size: 0.875rem;
+      color: var(--text-dim);
+      margin-bottom: 1.2rem;
+      line-height: 1.65;
+    }
+
+    /* ─── Contact ───────────────────────────────────────────────── */
+    #contact {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+    }
+
+    .contact-row {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: var(--text-dim);
+      font-size: 0.875rem;
+      font-weight: 500;
+      padding: 0.75rem 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .contact-item:hover {
+      border-color: var(--teal);
+      color: var(--teal-light);
+    }
+
+    .contact-item svg {
+      width: 1.1rem;
+      height: 1.1rem;
+    }
+
+    /* ─── Footer ────────────────────────────────────────────────── */
+    footer {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 1.5rem 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    footer p {
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      opacity: 0.6;
+    }
+
+    /* ─── Divider ───────────────────────────────────────────────── */
+    .teal-line {
+      border: none;
+      height: 1px;
+      background: var(--border);
+      margin: 0;
+    }
+
+    /* ─── Animations ────────────────────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-eyebrow  { animation: fadeUp 0.6s ease both; animation-delay: 0.1s; }
+    .hero-name     { animation: fadeUp 0.6s ease both; animation-delay: 0.2s; }
+    .hero-credentials { animation: fadeUp 0.6s ease both; animation-delay: 0.3s; }
+    .hero-title    { animation: fadeUp 0.6s ease both; animation-delay: 0.4s; }
+    .hero-tags     { animation: fadeUp 0.6s ease both; animation-delay: 0.5s; }
+    .hero-cta      { animation: fadeUp 0.6s ease both; animation-delay: 0.6s; }
+
+    /* ─── Responsive ────────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      nav { padding: 0.9rem 1.25rem; }
+      .nav-links { display: none; }
+      #hero { padding: 7rem 1.25rem 4rem; }
+      section { padding: 4rem 1.25rem; }
+      .stat-bar { padding: 1.5rem 1.25rem; }
+      .highlights-grid { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Circuit texture -->
+  <div class="circuit-bg" aria-hidden="true"></div>
+
+  <!-- ─── Navigation ──────────────────────────────────────────── -->
+  <nav role="navigation" aria-label="Main navigation">
+    <a href="#hero" class="nav-logo">
+      <img src="/logo-transparent.png" alt="Infinity Shield" />
+      <span class="nav-wordmark">Infinity Shield</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#expertise">Expertise</a></li>
+      <li><a href="#highlights">Experience</a></li>
+      <li><a href="#credentials">Credentials</a></li>
+      <li><a href="#research">Research</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- ─── Hero ────────────────────────────────────────────────── -->
+  <section id="hero" aria-labelledby="hero-name">
+    <div class="hero-eyebrow">Federal &bull; DoD &bull; Cloud &bull; Cybersecurity</div>
+    <h1 class="hero-name" id="hero-name">Dr. Chris <span>Opp</span></h1>
+    <p class="hero-credentials">DIT &nbsp;&bull;&nbsp; CISSP &nbsp;&bull;&nbsp; E-8 Retired, WYANG</p>
+    <p class="hero-title">Senior Cloud Architect and Cybersecurity Director with 24+ years leading enterprise-scale technology programs across Federal, DoD, and Defense Industrial Base environments.</p>
+    <div class="hero-tags">
+      <span class="tag">FedRAMP</span>
+      <span class="tag">CMMC 2.0</span>
+      <span class="tag">NIST 800-53/171</span>
+      <span class="tag">AWS GovCloud</span>
+      <span class="tag">Azure IL4</span>
+      <span class="tag">Zero Trust</span>
+      <span class="tag">SD-WAN</span>
+      <span class="tag">RMF / A&amp;A</span>
+    </div>
+    <div class="hero-cta">
+      <a href="#expertise" class="btn-primary">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        View Expertise
+      </a>
+      <a href="/OppCapstoneFinal.pdf" target="_blank" rel="noopener" class="btn-secondary">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        NIST 800-171 Research
+      </a>
+    </div>
+  </section>
+
+  <!-- ─── Stat Bar ─────────────────────────────────────────────── -->
+  <div class="stat-bar" role="region" aria-label="Career highlights">
+    <div class="stat-bar-inner">
+      <div class="stat-item">
+        <div class="stat-number">24+</div>
+        <div class="stat-label">Years Experience</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">100K+</div>
+        <div class="stat-label">Endpoints Secured</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">20+</div>
+        <div class="stat-label">Cloud Migrations</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">15</div>
+        <div class="stat-label">ANG Units Migrated</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">79</div>
+        <div class="stat-label">NIST Controls Remediated</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── Expertise ────────────────────────────────────────────── -->
+  <section id="expertise" aria-labelledby="expertise-heading">
+    <div class="section-inner">
+      <p class="section-label">Technical Domains</p>
+      <h2 class="section-heading" id="expertise-heading">Core Competencies</h2>
+      <p class="section-lead">Deep technical fluency across cloud, network, identity, and compliance architectures — applied at enterprise scale in Federal and DoD environments.</p>
+
+      <div class="expertise-grid">
+
+        <!-- Cloud Architecture -->
+        <div class="expertise-card">
+          <svg class="expertise-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+          <h3>Cloud Architecture</h3>
+          <p>Enterprise cloud design and migration across hyperscalers, with deep experience in sovereign and impact-level environments. Led 20+ cloud instance migrations at USDA and executed GCC-High transitions for DIB clients.</p>
+          <div class="tech-list">
+            <span class="tech-pill">AWS GovCloud</span>
+            <span class="tech-pill">Azure IL4</span>
+            <span class="tech-pill">GCP</span>
+            <span class="tech-pill">Oracle Cloud</span>
+            <span class="tech-pill">GCC-High</span>
+            <span class="tech-pill">Commvault</span>
+          </div>
+        </div>
+
+        <!-- Cybersecurity Leadership -->
+        <div class="expertise-card">
+          <svg class="expertise-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <h3>Cybersecurity Leadership</h3>
+          <p>Directed enterprise security operations for 100,000+ endpoints across the Air National Guard, receiving national recognition for endpoint management optimization. Experienced with Zero Trust architectures and next-generation firewall platforms.</p>
+          <div class="tech-list">
+            <span class="tech-pill">Zero Trust</span>
+            <span class="tech-pill">Palo Alto</span>
+            <span class="tech-pill">Cisco FTD</span>
+            <span class="tech-pill">Fortinet</span>
+            <span class="tech-pill">Sidewinder</span>
+            <span class="tech-pill">Bluecoat Proxy</span>
+          </div>
+        </div>
+
+        <!-- Compliance & Risk -->
+        <div class="expertise-card">
+          <svg class="expertise-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          <h3>Compliance &amp; Risk Frameworks</h3>
+          <p>Authored SSPs, COOP plans, and DR frameworks for classified and unclassified environments. Remediated 79 NIST 800-171 controls to restore DoD contract eligibility for a Defense Industrial Base client.</p>
+          <div class="tech-list">
+            <span class="tech-pill">FedRAMP</span>
+            <span class="tech-pill">CMMC 2.0</span>
+            <span class="tech-pill">NIST 800-53</span>
+            <span class="tech-pill">NIST 800-171</span>
+            <span class="tech-pill">RMF / A&amp;A</span>
+            <span class="tech-pill">FISMA</span>
+            <span class="tech-pill">DISA STIGs</span>
+          </div>
+        </div>
+
+        <!-- Network Architecture -->
+        <div class="expertise-card">
+          <svg class="expertise-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="2" y="2" width="6" height="6" rx="1"/><rect x="16" y="2" width="6" height="6" rx="1"/><rect x="9" y="16" width="6" height="6" rx="1"/><path d="M5 8v3a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8"/><path d="M12 12v4"/></svg>
+          <h3>Network Architecture</h3>
+          <p>Enterprise SME for USDA-wide SD-WAN covering hundreds of sites. Experienced with BGP routing, MTIPS planning, DNS/IPAM management, and network performance monitoring at federal scale.</p>
+          <div class="tech-list">
+            <span class="tech-pill">SD-WAN</span>
+            <span class="tech-pill">Lumen CSG</span>
+            <span class="tech-pill">VeloCloud</span>
+            <span class="tech-pill">BGP</span>
+            <span class="tech-pill">Infoblox</span>
+            <span class="tech-pill">ThousandEyes</span>
+          </div>
+        </div>
+
+        <!-- Identity & Access -->
+        <div class="expertise-card">
+          <svg class="expertise-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+          <h3>Identity &amp; Access Management</h3>
+          <p>Designed and operated hybrid Azure Active Directory and on-premises domain linkage for multi-site environments. Experienced with federated identity, conditional access policies, and privileged access management in DoD contexts.</p>
+          <div class="tech-list">
+            <span class="tech-pill">Hybrid Azure AD</span>
+            <span class="tech-pill">On-Prem AD</span>
+            <span class="tech-pill">Federated Identity</span>
+            <span class="tech-pill">PAM</span>
+            <span class="tech-pill">MFA</span>
+          </div>
+        </div>
+
+        <!-- IT/OT Convergence -->
+        <div class="expertise-card">
+          <svg class="expertise-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>
+          <h3>IT/OT Convergence &amp; Mission Readiness</h3>
+          <p>Extensive experience bridging IT and operational technology in military and critical infrastructure settings. Designed and executed the ROSC 31A data center build-out with under three hours of downtime across 15 ANG units.</p>
+          <div class="tech-list">
+            <span class="tech-pill">IT/OT Convergence</span>
+            <span class="tech-pill">Data Center Migration</span>
+            <span class="tech-pill">COOP</span>
+            <span class="tech-pill">DR Planning</span>
+            <span class="tech-pill">Mission Readiness</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <hr class="teal-line" />
+
+  <!-- ─── Career Highlights ─────────────────────────────────────── -->
+  <section id="highlights" aria-labelledby="highlights-heading">
+    <div class="section-inner">
+      <p class="section-label">Career</p>
+      <h2 class="section-heading" id="highlights-heading">Notable Engagements</h2>
+      <p class="section-lead">Selected mission-critical programs where technical leadership produced measurable outcomes.</p>
+
+      <div class="highlights-grid">
+        <div class="highlight-item">
+          <p class="highlight-org">USDA</p>
+          <h3>Enterprise SD-WAN Program Authority</h3>
+          <p>Served as enterprise SME for USDA-wide SD-WAN deployment. Managed the migration of 20+ cloud instances to the Lumen CSG platform, coordinating across agency stakeholders and vendor teams.</p>
+        </div>
+
+        <div class="highlight-item">
+          <p class="highlight-org">Wyoming Air National Guard</p>
+          <h3>ROSC 31A Data Center Migration</h3>
+          <p>Designed and executed a full data center build-out and migration achieving less than three hours of downtime across 15 ANG units — a result that preserved mission continuity during a critical transition window.</p>
+        </div>
+
+        <div class="highlight-item">
+          <p class="highlight-org">Celerium / DIB Client</p>
+          <h3>NIST 800-171 Remediation &amp; CMMC Readiness</h3>
+          <p>Remediated 79 NIST 800-171 controls to restore DoD contract eligibility for a Defense Industrial Base client facing compliance risk. Managed subsequent migration to GCC-High to align with CMMC 2.0 requirements.</p>
+        </div>
+
+        <div class="highlight-item">
+          <p class="highlight-org">Air National Guard — National Level</p>
+          <h3>SCCM Endpoint Management Optimization</h3>
+          <p>Received national recognition from Air National Guard leadership for designing and optimizing the ANG's SCCM solution, driving enterprise-wide improvements to patch compliance and endpoint visibility across 50,000+ devices.</p>
+        </div>
+
+        <div class="highlight-item">
+          <p class="highlight-org">Numerica</p>
+          <h3>Cloud Security Architecture</h3>
+          <p>Led cloud security architecture engagements for a technology company operating in the defense sector, aligning cloud posture with NIST 800-53 controls and FedRAMP authorization boundaries.</p>
+        </div>
+
+        <div class="highlight-item">
+          <p class="highlight-org">Academic</p>
+          <h3>IT &amp; Cybersecurity Adjunct Faculty</h3>
+          <p>Active adjunct faculty member instructing IT and cybersecurity curriculum, translating operational Federal and DoD experience directly into academic and professional development programs.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="teal-line" />
+
+  <!-- ─── Credentials ───────────────────────────────────────────── -->
+  <section id="credentials" aria-labelledby="credentials-heading">
+    <div class="section-inner">
+      <p class="section-label">Qualifications</p>
+      <h2 class="section-heading" id="credentials-heading">Credentials &amp; Background</h2>
+
+      <div class="credentials-grid">
+        <div class="credential-card">
+          <p class="cred-label">Certification</p>
+          <p class="cred-value">CISSP</p>
+        </div>
+        <div class="credential-card">
+          <p class="cred-label">Education</p>
+          <p class="cred-value">Doctorate in IT (DIT)</p>
+        </div>
+        <div class="credential-card">
+          <p class="cred-label">Military Service</p>
+          <p class="cred-value">E-8, SMS Ret. — WYANG</p>
+        </div>
+        <div class="credential-card">
+          <p class="cred-label">Experience</p>
+          <p class="cred-value">24+ Years Federal/DoD</p>
+        </div>
+        <div class="credential-card">
+          <p class="cred-label">Location</p>
+          <p class="cred-value">Cheyenne, Wyoming</p>
+        </div>
+        <div class="credential-card">
+          <p class="cred-label">Framework Fluency</p>
+          <p class="cred-value">NIST · FedRAMP · CMMC · RMF</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="teal-line" />
+
+  <!-- ─── Research ─────────────────────────────────────────────── -->
+  <section id="research" aria-labelledby="research-heading">
+    <div class="section-inner">
+      <p class="section-label">Publication</p>
+      <h2 class="section-heading" id="research-heading">Doctoral Research</h2>
+      <p class="section-lead">Applied research at the intersection of federal compliance and cybersecurity operations.</p>
+
+      <div class="research-card">
+        <svg class="research-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        <div>
+          <h3>NIST SP 800-171 Compliance in the Defense Industrial Base</h3>
+          <p>Doctoral capstone research examining the application and practical challenges of NIST 800-171 across Defense Industrial Base organizations, with analysis of control implementation gaps and remediation strategies.</p>
+          <a href="/OppCapstoneFinal.pdf" target="_blank" rel="noopener" class="btn-primary">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download PDF
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="teal-line" />
+
+  <!-- ─── Contact ───────────────────────────────────────────────── -->
+  <section id="contact" aria-labelledby="contact-heading">
+    <div class="section-inner">
+      <p class="section-label">Engagement</p>
+      <h2 class="section-heading" id="contact-heading">Connect</h2>
+      <p class="section-lead">Available for Director, C-Suite, and senior cross-functional leadership engagements in Federal, DoD, and adjacent sectors.</p>
+
+      <div class="contact-row">
+        <a href="https://www.linkedin.com/in/chrisopp" target="_blank" rel="noopener" class="contact-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          LinkedIn
+        </a>
+        <a href="mailto:chris@infinityshield.co" class="contact-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          chris@infinityshield.co
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Footer ───────────────────────────────────────────────── -->
+  <footer>
+    <p>Dr. Chris Opp, DIT, CISSP &mdash; Cheyenne, Wyoming</p>
+    <p>&copy; <span id="yr"></span> Infinity Shield. All rights reserved.</p>
+  </footer>
+
+  <script>
+    document.getElementById('yr').textContent = new Date().getFullYear();
+  </script>
+
+</body>
 </html>

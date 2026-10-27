@@ -168,6 +168,7 @@ footer{font-size:.8rem;color:var(--muted)}
       <li><span class="label">LiteLLM 1.107.0</span><p>A poisoned release went out on PyPI and the official Docker images on 21 Oct. The PyPI wheels were live for under two hours and the Docker tags stayed pointed at the bad image for a few hours more. The release pipeline was altered using stolen GitHub credentials from three developer accounts. It ran a credential stealer at every Python startup, even if LiteLLM was never imported, and installed a loader that fetches and runs code from attacker infrastructure every hour. Anyone who installed it should treat every secret on that host as exposed; the clean version is 1.106.2.</p></li>
       <li><span class="label">npm</span><p>Eight malicious packages in a long-running data-theft campaign reached about 40,000 downloads.</p></li>
       <li><span class="label">AI coding agents</span><p>More than 13,000 sensitive screenshots taken during agent-driven development workflows were found committed to public GitHub repositories.</p></li>
+      <li><span class="label">JAMIS Prime (hosted ERP)</span><p>Hosted JAMIS Prime environments used by government contractors have been disrupted for about a week, with access returning unevenly since late October. A post from the accounting firm Corporate Results, Inc. says reports and community updates tie the outage to a security compromise of the environment, and that customer instances are being rebuilt on new AWS infrastructure instead of cleaned in place. Some tenants have basic logins back but report intermittent performance, delayed database imports and broken integrations and reports. No JAMIS statement was found in the sources reviewed, so the cause, scope and number of customers affected are unconfirmed. For contractors the open questions are DCAA timekeeping and billing records kept by hand during the outage, whether the rebuilt environment keeps the FedRAMP Moderate equivalency the post says JAMIS Prime holds, and whether CUI held in an instance triggered 72-hour DFARS 252.204-7012 reporting to DC3.</p></li>
     </ul>
   </section>
 
@@ -191,7 +192,7 @@ footer{font-size:.8rem;color:var(--muted)}
         <tr><td>GMO Onamae Desktop Cloud</td><td>Up to ~26.7K servers</td><td>Confirmed 20 Oct. An outside party installed malware and GMO shut down customer servers. How they got in has not been disclosed, and no data leak is confirmed.</td></tr>
       </tbody>
     </table></div>
-    <p class="label">Unverified claims: PwC (Everest claims ~590 GB, posted 22 Oct; PwC confirms only an incident at a third-party platform that hosts employee learning records)</p>
+    <p class="label">Unverified claims: PwC (Everest claims ~590 GB, posted 22 Oct; PwC confirms only an incident at a third-party platform that hosts employee learning records), JAMIS Prime outage (cause, timeline and scope rest on one post by Corporate Results, Inc., a firm that sells recovery and ERP migration services, plus unnamed community updates; no JAMIS statement or other coverage was found)</p>
   </section>
 
   <section aria-labelledby="other">
@@ -212,6 +213,7 @@ footer{font-size:.8rem;color:var(--muted)}
       <li>Audit third-party app identities in Microsoft 365 (backup, MSP and RMM tools) and rotate their secrets.</li>
       <li>Check Python environments for LiteLLM 1.107.0, move to 1.106.2, and rotate secrets on any host that installed it.</li>
       <li>Replace long-lived admin tokens and plaintext environment variables at hosting providers with short-lived, scoped credentials.</li>
+      <li>If you run hosted JAMIS Prime, document when the system went down and how manual timecards were collected, signed and approved, ask JAMIS in writing whether the rebuilt environment keeps your FedRAMP equivalency and security boundary, and decide whether DFARS 252.204-7012 reporting applies to CUI held in the instance.</li>
     </ol>
   </section>
 
@@ -230,6 +232,7 @@ footer{font-size:.8rem;color:var(--muted)}
       <li><a href="https://www.sherlockforensics.com/blog/2026-10-14-weekly-security-roundup.html">Sherlock Forensics: 7–14 Oct roundup</a></li>
       <li><a href="https://threataft.com/articles/global-cybersecurity-week-zero-days-ai-attacks-breaches-30-sept-7-oct-2026">ThreatAft: 30 Sep–7 Oct roundup</a></li>
       <li><a href="https://www.duocircle.com/blog/cybersecurity-news-update-week-41-of-2026">DuoCircle: week 41</a></li>
+      <li><a href="https://www.cri4results.com/post/when-the-erp-goes-dark-navigating-the-jamis-outage-dcaa-compliance-and-your-options">Corporate Results, Inc.: When the ERP goes dark (JAMIS outage)</a></li>
     </ul>
   </section>
 

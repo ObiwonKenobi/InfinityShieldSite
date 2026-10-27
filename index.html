@@ -1,915 +1,233 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dr. Chris Opp, DIT, CISSP — Cloud Architecture &amp; Cybersecurity Leadership</title>
-  <meta name="description" content="Senior Cloud Architect and Cybersecurity Director with 24+ years of Federal and DoD experience. Specializing in FedRAMP, CMMC 2.0, Zero Trust, and cloud migration at enterprise scale." />
-  <link rel="icon" type="image/png" href="/favicon.png" />
-
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Public+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
-
-  <style>
-    /* ─── Reset & Variables ─────────────────────────────────────── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --charcoal:   #2D2D2D;
-      --teal:       #1A7B72;
-      --teal-light: #23a396;
-      --teal-dim:   rgba(26,123,114,0.15);
-      --teal-glow:  rgba(26,123,114,0.35);
-      --ink:        #0f1a19;
-      --surface:    #1a2523;
-      --surface2:   #1f2e2c;
-      --muted:      #7a9490;
-      --text:       #dde8e6;
-      --text-dim:   #8faaa7;
-      --border:     rgba(26,123,114,0.25);
-      --ff-head:    'Inter', sans-serif;
-      --ff-body:    'Public Sans', sans-serif;
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--ink);
-      color: var(--text);
-      font-family: var(--ff-body);
-      font-weight: 400;
-      line-height: 1.7;
-      overflow-x: hidden;
-    }
-
-    /* ─── Circuit Background ────────────────────────────────────── */
-    .circuit-bg {
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      opacity: 0.04;
-      background-image: url('/circuitry-bg-animated.svg');
-      background-size: cover;
-      background-position: center;
-      pointer-events: none;
-    }
-
-    /* ─── Nav ───────────────────────────────────────────────────── */
-    nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1rem 2.5rem;
-      background: rgba(15,26,25,0.88);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .nav-logo {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      text-decoration: none;
-    }
-
-    .nav-logo img {
-      height: 36px;
-      width: auto;
-    }
-
-    .nav-wordmark {
-      font-family: var(--ff-head);
-      font-weight: 700;
-      font-size: 0.95rem;
-      color: var(--teal-light);
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 2rem;
-      list-style: none;
-    }
-
-    .nav-links a {
-      font-family: var(--ff-body);
-      font-size: 0.85rem;
-      font-weight: 500;
-      color: var(--text-dim);
-      text-decoration: none;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      transition: color 0.2s;
-    }
-
-    .nav-links a:hover { color: var(--teal-light); }
-
-    /* ─── Hero ──────────────────────────────────────────────────── */
-    #hero {
-      position: relative;
-      z-index: 1;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 8rem 2.5rem 5rem;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .hero-eyebrow {
-      font-family: var(--ff-body);
-      font-size: 0.78rem;
-      font-weight: 500;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--teal-light);
-      margin-bottom: 1.2rem;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-
-    .hero-eyebrow::before {
-      content: '';
-      display: block;
-      width: 2rem;
-      height: 1px;
-      background: var(--teal);
-    }
-
-    .hero-name {
-      font-family: var(--ff-head);
-      font-weight: 800;
-      font-size: clamp(2.4rem, 5vw, 4.2rem);
-      line-height: 1.08;
-      color: #e8f0ee;
-      letter-spacing: -0.02em;
-      margin-bottom: 0.4rem;
-    }
-
-    .hero-name span {
-      color: var(--teal-light);
-    }
-
-    .hero-credentials {
-      font-family: var(--ff-head);
-      font-size: clamp(0.85rem, 1.5vw, 1.05rem);
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 1.8rem;
-    }
-
-    .hero-title {
-      font-family: var(--ff-body);
-      font-size: clamp(1rem, 2vw, 1.3rem);
-      font-weight: 300;
-      color: var(--text-dim);
-      max-width: 580px;
-      margin-bottom: 2.5rem;
-      line-height: 1.6;
-    }
-
-    .hero-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.6rem;
-      margin-bottom: 3rem;
-    }
-
-    .tag {
-      font-family: var(--ff-body);
-      font-size: 0.75rem;
-      font-weight: 500;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding: 0.35rem 0.9rem;
-      border: 1px solid var(--border);
-      border-radius: 2px;
-      color: var(--teal-light);
-      background: var(--teal-dim);
-    }
-
-    .hero-cta {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-
-    .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.75rem 1.8rem;
-      background: var(--teal);
-      color: #fff;
-      text-decoration: none;
-      font-family: var(--ff-head);
-      font-weight: 600;
-      font-size: 0.85rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      border-radius: 2px;
-      transition: background 0.2s, transform 0.15s;
-    }
-
-    .btn-primary:hover {
-      background: var(--teal-light);
-      transform: translateY(-1px);
-    }
-
-    .btn-secondary {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.75rem 1.8rem;
-      border: 1px solid var(--teal);
-      color: var(--teal-light);
-      text-decoration: none;
-      font-family: var(--ff-head);
-      font-weight: 600;
-      font-size: 0.85rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      border-radius: 2px;
-      transition: background 0.2s, transform 0.15s;
-    }
-
-    .btn-secondary:hover {
-      background: var(--teal-dim);
-      transform: translateY(-1px);
-    }
-
-    /* ─── Stat Bar ──────────────────────────────────────────────── */
-    .stat-bar {
-      position: relative;
-      z-index: 1;
-      background: var(--surface);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      padding: 2rem 2.5rem;
-    }
-
-    .stat-bar-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 1.5rem;
-      text-align: center;
-    }
-
-    .stat-item {
-      padding: 0.5rem;
-    }
-
-    .stat-number {
-      font-family: var(--ff-head);
-      font-weight: 800;
-      font-size: 2.2rem;
-      color: var(--teal-light);
-      line-height: 1;
-      margin-bottom: 0.3rem;
-    }
-
-    .stat-label {
-      font-size: 0.78rem;
-      font-weight: 500;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--text-dim);
-    }
-
-    /* ─── Sections ──────────────────────────────────────────────── */
-    section {
-      position: relative;
-      z-index: 1;
-      padding: 6rem 2.5rem;
-    }
-
-    .section-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .section-label {
-      font-family: var(--ff-body);
-      font-size: 0.75rem;
-      font-weight: 500;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--teal-light);
-      margin-bottom: 0.6rem;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-
-    .section-label::before {
-      content: '';
-      display: block;
-      width: 1.5rem;
-      height: 1px;
-      background: var(--teal);
-    }
-
-    .section-heading {
-      font-family: var(--ff-head);
-      font-weight: 700;
-      font-size: clamp(1.6rem, 3vw, 2.4rem);
-      color: #e8f0ee;
-      line-height: 1.15;
-      margin-bottom: 1.2rem;
-      letter-spacing: -0.01em;
-    }
-
-    .section-lead {
-      font-size: 1rem;
-      color: var(--text-dim);
-      max-width: 640px;
-      margin-bottom: 3.5rem;
-      line-height: 1.75;
-    }
-
-    /* ─── Expertise Grid ────────────────────────────────────────── */
-    #expertise { background: var(--surface); }
-
-    .expertise-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 1.5px;
-      background: var(--border);
-      border: 1px solid var(--border);
-    }
-
-    .expertise-card {
-      background: var(--surface2);
-      padding: 2rem;
-      transition: background 0.2s;
-    }
-
-    .expertise-card:hover {
-      background: #243330;
-    }
-
-    .expertise-icon {
-      width: 2.5rem;
-      height: 2.5rem;
-      margin-bottom: 1.2rem;
-      color: var(--teal-light);
-    }
-
-    .expertise-card h3 {
-      font-family: var(--ff-head);
-      font-weight: 700;
-      font-size: 1rem;
-      color: #dde8e6;
-      margin-bottom: 0.75rem;
-      letter-spacing: -0.01em;
-    }
-
-    .expertise-card p {
-      font-size: 0.88rem;
-      color: var(--text-dim);
-      line-height: 1.65;
-    }
-
-    .expertise-card .tech-list {
-      margin-top: 1rem;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-    }
-
-    .tech-pill {
-      font-size: 0.7rem;
-      font-weight: 500;
-      letter-spacing: 0.07em;
-      text-transform: uppercase;
-      padding: 0.2rem 0.6rem;
-      background: var(--teal-dim);
-      border: 1px solid rgba(26,123,114,0.3);
-      color: var(--teal-light);
-      border-radius: 2px;
-    }
-
-    /* ─── Career Highlights ─────────────────────────────────────── */
-    .highlights-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2rem;
-    }
-
-    .highlight-item {
-      border-left: 2px solid var(--teal);
-      padding-left: 1.5rem;
-    }
-
-    .highlight-org {
-      font-family: var(--ff-head);
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--teal-light);
-      margin-bottom: 0.3rem;
-    }
-
-    .highlight-item h3 {
-      font-family: var(--ff-head);
-      font-weight: 700;
-      font-size: 0.98rem;
-      color: #dde8e6;
-      margin-bottom: 0.5rem;
-      line-height: 1.35;
-    }
-
-    .highlight-item p {
-      font-size: 0.875rem;
-      color: var(--text-dim);
-      line-height: 1.65;
-    }
-
-    /* ─── Credentials Bar ───────────────────────────────────────── */
-    #credentials {
-      background: var(--surface);
-    }
-
-    .credentials-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 1px;
-      background: var(--border);
-      border: 1px solid var(--border);
-    }
-
-    .credential-card {
-      background: var(--surface2);
-      padding: 1.75rem;
-    }
-
-    .credential-card .cred-label {
-      font-size: 0.72rem;
-      font-weight: 500;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--teal-light);
-      margin-bottom: 0.4rem;
-    }
-
-    .credential-card .cred-value {
-      font-family: var(--ff-head);
-      font-weight: 700;
-      font-size: 1.05rem;
-      color: #dde8e6;
-    }
-
-    /* ─── Research ──────────────────────────────────────────────── */
-    .research-card {
-      display: flex;
-      align-items: flex-start;
-      gap: 2rem;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      padding: 2.5rem;
-      max-width: 700px;
-      border-radius: 2px;
-    }
-
-    .research-icon {
-      flex-shrink: 0;
-      width: 3rem;
-      height: 3rem;
-      color: var(--teal-light);
-    }
-
-    .research-card h3 {
-      font-family: var(--ff-head);
-      font-weight: 700;
-      font-size: 1.1rem;
-      color: #dde8e6;
-      margin-bottom: 0.5rem;
-    }
-
-    .research-card p {
-      font-size: 0.875rem;
-      color: var(--text-dim);
-      margin-bottom: 1.2rem;
-      line-height: 1.65;
-    }
-
-    /* ─── Contact ───────────────────────────────────────────────── */
-    #contact {
-      background: var(--surface);
-      border-top: 1px solid var(--border);
-    }
-
-    .contact-row {
-      display: flex;
-      gap: 1.5rem;
-      flex-wrap: wrap;
-    }
-
-    .contact-item {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      text-decoration: none;
-      color: var(--text-dim);
-      font-size: 0.875rem;
-      font-weight: 500;
-      padding: 0.75rem 1.25rem;
-      border: 1px solid var(--border);
-      border-radius: 2px;
-      transition: border-color 0.2s, color 0.2s;
-    }
-
-    .contact-item:hover {
-      border-color: var(--teal);
-      color: var(--teal-light);
-    }
-
-    .contact-item svg {
-      width: 1.1rem;
-      height: 1.1rem;
-    }
-
-    /* ─── Footer ────────────────────────────────────────────────── */
-    footer {
-      position: relative;
-      z-index: 1;
-      border-top: 1px solid var(--border);
-      padding: 1.5rem 2.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    footer p {
-      font-size: 0.78rem;
-      color: var(--text-dim);
-      opacity: 0.6;
-    }
-
-    /* ─── Divider ───────────────────────────────────────────────── */
-    .teal-line {
-      border: none;
-      height: 1px;
-      background: var(--border);
-      margin: 0;
-    }
-
-    /* ─── Animations ────────────────────────────────────────────── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    .hero-eyebrow  { animation: fadeUp 0.6s ease both; animation-delay: 0.1s; }
-    .hero-name     { animation: fadeUp 0.6s ease both; animation-delay: 0.2s; }
-    .hero-credentials { animation: fadeUp 0.6s ease both; animation-delay: 0.3s; }
-    .hero-title    { animation: fadeUp 0.6s ease both; animation-delay: 0.4s; }
-    .hero-tags     { animation: fadeUp 0.6s ease both; animation-delay: 0.5s; }
-    .hero-cta      { animation: fadeUp 0.6s ease both; animation-delay: 0.6s; }
-
-    /* ─── Responsive ────────────────────────────────────────────── */
-    @media (max-width: 768px) {
-      nav { padding: 0.9rem 1.25rem; }
-      .nav-links { display: none; }
-      #hero { padding: 7rem 1.25rem 4rem; }
-      section { padding: 4rem 1.25rem; }
-      .stat-bar { padding: 1.5rem 1.25rem; }
-      .highlights-grid { grid-template-columns: 1fr; }
-      footer { flex-direction: column; gap: 0.5rem; text-align: center; }
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Cybersecurity brief for 27 Sep - 27 Oct 2026: PHP2Shell, the eMudhra CA key failure, exploited zero-days, supply-chain attacks, major breaches and recommended actions.">
+<style>*,*::before,*::after{box-sizing:border-box}body{margin:0}img{max-width:100%}</style><title>October 2026 Threat Brief | Infinity Shield</title>
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Public+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: single reading column, intel-bulletin style, in the Infinity Shield dark-teal site theme (matches about.html) */
+:root{
+  color-scheme:dark;
+  --paper:#0f1a19; --surface:#1a2523; --chip:#1f2e2c; --ink:#dde8e6; --head:#e8f0ee; --muted:#8faaa7;
+  --rule:rgba(26,123,114,0.25); --teal:#1A7B72; --accent:#23a396; --teal-dim:rgba(26,123,114,0.15);
+  --crit:#f07a72; --high:#e9a25b; --med:#d8c25c;
+  --display:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --body:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+}
+
+body{background:var(--paper);color:var(--ink);font:15px/1.7 var(--body);padding-inline:20px;overflow-x:hidden}
+.circuit-bg{position:fixed;inset:0;z-index:0;opacity:.04;background-image:url('/circuitry-bg-animated.svg');background-size:cover;background-position:center;pointer-events:none}
+.wrap,.site-nav{position:relative;z-index:1}
+h1,h2,h3{color:var(--head)}
+.wrap{max-width:880px;margin:0 auto;padding-block:32px 64px;display:flex;flex-direction:column;gap:40px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.15}
+h1{font-size:clamp(2rem,4.5vw,3rem);font-weight:800;letter-spacing:-.02em}
+h1 span{color:var(--accent)}
+h2{font-size:1.4rem;font-weight:700;letter-spacing:-.01em;padding-bottom:10px;border-bottom:1px solid var(--teal)}
+h3{font-size:1.08rem;font-weight:700;letter-spacing:-.01em}
+p{margin:0;max-width:68ch}
+a{color:var(--accent)}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.mono{font-family:var(--mono);font-size:.82em}
+.label{font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+
+.marking{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;font-family:var(--mono);font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);border-block:1px solid var(--rule);padding-block:8px}
+.tlp{background:var(--teal-dim);border:1px solid var(--rule);color:var(--accent);padding:2px 8px;font-weight:500;border-radius:2px}
+header{display:flex;flex-direction:column;gap:14px}
+.lede{font-size:1.05rem;color:var(--muted)}
+
+.sev{display:inline-block;font-family:var(--mono);font-size:.68rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;padding:1px 7px;border:1px solid currentColor;border-radius:2px;white-space:nowrap}
+.sev.crit{color:var(--crit)} .sev.high{color:var(--high)} .sev.med{color:var(--med)}
+
+.lead{display:flex;flex-direction:column;gap:16px}
+.item{background:var(--surface);border:1px solid var(--rule);border-radius:2px;padding:22px 24px;display:flex;flex-direction:column;gap:10px}
+.item-head{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:baseline;justify-content:space-between}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px 20px;margin:4px 0 0;padding-top:10px;border-top:1px dashed var(--rule)}
+.facts div{display:flex;flex-direction:column;gap:2px}
+.facts dt{font-family:var(--mono);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.facts dd{margin:0;font-size:.9rem;font-variant-numeric:tabular-nums}
+.action{font-size:.92rem}
+.action b{font-family:var(--display);font-weight:600;color:var(--accent)}
+
+section{display:flex;flex-direction:column;gap:14px}
+.tbl{overflow-x:auto;background:var(--surface);border:1px solid var(--rule)}
+table{border-collapse:collapse;width:100%;min-width:640px;font-size:.88rem;font-variant-numeric:tabular-nums}
+th,td{text-align:left;vertical-align:top;padding:10px 12px;border-bottom:1px solid var(--rule)}
+th{font-family:var(--mono);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:500;background:var(--chip)}
+tr:last-child td{border-bottom:0}
+td:first-child{font-weight:600}
+td .mono{color:var(--muted)}
+
+.list{display:flex;flex-direction:column;gap:12px;margin:0;padding:0;list-style:none}
+.list li{display:grid;grid-template-columns:150px 1fr;gap:4px 16px}
+@media (max-width:560px){.list li{grid-template-columns:1fr}h1{font-size:1.9rem}}
+
+ol.todo{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:8px;max-width:72ch}
+.sources{font-size:.82rem;color:var(--muted);columns:2 280px;gap:24px;margin:0;padding-left:1.1em}
+.sources li{break-inside:avoid;margin-bottom:4px}
+footer{font-size:.8rem;color:var(--muted)}
+
+.site-nav{position:sticky;top:0;z-index:100;margin-inline:-20px;padding:1rem 2.5rem;background:rgba(15,26,25,0.88);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--rule)}
+.site-nav-inner{display:flex;flex-wrap:wrap;gap:8px 24px;align-items:center;justify-content:space-between}
+.site-brand{display:flex;align-items:center;gap:.75rem;text-decoration:none;color:var(--accent);font-family:var(--display);font-weight:700;letter-spacing:.04em;text-transform:uppercase;font-size:.95rem}
+.site-brand img{height:36px;width:auto}
+.site-links{display:flex;gap:2rem;list-style:none;margin:0;padding:0;font-family:var(--body);font-size:.85rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase}
+.site-links a{color:var(--muted);text-decoration:none;transition:color .2s}
+.site-links a:hover,.site-links a[aria-current="page"]{color:var(--accent)}
+@media (max-width:768px){.site-nav{padding:.9rem 1.25rem}.site-links{gap:1.25rem;font-size:.78rem}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
 </head>
 <body>
+<div class="circuit-bg" aria-hidden="true"></div>
 
-  <!-- Circuit texture -->
-  <div class="circuit-bg" aria-hidden="true"></div>
-
-  <!-- ─── Navigation ──────────────────────────────────────────── -->
-  <nav role="navigation" aria-label="Main navigation">
-    <a href="#hero" class="nav-logo">
-      <img src="/logo-transparent.png" alt="Infinity Shield" />
-      <span class="nav-wordmark">Infinity Shield</span>
-    </a>
-    <ul class="nav-links">
-      <li><a href="#expertise">Expertise</a></li>
-      <li><a href="#highlights">Experience</a></li>
-      <li><a href="#credentials">Credentials</a></li>
-      <li><a href="#research">Research</a></li>
-      <li><a href="#contact">Contact</a></li>
+<nav class="site-nav" aria-label="Main navigation">
+  <div class="site-nav-inner">
+    <a href="/" class="site-brand"><img src="/logo-transparent.png" alt="">Infinity Shield</a>
+    <ul class="site-links">
+      <li><a href="/" aria-current="page">Threat Brief</a></li>
+      <li><a href="/about.html">About</a></li>
     </ul>
-  </nav>
-
-  <!-- ─── Hero ────────────────────────────────────────────────── -->
-  <section id="hero" aria-labelledby="hero-name">
-    <div class="hero-eyebrow">Federal &bull; DoD &bull; Cloud &bull; Cybersecurity</div>
-    <h1 class="hero-name" id="hero-name">Dr. Chris <span>Opp</span></h1>
-    <p class="hero-credentials">DIT &nbsp;&bull;&nbsp; CISSP &nbsp;&bull;&nbsp; E-8 Retired, WYANG</p>
-    <p class="hero-title">Senior Cloud Architect and Cybersecurity Director with 24+ years leading enterprise-scale technology programs across Federal, DoD, and Defense Industrial Base environments.</p>
-    <div class="hero-tags">
-      <span class="tag">FedRAMP</span>
-      <span class="tag">CMMC 2.0</span>
-      <span class="tag">NIST 800-53/171</span>
-      <span class="tag">AWS GovCloud</span>
-      <span class="tag">Azure IL4</span>
-      <span class="tag">Zero Trust</span>
-      <span class="tag">SD-WAN</span>
-      <span class="tag">RMF / A&amp;A</span>
-    </div>
-    <div class="hero-cta">
-      <a href="#expertise" class="btn-primary">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        View Expertise
-      </a>
-      <a href="/OppCapstoneFinal.pdf" target="_blank" rel="noopener" class="btn-secondary">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-        NIST 800-171 Research
-      </a>
-    </div>
-  </section>
-
-  <!-- ─── Stat Bar ─────────────────────────────────────────────── -->
-  <div class="stat-bar" role="region" aria-label="Career highlights">
-    <div class="stat-bar-inner">
-      <div class="stat-item">
-        <div class="stat-number">24+</div>
-        <div class="stat-label">Years Experience</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-number">100K+</div>
-        <div class="stat-label">Endpoints Secured</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-number">20+</div>
-        <div class="stat-label">Cloud Migrations</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-number">15</div>
-        <div class="stat-label">ANG Units Migrated</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-number">79</div>
-        <div class="stat-label">NIST Controls Remediated</div>
-      </div>
-    </div>
   </div>
+</nav>
+<div class="wrap">
+  <header>
+    <div class="marking"><span class="tlp">TLP:CLEAR</span><span>Period 27 Sep – 27 Oct 2026</span><span>Issued 27 Oct 2026</span></div>
+    <h1>October 2026 <span>Threat Brief</span></h1>
+    <p class="lede">A month defined by two internet-wide trust failures, a PHP remote-code-execution pair and a certificate authority with guessable keys, plus a run of exploited edge-device zero-days and credential-driven breaches at hosting and SaaS providers.</p>
+  </header>
 
-  <!-- ─── Expertise ────────────────────────────────────────────── -->
-  <section id="expertise" aria-labelledby="expertise-heading">
-    <div class="section-inner">
-      <p class="section-label">Technical Domains</p>
-      <h2 class="section-heading" id="expertise-heading">Core Competencies</h2>
-      <p class="section-lead">Deep technical fluency across cloud, network, identity, and compliance architectures — applied at enterprise scale in Federal and DoD environments.</p>
+  <section class="lead" aria-labelledby="top">
+    <h2 id="top">Top items</h2>
 
-      <div class="expertise-grid">
+    <article class="item">
+      <div class="item-head"><h3>PHP2Shell: unauthenticated RCE in PHP core</h3><span class="sev crit">Critical · exploited</span></div>
+      <p>Two memory-safety flaws in PHP 5.4 through 8.5 let a remote, unauthenticated attacker run code on affected web servers. The bugs were found with AI assistance in August. Details leaked on Hacker News on 20 Oct, a day before advisories were published on 21 Oct. Amazon saw an exploit attempt on 17 Oct, four days before disclosure, and watchTowr and Cloudflare confirmed in-the-wild exploitation by 21 Oct.</p>
+      <dl class="facts">
+        <div><dt>CVE</dt><dd class="mono">CVE-2026-109618<br>CVE-2026-109619</dd></div>
+        <div><dt>CVSS v4</dt><dd>9.2</dd></div>
+        <div><dt>Fixed in</dt><dd class="mono">8.5.12 · 8.4.27 · 8.3.36 · 8.2.35</dd></div>
+      </dl>
+      <p class="action"><b>Action:</b> Patch every PHP install now, including vendor appliances and hosted CMSs. Hunt for web shells on anything exposed since 17 Oct. Versions older than 8.2 receive no fix and need replacing or isolating.</p>
+    </article>
 
-        <!-- Cloud Architecture -->
-        <div class="expertise-card">
-          <svg class="expertise-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
-          <h3>Cloud Architecture</h3>
-          <p>Enterprise cloud design and migration across hyperscalers, with deep experience in sovereign and impact-level environments. Led 20+ cloud instance migrations at USDA and executed GCC-High transitions for DIB clients.</p>
-          <div class="tech-list">
-            <span class="tech-pill">AWS GovCloud</span>
-            <span class="tech-pill">Azure IL4</span>
-            <span class="tech-pill">GCP</span>
-            <span class="tech-pill">Oracle Cloud</span>
-            <span class="tech-pill">GCC-High</span>
-            <span class="tech-pill">Commvault</span>
-          </div>
-        </div>
+    <article class="item">
+      <div class="item-head"><h3>eMudhra CA: intermediate certificate keys trivially recoverable</h3><span class="sev crit">Critical · contained</span></div>
+      <p>Eight intermediate CA certificates from the Indian certificate authority eMudhra used P-384 private keys with 3 to 8 bits of entropy. One key was literally the number 4. Anyone holding the public certificate could derive the key in under a second and issue trusted HTTPS certificates for any domain. A researcher found it via a CCADB check on 17 Oct. eMudhra revoked the certificates on 18 Oct, and Chrome, Firefox, Apple and Microsoft all blocked them by 20 Oct. On 22 Oct eMudhra said it would exit the global SSL/TLS business.</p>
+      <dl class="facts">
+        <div><dt>Certs affected</dt><dd>8 intermediates</dd></div>
+        <div><dt>Key values</dt><dd class="mono">4, 56, 66, 115, 155, 156, 230, 237</dd></div>
+        <div><dt>Browser block</dt><dd>17–20 Oct</dd></div>
+      </dl>
+      <p class="action"><b>Action:</b> Inventory any certificates chaining to eMudhra and replace them with another CA. Make sure browsers and OS trust stores are current. Check Certificate Transparency logs for certificates issued for your domains under these intermediates.</p>
+    </article>
 
-        <!-- Cybersecurity Leadership -->
-        <div class="expertise-card">
-          <svg class="expertise-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          <h3>Cybersecurity Leadership</h3>
-          <p>Directed enterprise security operations for 100,000+ endpoints across the Air National Guard, receiving national recognition for endpoint management optimization. Experienced with Zero Trust architectures and next-generation firewall platforms.</p>
-          <div class="tech-list">
-            <span class="tech-pill">Zero Trust</span>
-            <span class="tech-pill">Palo Alto</span>
-            <span class="tech-pill">Cisco FTD</span>
-            <span class="tech-pill">Fortinet</span>
-            <span class="tech-pill">Sidewinder</span>
-            <span class="tech-pill">Bluecoat Proxy</span>
-          </div>
-        </div>
-
-        <!-- Compliance & Risk -->
-        <div class="expertise-card">
-          <svg class="expertise-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-          <h3>Compliance &amp; Risk Frameworks</h3>
-          <p>Authored SSPs, COOP plans, and DR frameworks for classified and unclassified environments. Remediated 79 NIST 800-171 controls to restore DoD contract eligibility for a Defense Industrial Base client.</p>
-          <div class="tech-list">
-            <span class="tech-pill">FedRAMP</span>
-            <span class="tech-pill">CMMC 2.0</span>
-            <span class="tech-pill">NIST 800-53</span>
-            <span class="tech-pill">NIST 800-171</span>
-            <span class="tech-pill">RMF / A&amp;A</span>
-            <span class="tech-pill">FISMA</span>
-            <span class="tech-pill">DISA STIGs</span>
-          </div>
-        </div>
-
-        <!-- Network Architecture -->
-        <div class="expertise-card">
-          <svg class="expertise-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="2" y="2" width="6" height="6" rx="1"/><rect x="16" y="2" width="6" height="6" rx="1"/><rect x="9" y="16" width="6" height="6" rx="1"/><path d="M5 8v3a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8"/><path d="M12 12v4"/></svg>
-          <h3>Network Architecture</h3>
-          <p>Enterprise SME for USDA-wide SD-WAN covering hundreds of sites. Experienced with BGP routing, MTIPS planning, DNS/IPAM management, and network performance monitoring at federal scale.</p>
-          <div class="tech-list">
-            <span class="tech-pill">SD-WAN</span>
-            <span class="tech-pill">Lumen CSG</span>
-            <span class="tech-pill">VeloCloud</span>
-            <span class="tech-pill">BGP</span>
-            <span class="tech-pill">Infoblox</span>
-            <span class="tech-pill">ThousandEyes</span>
-          </div>
-        </div>
-
-        <!-- Identity & Access -->
-        <div class="expertise-card">
-          <svg class="expertise-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-          <h3>Identity &amp; Access Management</h3>
-          <p>Designed and operated hybrid Azure Active Directory and on-premises domain linkage for multi-site environments. Experienced with federated identity, conditional access policies, and privileged access management in DoD contexts.</p>
-          <div class="tech-list">
-            <span class="tech-pill">Hybrid Azure AD</span>
-            <span class="tech-pill">On-Prem AD</span>
-            <span class="tech-pill">Federated Identity</span>
-            <span class="tech-pill">PAM</span>
-            <span class="tech-pill">MFA</span>
-          </div>
-        </div>
-
-        <!-- IT/OT Convergence -->
-        <div class="expertise-card">
-          <svg class="expertise-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>
-          <h3>IT/OT Convergence &amp; Mission Readiness</h3>
-          <p>Extensive experience bridging IT and operational technology in military and critical infrastructure settings. Designed and executed the ROSC 31A data center build-out with under three hours of downtime across 15 ANG units.</p>
-          <div class="tech-list">
-            <span class="tech-pill">IT/OT Convergence</span>
-            <span class="tech-pill">Data Center Migration</span>
-            <span class="tech-pill">COOP</span>
-            <span class="tech-pill">DR Planning</span>
-            <span class="tech-pill">Mission Readiness</span>
-          </div>
-        </div>
-
-      </div>
-    </div>
+    <article class="item">
+      <div class="item-head"><h3>ConnectWise Cloud Backup (formerly SkyKick) used to reach Microsoft 365 tenants</h3><span class="sev crit">Critical · supply chain</span></div>
+      <p>Starting 15 Oct, attackers abused the backup platform's application identities to sign into customer Microsoft 365 tenants. Nearly 1,000 Entra tenants were targeted, with 300+ successful sign-ins and at least 162 tenants confirmed compromised in early counts. Reports blaming a China-linked actor using AI agents are not supported by primary sources so far.</p>
+      <p class="action"><b>Action:</b> If you or your MSP use this product, review Entra sign-in logs for its service principals since 15 Oct, rotate its credentials and consent grants, and audit mailbox and SharePoint access.</p>
+    </article>
   </section>
 
-  <hr class="teal-line" />
-
-  <!-- ─── Career Highlights ─────────────────────────────────────── -->
-  <section id="highlights" aria-labelledby="highlights-heading">
-    <div class="section-inner">
-      <p class="section-label">Career</p>
-      <h2 class="section-heading" id="highlights-heading">Notable Engagements</h2>
-      <p class="section-lead">Selected mission-critical programs where technical leadership produced measurable outcomes.</p>
-
-      <div class="highlights-grid">
-        <div class="highlight-item">
-          <p class="highlight-org">USDA</p>
-          <h3>Enterprise SD-WAN Program Authority</h3>
-          <p>Served as enterprise SME for USDA-wide SD-WAN deployment. Managed the migration of 20+ cloud instances to the Lumen CSG platform, coordinating across agency stakeholders and vendor teams.</p>
-        </div>
-
-        <div class="highlight-item">
-          <p class="highlight-org">Wyoming Air National Guard</p>
-          <h3>ROSC 31A Data Center Migration</h3>
-          <p>Designed and executed a full data center build-out and migration achieving less than three hours of downtime across 15 ANG units — a result that preserved mission continuity during a critical transition window.</p>
-        </div>
-
-        <div class="highlight-item">
-          <p class="highlight-org">Celerium / DIB Client</p>
-          <h3>NIST 800-171 Remediation &amp; CMMC Readiness</h3>
-          <p>Remediated 79 NIST 800-171 controls to restore DoD contract eligibility for a Defense Industrial Base client facing compliance risk. Managed subsequent migration to GCC-High to align with CMMC 2.0 requirements.</p>
-        </div>
-
-        <div class="highlight-item">
-          <p class="highlight-org">Air National Guard — National Level</p>
-          <h3>SCCM Endpoint Management Optimization</h3>
-          <p>Received national recognition from Air National Guard leadership for designing and optimizing the ANG's SCCM solution, driving enterprise-wide improvements to patch compliance and endpoint visibility across 50,000+ devices.</p>
-        </div>
-
-        <div class="highlight-item">
-          <p class="highlight-org">Numerica</p>
-          <h3>Cloud Security Architecture</h3>
-          <p>Led cloud security architecture engagements for a technology company operating in the defense sector, aligning cloud posture with NIST 800-53 controls and FedRAMP authorization boundaries.</p>
-        </div>
-
-        <div class="highlight-item">
-          <p class="highlight-org">Academic</p>
-          <h3>IT &amp; Cybersecurity Adjunct Faculty</h3>
-          <p>Active adjunct faculty member instructing IT and cybersecurity curriculum, translating operational Federal and DoD experience directly into academic and professional development programs.</p>
-        </div>
-      </div>
-    </div>
+  <section aria-labelledby="vulns">
+    <h2 id="vulns">Exploited vulnerabilities and zero-days</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>Product</th><th>CVE</th><th>What it allows</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td>Ivanti Connect Secure VPN</td><td class="mono">CVE-2026-104935 + 2 chained</td><td>Unauthenticated root code execution on fully patched appliances. Actor UTA0576 harvested AD data and BitLocker keys, used no malware and edited logs. Exploited since 1–3 Oct.</td><td><span class="sev crit">Exploited</span><br>Partial fix</td></tr>
+        <tr><td>Microsoft Patch Tuesday (13 Oct)</td><td class="mono">CVE-2026-96951 (MotW bypass)</td><td>Record ~1,413 CVEs. Also Outlook and PowerPoint preview-pane RCEs, an email-triggered Exchange RCE, and a .NET/WDAC bypass.</td><td><span class="sev high">Exploited</span><br>Patched</td></tr>
+        <tr><td>Cisco Catalyst SD-WAN Manager</td><td class="mono">CVE-2026-76504</td><td>Unauthenticated admin access</td><td><span class="sev crit">Exploited</span></td></tr>
+        <tr><td>Fortinet FortiMail</td><td class="mono">CVE-2026-104286</td><td>Arbitrary file write, CVSS 9.8</td><td><span class="sev crit">Exploited</span><br>CISA KEV</td></tr>
+        <tr><td>Citrix NetScaler ADC / Gateway</td><td class="mono">Multiple</td><td>Memory overflow under SAML configurations</td><td><span class="sev crit">Exploited</span></td></tr>
+        <tr><td>AhsayCBS backup (MSP platform)</td><td class="mono">CVE-2026-105133 / 105134</td><td>Auth bypass plus unauthenticated RCE. Attackers deployed JSP web shells and XMRig miners. The first fix was incomplete.</td><td><span class="sev high">Exploited</span><br>Hotfix 10.3.4.45 / 9.15.2.70</td></tr>
+        <tr><td>Arista VeloCloud Orchestrator</td><td class="mono">CVE-2026-93952</td><td>The third exploited VeloCloud zero-day in four months</td><td><span class="sev high">Exploited</span><br>CISA KEV</td></tr>
+        <tr><td>BeyondTrust Remote Support</td><td class="mono">CVE-2026-102764</td><td>Exploited since late August by a China-linked group</td><td><span class="sev high">Exploited</span></td></tr>
+        <tr><td>Palo Alto PAN-OS · Cisco Secure Email</td><td class="mono">CVE-2026-0322 · CVE-2026-76519</td><td>Code injection and path traversal, added to CISA KEV on 14 Oct</td><td><span class="sev high">Exploited</span></td></tr>
+        <tr><td>Zammad helpdesk 6.3.0–6.5.4</td><td class="mono">CVE-2026-102489 / 102490</td><td>Privilege escalation chain used to breach DIVD, the Dutch vulnerability-disclosure institute. Investigators describe the intrusion as agentic-AI-driven.</td><td><span class="sev high">Exploited</span><br>CISA KEV</td></tr>
+        <tr><td>Atlassian Jira / Confluence / Bitbucket DC</td><td class="mono">CVE-2026-21589</td><td>Unauthenticated file access, CVSS 9.3</td><td><span class="sev med">Not yet exploited</span></td></tr>
+      </tbody>
+    </table></div>
   </section>
 
-  <hr class="teal-line" />
-
-  <!-- ─── Credentials ───────────────────────────────────────────── -->
-  <section id="credentials" aria-labelledby="credentials-heading">
-    <div class="section-inner">
-      <p class="section-label">Qualifications</p>
-      <h2 class="section-heading" id="credentials-heading">Credentials &amp; Background</h2>
-
-      <div class="credentials-grid">
-        <div class="credential-card">
-          <p class="cred-label">Certification</p>
-          <p class="cred-value">CISSP</p>
-        </div>
-        <div class="credential-card">
-          <p class="cred-label">Education</p>
-          <p class="cred-value">Doctorate in IT (DIT)</p>
-        </div>
-        <div class="credential-card">
-          <p class="cred-label">Military Service</p>
-          <p class="cred-value">E-8, SMS Ret. — WYANG</p>
-        </div>
-        <div class="credential-card">
-          <p class="cred-label">Experience</p>
-          <p class="cred-value">24+ Years Federal/DoD</p>
-        </div>
-        <div class="credential-card">
-          <p class="cred-label">Location</p>
-          <p class="cred-value">Cheyenne, Wyoming</p>
-        </div>
-        <div class="credential-card">
-          <p class="cred-label">Framework Fluency</p>
-          <p class="cred-value">NIST · FedRAMP · CMMC · RMF</p>
-        </div>
-      </div>
-    </div>
+  <section aria-labelledby="supply">
+    <h2 id="supply">Supply chain</h2>
+    <ul class="list">
+      <li><span class="label">LiteLLM 1.107.0</span><p>A poisoned release went out on PyPI and the official Docker images on 21 Oct and stayed up about two hours. It ran a credential stealer at Python startup and installed a remote-access backdoor. Attackers published it with stolen maintainer GitHub tokens. Anyone who installed it should treat every secret on that host as exposed.</p></li>
+      <li><span class="label">npm</span><p>Eight malicious packages in a long-running data-theft campaign reached about 40,000 downloads.</p></li>
+      <li><span class="label">AI coding agents</span><p>More than 13,000 sensitive screenshots taken during agent-driven development workflows were found committed to public GitHub repositories.</p></li>
+    </ul>
   </section>
 
-  <hr class="teal-line" />
-
-  <!-- ─── Research ─────────────────────────────────────────────── -->
-  <section id="research" aria-labelledby="research-heading">
-    <div class="section-inner">
-      <p class="section-label">Publication</p>
-      <h2 class="section-heading" id="research-heading">Doctoral Research</h2>
-      <p class="section-lead">Applied research at the intersection of federal compliance and cybersecurity operations.</p>
-
-      <div class="research-card">
-        <svg class="research-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-        <div>
-          <h3>NIST SP 800-171 Compliance in the Defense Industrial Base</h3>
-          <p>Doctoral capstone research examining the application and practical challenges of NIST 800-171 across Defense Industrial Base organizations, with analysis of control implementation gaps and remediation strategies.</p>
-          <a href="/OppCapstoneFinal.pdf" target="_blank" rel="noopener" class="btn-primary">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            Download PDF
-          </a>
-        </div>
-      </div>
-    </div>
+  <section aria-labelledby="breaches">
+    <h2 id="breaches">Data breaches</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>Organization</th><th>People / records</th><th>Cause and data</th></tr></thead>
+      <tbody>
+        <tr><td>Oracle Health (Cerner)</td><td>~20M patients</td><td>Compromised customer credentials used on legacy systems. The intrusion dates to 2025 and notices went out in October.</td></tr>
+        <tr><td>Burger King Japan</td><td>~11.18M app members</td><td>Emails, phone numbers and dates of birth taken 2–7 Oct. No card data was stored on the server.</td></tr>
+        <tr><td>Denmark CPR register</td><td>~8.8M (≈80% of population)</td><td>Third-party breach combined with brute-forced CPR numbers</td></tr>
+        <tr><td>Daiichikosho (karaoke)</td><td>~8.72M customers</td><td>Breached through a contractor's system</td></tr>
+        <tr><td>iRhythm Technologies</td><td>8.2M (revised up from 370K)</td><td>Zio cardiac monitor maker. Insurance and patient data taken during a June intrusion, followed by a ransom demand.</td></tr>
+        <tr><td>Times Mobility (Japan)</td><td>~6.6M accounts</td><td>Driver's licence images exposed</td></tr>
+        <tr><td>ETS</td><td>5.7–7M records</td><td>California student data, including disability status and test results, taken with one stolen login</td></tr>
+        <tr><td>Zeabur (hosting)</td><td>3.2M env-var records / 321K accounts</td><td>A leaked non-expiring admin token. The platform will shut down by 31 Dec.</td></tr>
+        <tr><td>Pentagon DMDC</td><td>~3.05M people</td><td>Unencrypted SSNs and military personnel data accessed Oct 2025–Jul 2026. Disclosed 1 Oct.</td></tr>
+        <tr><td>Nikkei</td><td>~1.83M records</td><td>Stolen credentials to a cloud development service. Its third incident in about a month.</td></tr>
+        <tr><td>Railway (hosting)</td><td>Limited</td><td>Customer environment variables, some decrypted. Part of a wider campaign against hosting and AI-inference providers.</td></tr>
+        <tr><td>IDC Frontier (SoftBank)</td><td>495 customers disrupted</td><td>Ransomware attack on 7 Oct. Japan declared a "state of emergency in cyberspace."</td></tr>
+        <tr><td>GMO Onamae Desktop Cloud</td><td>~26.7K servers</td><td>Malware planted after a credential compromise. No data leak confirmed yet.</td></tr>
+      </tbody>
+    </table></div>
+    <p class="label">Unverified claims: PwC (Everest, ~590 GB claimed; PwC confirms only a vendor learning-records incident), Anne Arundel County MD (Rhysida, 2.6 TB claimed)</p>
   </section>
 
-  <hr class="teal-line" />
-
-  <!-- ─── Contact ───────────────────────────────────────────────── -->
-  <section id="contact" aria-labelledby="contact-heading">
-    <div class="section-inner">
-      <p class="section-label">Engagement</p>
-      <h2 class="section-heading" id="contact-heading">Connect</h2>
-      <p class="section-lead">Available for Director, C-Suite, and senior cross-functional leadership engagements in Federal, DoD, and adjacent sectors.</p>
-
-      <div class="contact-row">
-        <a href="https://www.linkedin.com/in/chrisopp" target="_blank" rel="noopener" class="contact-item">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-          LinkedIn
-        </a>
-        <a href="mailto:chris@infinityshield.co" class="contact-item">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-          chris@infinityshield.co
-        </a>
-      </div>
-    </div>
+  <section aria-labelledby="other">
+    <h2 id="other">Law enforcement and research</h2>
+    <ul class="list">
+      <li><span class="label">KillSec takedown</span><p>An international operation seized the ransomware group's leak site and five core servers holding at least 110 TB of stolen data. Suspects were arrested.</p></li>
+      <li><span class="label">Pwn2Own Ireland</span><p>98 zero-days and $1.26M paid out over 6–8 Oct. The Pixel 10 and Galaxy S26 were each compromised four times. Nobody attempted the iPhone 17.</p></li>
+    </ul>
   </section>
 
-  <!-- ─── Footer ───────────────────────────────────────────────── -->
-  <footer>
-    <p>Dr. Chris Opp, DIT, CISSP &mdash; Cheyenne, Wyoming</p>
-    <p>&copy; <span id="yr"></span> Infinity Shield. All rights reserved.</p>
-  </footer>
+  <section aria-labelledby="do">
+    <h2 id="do">What to do this week</h2>
+    <ol class="todo">
+      <li>Patch PHP everywhere and hunt for web shells on internet-facing PHP hosts.</li>
+      <li>Replace any certificate chaining to eMudhra.</li>
+      <li>Patch Ivanti, Cisco SD-WAN, FortiMail, NetScaler, VeloCloud, BeyondTrust and PAN-OS, then check those devices for signs of prior compromise. Patching does not remove an attacker who is already in.</li>
+      <li>Apply October Patch Tuesday, prioritising Outlook, Exchange and Windows Shell.</li>
+      <li>Audit third-party app identities in Microsoft 365 (backup, MSP and RMM tools) and rotate their secrets.</li>
+      <li>Check Python environments for LiteLLM 1.107.0 and rotate secrets on any host that installed it.</li>
+      <li>Replace long-lived admin tokens and plaintext environment variables at hosting providers with short-lived, scoped credentials.</li>
+    </ol>
+  </section>
 
-  <script>
-    document.getElementById('yr').textContent = new Date().getFullYear();
-  </script>
+  <section aria-labelledby="src">
+    <h2 id="src">Sources</h2>
+    <ul class="sources">
+      <li><a href="https://thehackernews.com/2026/10/php-issues-emergency-patches-for-two.html">The Hacker News: PHP2Shell patches</a></li>
+      <li><a href="https://thehackernews.com/2026/10/someone-tried-to-exploit-php2shell-4.html">The Hacker News: pre-disclosure exploitation</a></li>
+      <li><a href="https://techcrunch.com/2026/10/24/php-ocalypse-how-two-critical-web-bugs-almost-broke-the-internet/">TechCrunch: PHP-ocalypse</a></li>
+      <li><a href="https://watchtowr.com/intelligence/php-cve-2026-109618-faq/">watchTowr: CVE-2026-109618 FAQ</a></li>
+      <li><a href="https://www.helpnetsecurity.com/2026/10/21/emudhra-certificates-private-keys-compromised/">Help Net Security: eMudhra keys</a></li>
+      <li><a href="https://blog.cloudflare.com/emudhra-certificate-compromise/">Cloudflare: eMudhra certificate compromise</a></li>
+      <li><a href="https://thehackernews.com/2026/10/emudhra-to-exit-global-ssltls-business.html">The Hacker News: eMudhra exits TLS</a></li>
+      <li><a href="https://www.helpnetsecurity.com/2026/10/01/pentagon-dmdc-data-breach-3-million-people/">Help Net Security: Pentagon DMDC</a></li>
+      <li><a href="https://playciso.com/blog/october-2026-cybersecurity-breaches-roundup">PlayCISO: October 2026 roundup</a></li>
+      <li><a href="https://www.sherlockforensics.com/blog/2026-10-14-weekly-security-roundup.html">Sherlock Forensics: 7–14 Oct roundup</a></li>
+      <li><a href="https://threataft.com/articles/global-cybersecurity-week-zero-days-ai-attacks-breaches-30-sept-7-oct-2026">ThreatAft: 30 Sep–7 Oct roundup</a></li>
+      <li><a href="https://www.duocircle.com/blog/cybersecurity-news-update-week-41-of-2026">DuoCircle: week 41</a></li>
+    </ul>
+  </section>
+
+  <footer>Compiled from public reporting as of 27 Oct 2026. Figures are as first reported and may be revised. · <a href="/about.html">About Infinity Shield</a></footer>
+</div>
 
 </body>
 </html>

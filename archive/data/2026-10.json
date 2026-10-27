@@ -3,13 +3,13 @@
   "label": "October 2026",
   "period": "1 – 27 Oct 2026 (month to date)",
   "issued": "27 Oct 2026",
-  "lede": "This is the month-to-date brief for 1 to 27 October 2026. The month so far is defined by two internet-wide trust failures, critical PHP flaws and a certificate authority with recoverable keys, plus a run of exploited edge-device zero-days and credential-driven breaches at hosting, SaaS and consumer-service providers.",
+  "lede": "This is the month-to-date brief for 1 to 27 October 2026. The month so far is defined by two internet-wide trust failures, critical PHP flaws, and a certificate authority with recoverable keys, plus a run of exploited edge-device zero-days and credential-driven breaches at hosting, SaaS, and consumer-service providers.",
   "top": [
     {
       "title": "PHP2Shell: critical flaws in PHP core",
       "sev": "crit",
       "status": "Critical · exploitation attempts",
-      "body": "Two critical flaws affect nearly every PHP version back to 5.4, across PHP-FPM, Apache mod_php, php-cgi, FrankenPHP and LiteSpeed, with mod_php at highest risk. Wiz Research, Calif and OpenAI's Codex Security team reported them, and the researchers say AI tools helped turn them into working exploits. Details leaked online on 20 Oct, and PHP moved its release up to 21 Oct. Amazon logged exploitation attempts from 17 Oct, four days before the patches, and Cloudflare and watchTowr also reported attempts. Sources disagree on impact: Amazon's CISO says the flaws are being broadly exploited, while Dataminr reports only scanning and non-working exploits with no known compromises.",
+      "body": "Two critical flaws affect nearly every PHP version back to 5.4, across PHP-FPM, Apache mod_php, php-cgi, FrankenPHP, and LiteSpeed, with mod_php at highest risk. Wiz Research, Calif, and OpenAI's Codex Security team reported them, and the researchers say AI tools helped turn them into working exploits. Details leaked online on 20 Oct, and PHP moved its release up to 21 Oct. Amazon logged exploitation attempts from 17 Oct, four days before the patches, and Cloudflare and watchTowr also reported attempts. Sources disagree on impact: Amazon's CISO says the flaws are being broadly exploited, while Dataminr reports only scanning and non-working exploits with no known compromises.",
       "facts": [
         [
           "CVE",
@@ -30,7 +30,7 @@
       "title": "eMudhra CA: intermediate certificate keys trivially recoverable",
       "sev": "crit",
       "status": "Critical · contained",
-      "body": "Eight intermediate CA certificates from the Indian certificate authority eMudhra, six for TLS and two for code signing, were generated with far too little randomness. Each private key was smaller than 256, so anyone holding the public certificate could test every possible value; recovered keys included 4, 56 and 115. A researcher found it with a CCADB check on 17 Oct. eMudhra revoked the certificates on 18 Oct, Apple blocked them on 19 Oct, and Microsoft followed on 20 Oct, the day Mozilla made the incident public. eMudhra says only one of the eight was deployed in production, none issued end-entity certificates and its infrastructure was not breached. On 22 Oct it said it would exit the global SSL/TLS business.",
+      "body": "Eight intermediate CA certificates from the Indian certificate authority eMudhra, six for TLS and two for code signing, were generated with far too little randomness. Each private key was smaller than 256, so anyone holding the public certificate could test every possible value; recovered keys included 4, 56, and 115. A researcher found it with a CCADB check on 17 Oct. eMudhra revoked the certificates on 18 Oct, Apple blocked them on 19 Oct, and Microsoft followed on 20 Oct, the day Mozilla made the incident public. eMudhra says only one of the eight was deployed in production, none issued end-entity certificates and its infrastructure was not breached. On 22 Oct it said it would exit the global SSL/TLS business.",
       "facts": [
         [
           "Certs affected",
@@ -70,14 +70,14 @@
           "From 15 Oct"
         ]
       ],
-      "action": "If you or your MSP use this product, review Entra sign-in logs for its service principals back to at least 15 Oct, audit application secrets, certificates, OAuth grants and Graph activity added since 13 Oct, and review role changes. Keep ConnectWise integrations disabled until ConnectWise confirms restoration is safe, and do not delete the enterprise applications as a first step."
+      "action": "If you or your MSP use this product, review Entra sign-in logs for its service principals back to at least 15 Oct, audit application secrets, certificates, OAuth grants, and Graph activity added since 13 Oct, and review role changes. Keep ConnectWise integrations disabled until ConnectWise confirms restoration is safe, and do not delete the enterprise applications as a first step."
     }
   ],
   "vulns": [
     {
       "product": "Ivanti Connect Secure VPN",
       "cve": "CVE-2026-104935 + 2 chained",
-      "allows": "Chained authentication bypass, remote code execution and privilege escalation giving root on fully patched appliances. Actor UTA0576 harvested Active Directory credentials, BitLocker recovery keys and LAPS data with custom Python LDAP and Kerberos tools, and deleted evidence from debug and audit logs. Exploited since 1–3 Oct; added to CISA KEV on 13 Oct. Ivanti's Integrity Checker may not detect compromise because commands run in memory.",
+      "allows": "Chained authentication bypass, remote code execution, and privilege escalation giving root on fully patched appliances. Actor UTA0576 harvested Active Directory credentials, BitLocker recovery keys, and LAPS data with custom Python LDAP and Kerberos tools, and deleted evidence from debug and audit logs. Exploited since 1–3 Oct; added to CISA KEV on 13 Oct. Ivanti's Integrity Checker may not detect compromise because commands run in memory.",
       "sev": "crit",
       "status": "Exploited",
       "note": "Partial fix"
@@ -131,7 +131,7 @@
     {
       "product": "Atlassian Jira / Confluence / Bitbucket and other Data Center products",
       "cve": "CVE-2026-21589",
-      "allows": "Unauthenticated file access, CVSS 9.3, across eight products including Bamboo, Crowd, Crucible and Fisheye. Disclosed 5 Oct. Previdian reported exploitation attempts on its honeypots within two hours of watchTowr publishing a proof of concept; no confirmed compromises were reported.",
+      "allows": "Unauthenticated file access, CVSS 9.3, across eight products including Bamboo, Crowd, Crucible, and Fisheye. Disclosed 5 Oct. Previdian reported exploitation attempts on its honeypots within two hours of watchTowr publishing a proof of concept; no confirmed compromises were reported.",
       "sev": "med",
       "status": "Exploit attempts"
     },
@@ -154,7 +154,7 @@
     },
     {
       "label": "JAMIS Prime (hosted ERP)",
-      "text": "Hosted JAMIS Prime environments used by government contractors have been disrupted for about a week, with access returning unevenly since late October. A post from the accounting firm Corporate Results, Inc. says reports and community updates tie the outage to a security compromise of the environment, and that customer instances are being rebuilt on new AWS infrastructure instead of cleaned in place. Some tenants have basic logins back but report intermittent performance, delayed database imports and broken integrations and reports. No JAMIS statement was found in the sources reviewed, so the cause, scope and number of customers affected are unconfirmed. For contractors the open questions are DCAA timekeeping and billing records kept by hand during the outage, whether the rebuilt environment keeps the FedRAMP Moderate equivalency the post says JAMIS Prime holds, and whether CUI held in an instance triggered 72-hour DFARS 252.204-7012 reporting to DC3."
+      "text": "Hosted JAMIS Prime environments used by government contractors have been disrupted for about a week, with access returning unevenly since late October. A post from the accounting firm Corporate Results, Inc. says reports and community updates tie the outage to a security compromise of the environment, and that customer instances are being rebuilt on new AWS infrastructure instead of cleaned in place. Some tenants have basic logins back but report intermittent performance, delayed database imports, and broken integrations and reports. No JAMIS statement was found in the sources reviewed, so the cause, scope, and number of customers affected are unconfirmed. For contractors the open questions are DCAA timekeeping and billing records kept by hand during the outage, whether the rebuilt environment keeps the FedRAMP Moderate equivalency the post says JAMIS Prime holds, and whether CUI held in an instance triggered 72-hour DFARS 252.204-7012 reporting to DC3."
     }
   ],
   "breaches": [
@@ -166,17 +166,17 @@
     {
       "org": "Burger King Japan",
       "scale": "~11.18M app members",
-      "cause": "Names, birth dates, gender, emails, phone numbers and order history taken 2–7 Oct and announced 15 Oct. The server held no card numbers."
+      "cause": "Names, birth dates, gender, emails, phone numbers, and order history taken 2–7 Oct and announced 15 Oct. The server held no card numbers."
     },
     {
       "org": "Denmark CPR register",
       "scale": "~8.8M (≈80% of the register)",
-      "cause": "Attackers misused a private Danish company's legitimate registry access and brute-forced CPR numbers. Names, addresses and CPR numbers taken. Found 2 Oct, disclosed 5 Oct."
+      "cause": "Attackers misused a private Danish company's legitimate registry access and brute-forced CPR numbers. Names, addresses, and CPR numbers taken. Found 2 Oct, disclosed 5 Oct."
     },
     {
       "org": "Daiichikosho (karaoke)",
       "scale": "~8.72M customers",
-      "cause": "Malware on an employee PC at contractor Nippon Columbia Group. Names, genders, birth dates, emails and phone numbers. Announced 8 Oct."
+      "cause": "Malware on an employee PC at contractor Nippon Columbia Group. Names, genders, birth dates, emails, and phone numbers. Announced 8 Oct."
     },
     {
       "org": "iRhythm Technologies",
@@ -191,7 +191,7 @@
     {
       "org": "Yamato Transport (Kuroneko deferred payment)",
       "scale": "~5.3M records",
-      "cause": "Unauthorized access detected 28 Sep and reported 19 Oct. Names, addresses, phone numbers and purchase details; no card details or passwords. Entry point not stated."
+      "cause": "Unauthorized access detected 28 Sep and reported 19 Oct. Names, addresses, phone numbers, and purchase details; no card details or passwords. Entry point not stated."
     },
     {
       "org": "Zeabur (hosting)",
@@ -216,7 +216,7 @@
     {
       "org": "Ahold Delhaize",
       "scale": "Multiple brands (not quantified)",
-      "cause": "Systems taken offline from about 12 Oct. Albert Heijn, Delhaize, Stop & Shop, Hannaford and Giant Food sites and apps were down while stores stayed open. No evidence of customer data theft so far and no ransomware group claim reported."
+      "cause": "Systems taken offline from about 12 Oct. Albert Heijn, Delhaize, Stop & Shop, Hannaford, and Giant Food sites and apps were down while stores stayed open. No evidence of customer data theft so far and no ransomware group claim reported."
     },
     {
       "org": "GMO Onamae Desktop Cloud",
@@ -224,7 +224,7 @@
       "cause": "Confirmed 20 Oct. An outside party installed malware and GMO shut down customer servers. How they got in has not been disclosed, and no data leak is confirmed."
     }
   ],
-  "unverified": "PwC (Everest claims ~590 GB, posted 22 Oct; PwC confirms only an incident at a third-party platform that hosts employee learning records), JAMIS Prime outage (cause, timeline and scope rest on one post by Corporate Results, Inc., a firm that sells recovery and ERP migration services, plus unnamed community updates; no JAMIS statement or other coverage was found)",
+  "unverified": "PwC (Everest claims ~590 GB, posted 22 Oct; PwC confirms only an incident at a third-party platform that hosts employee learning records), JAMIS Prime outage (cause, timeline, and scope rest on one post by Corporate Results, Inc., a firm that sells recovery and ERP migration services, plus unnamed community updates; no JAMIS statement or other coverage was found)",
   "other": [
     {
       "label": "Pwn2Own Ireland",
@@ -232,7 +232,7 @@
     },
     {
       "label": "Flax Typhoon advisory",
-      "text": "A joint advisory from the US, UK, Australia, Canada, Japan, New Zealand and Spain ties Flax Typhoon operations to China-based Integrity Technology Group. It covers eight exploited vulnerabilities used for initial access, email and credential theft and VPN persistence, and warns of positioning in critical infrastructure networks."
+      "text": "A joint advisory from the US, UK, Australia, Canada, Japan, New Zealand, and Spain ties Flax Typhoon operations to China-based Integrity Technology Group. It covers eight exploited vulnerabilities used for initial access, email and credential theft, and VPN persistence, and warns of positioning in critical infrastructure networks."
     },
     {
       "label": "GlobalProtect ransomware",
@@ -242,13 +242,13 @@
   "todo": [
     "Patch PHP everywhere and hunt for web shells on internet-facing PHP hosts, checking vendor changelogs for the two CVEs.",
     "Replace any certificate chaining to eMudhra.",
-    "Patch Ivanti, FortiMail, NetScaler, Cisco Secure Email Gateway, PAN-OS, BeyondTrust, AhsayCBS and Atlassian Data Center, then check those devices for signs of prior compromise. Patching does not remove an attacker who is already in.",
+    "Patch Ivanti, FortiMail, NetScaler, Cisco Secure Email Gateway, PAN-OS, BeyondTrust, AhsayCBS, and Atlassian Data Center, then check those devices for signs of prior compromise. Patching does not remove an attacker who is already in.",
     "Apply October Patch Tuesday, starting with the exploited Windows Shell Mark of the Web bypass (CVE-2026-96951).",
-    "Audit third-party app identities in Microsoft 365 (backup, MSP and RMM tools), rotate their secrets, and keep ConnectWise integrations disabled until restoration is confirmed.",
+    "Audit third-party app identities in Microsoft 365 (backup, MSP, and RMM tools), rotate their secrets, and keep ConnectWise integrations disabled until restoration is confirmed.",
     "Check Python environments for LiteLLM 1.107.0, move to 1.106.2, and rotate secrets on any host that installed it.",
     "Replace long-lived admin tokens and plaintext environment variables at hosting providers with short-lived, scoped credentials, and rotate anything stored at Railway or Zeabur.",
     "After patching GlobalProtect, terminate active sessions and disable authentication override cookies where they are not needed.",
-    "If you run hosted JAMIS Prime, document when the system went down and how manual timecards were collected, signed and approved, ask JAMIS in writing whether the rebuilt environment keeps your FedRAMP equivalency and security boundary, and decide whether DFARS 252.204-7012 reporting applies to CUI held in the instance."
+    "If you run hosted JAMIS Prime, document when the system went down and how manual timecards were collected, signed, and approved, ask JAMIS in writing whether the rebuilt environment keeps your FedRAMP equivalency and security boundary, and decide whether DFARS 252.204-7012 reporting applies to CUI held in the instance."
   ],
   "sources": [
     {

@@ -53,7 +53,7 @@
           "4 Sep"
         ]
       ],
-      "action": "Apply the Adobe hotfix and confirm it covers your exact release. Review templates and email logs for injected PHP, and look for processes named kworker/u:8:0, fc-cache or chronyd running from unexpected paths. Stores older than 2.4.4 have no vendor fix and need an upgrade or isolation."
+      "action": "Apply the Adobe hotfix and confirm it covers your exact release. Review templates and email logs for injected PHP, and look for processes named kworker/u:8:0, fc-cache, or chronyd running from unexpected paths. Stores older than 2.4.4 have no vendor fix and need an upgrade or isolation."
     },
     {
       "title": "Microsoft Patch Tuesday: record volume, two exploited zero-days, a wormable DNS flaw",
@@ -74,7 +74,7 @@
           "CVE-2026-69676 (Kerberos, domain controller RCE)\nCVE-2026-55007 (Exchange, malicious Visio attachment)"
         ]
       ],
-      "action": "Patch Windows DNS servers and domain controllers first, then the two exploited bugs, Exchange and endpoints. A public proof of concept reportedly bypasses the patch for the Defender flaw CVE-2026-69414, so verify Defender versions after updating."
+      "action": "Patch Windows DNS servers and domain controllers first, then the two exploited bugs, Exchange, and endpoints. A public proof of concept reportedly bypasses the patch for the Defender flaw CVE-2026-69414, so verify Defender versions after updating."
     }
   ],
   "vulns": [
@@ -89,7 +89,7 @@
     {
       "product": "Cisco Secure Firewall Management Center",
       "cve": "CVE-2026-20079",
-      "allows": "Unauthenticated authentication bypass, script execution and possible root access. Talos tracks three clusters, including Qilin ransomware operators (UAT-11988) and a group with tooling that overlaps Sandworm (UAT-11823).",
+      "allows": "Unauthenticated authentication bypass, script execution, and possible root access. Talos tracks three clusters, including Qilin ransomware operators (UAT-11988) and a group with tooling that overlaps Sandworm (UAT-11823).",
       "sev": "crit",
       "status": "Exploited",
       "note": "CISA KEV, federal deadline 12 Sep. The Sandworm link is tooling overlap only, not confirmed attribution."
@@ -198,7 +198,7 @@
     },
     {
       "label": "Scope of this section",
-      "text": "No September npm, PyPI or GitHub Actions compromise on the scale of earlier 2026 incidents turned up in the sources reviewed."
+      "text": "No September npm, PyPI, or GitHub Actions compromise on the scale of earlier 2026 incidents turned up in the sources reviewed."
     }
   ],
   "breaches": [
@@ -267,7 +267,7 @@
   "other": [
     {
       "label": "KillSec takedown",
-      "text": "On 30 Sep, in an operation called KillSwitch led by Hamburg police and prosecutors, authorities took control of the ransomware group's leak site and secured at least 110 TB of data. Three people were provisionally arrested and eight searches were carried out in Greece, Romania, Spain and the United Kingdom. A 16-year-old is named as the suspected main operator. The group is linked to about 1,000 suspected attacks, about 500 of them identified as successful, and the figures may change as evidence is analysed. Ten countries, Europol and Eurojust took part, with support from Bitdefender and Group-IB. Police announced it on 1 Oct."
+      "text": "On 30 Sep, in an operation called KillSwitch led by Hamburg police and prosecutors, authorities took control of the ransomware group's leak site and secured at least 110 TB of data. Three people were provisionally arrested and eight searches were carried out in Greece, Romania, Spain, and the United Kingdom. A 16-year-old is named as the suspected main operator. The group is linked to about 1,000 suspected attacks, about 500 of them identified as successful, and the figures may change as evidence is analysed. Ten countries, Europol, and Eurojust took part, with support from Bitdefender and Group-IB. Police announced it on 1 Oct."
     },
     {
       "label": "Liquid Network (Blockstream)",
@@ -287,11 +287,11 @@
     }
   ],
   "todo": [
-    "Update every NetScaler ADC and Gateway, then hunt for WHIPSHOT, SLAPSHOT and a setuid /bin/sh dating back to early September.",
+    "Update every NetScaler ADC and Gateway, then hunt for WHIPSHOT, SLAPSHOT, and a setuid /bin/sh dating back to early September.",
     "Apply the Adobe hotfix to Magento and Adobe Commerce, and move any store older than 2.4.4 to a supported release.",
-    "Patch Check Point gateways and management servers, F5 BIG-IP APM, Arista VeloCloud and Cisco Secure Email Gateway, then check for prior compromise, since patching does not evict an attacker already inside.",
-    "Restrict management interfaces for Check Point, Cisco FMC and VeloCloud to trusted internal addresses.",
-    "Apply the September Patch Tuesday updates, starting with DNS servers, domain controllers and the two exploited privilege escalation bugs.",
+    "Patch Check Point gateways and management servers, F5 BIG-IP APM, Arista VeloCloud, and Cisco Secure Email Gateway, then check for prior compromise, since patching does not evict an attacker already inside.",
+    "Restrict management interfaces for Check Point, Cisco FMC, and VeloCloud to trusted internal addresses.",
+    "Apply the September Patch Tuesday updates, starting with DNS servers, domain controllers, and the two exploited privilege escalation bugs.",
     "Update WordPress to 7.1.2, 7.0.6, 6.9.9 or 6.8.10 and check themes for directories beginning with page-.",
     "Enforce multifactor authentication on SaaS and consumer-linked accounts, and remove legacy sign-in integrations such as Lenovo ID where they are not needed.",
     "Rotate API keys and application credentials held by third-party apps and email or e-commerce platforms, and review which vendors hold long-lived keys to your systems."
@@ -322,7 +322,7 @@
       "url": "https://sansec.io/research/stylesmuggler"
     },
     {
-      "title": "Help Net Security: Check Point, Arista and F5 attacks",
+      "title": "Help Net Security: Check Point, Arista, and F5 attacks",
       "url": "https://www.helpnetsecurity.com/?p=385473"
     },
     {

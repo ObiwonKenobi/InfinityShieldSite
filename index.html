@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Cybersecurity brief for 27 Sep - 27 Oct 2026: PHP2Shell, the eMudhra CA key failure, exploited zero-days, supply-chain attacks, major breaches and recommended actions.">
+<meta name="description" content="Cybersecurity brief for 27 Sep - 27 Oct 2026: PHP2Shell, the eMudhra CA key failure, exploited zero-days, supply-chain attacks, major breaches, and recommended actions.">
 <style>*,*::before,*::after{box-sizing:border-box}body{margin:0}img{max-width:100%}</style><title>October 2026 Threat Brief | Infinity Shield</title>
 <link rel="icon" type="image/png" href="/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -101,7 +101,7 @@ footer{font-size:.8rem;color:var(--muted)}
   <header>
     <div class="marking"><span class="tlp">TLP:CLEAR</span><span>Period 27 Sep – 27 Oct 2026</span><span>Issued 27 Oct 2026</span></div>
     <h1>October 2026 <span>Threat Brief</span></h1>
-    <p class="lede">A month defined by two internet-wide trust failures, critical PHP flaws and a certificate authority with recoverable keys, plus a run of exploited edge-device zero-days and credential-driven breaches at hosting and SaaS providers.</p>
+    <p class="lede">A month defined by two internet-wide trust failures, critical PHP flaws, and a certificate authority with recoverable keys, plus a run of exploited edge-device zero-days and credential-driven breaches at hosting and SaaS providers.</p>
   </header>
 
   <section class="lead" aria-labelledby="top">
@@ -109,7 +109,7 @@ footer{font-size:.8rem;color:var(--muted)}
 
     <article class="item">
       <div class="item-head"><h3>PHP2Shell: critical flaws in PHP core</h3><span class="sev crit">Critical · exploitation attempts</span></div>
-      <p>Two critical flaws affect nearly every PHP version back to 5.4, across PHP-FPM, Apache mod_php, php-cgi, FrankenPHP and LiteSpeed, with mod_php at highest risk. Wiz Research, Calif and OpenAI's Codex Security team reported them, and the researchers say AI tools helped turn them into working exploits. Details leaked online on 20 Oct, and PHP moved its release up to 21 Oct. Amazon logged exploitation attempts from 17 Oct, four days before the patches, and Cloudflare and watchTowr also reported attempts. Sources disagree on impact: Amazon's CISO says the flaws are being broadly exploited, while Dataminr reports only scanning and non-working exploits with no known compromises.</p>
+      <p>Two critical flaws affect nearly every PHP version back to 5.4, across PHP-FPM, Apache mod_php, php-cgi, FrankenPHP, and LiteSpeed, with mod_php at highest risk. Wiz Research, Calif, and OpenAI's Codex Security team reported them, and the researchers say AI tools helped turn them into working exploits. Details leaked online on 20 Oct, and PHP moved its release up to 21 Oct. Amazon logged exploitation attempts from 17 Oct, four days before the patches, and Cloudflare and watchTowr also reported attempts. Sources disagree on impact: Amazon's CISO says the flaws are being broadly exploited, while Dataminr reports only scanning and non-working exploits with no known compromises.</p>
       <dl class="facts">
         <div><dt>CVE</dt><dd class="mono">CVE-2026-109618<br>CVE-2026-109619</dd></div>
         <div><dt>CVSS v4</dt><dd class="mono">9.2 (PHP rating)</dd></div>
@@ -120,7 +120,7 @@ footer{font-size:.8rem;color:var(--muted)}
 
     <article class="item">
       <div class="item-head"><h3>eMudhra CA: intermediate certificate keys trivially recoverable</h3><span class="sev crit">Critical · contained</span></div>
-      <p>Eight intermediate CA certificates from the Indian certificate authority eMudhra, six for TLS and two for code signing, were generated with far too little randomness. Each private key was smaller than 256, so anyone holding the public certificate could test every possible value; recovered keys included 4, 56 and 115. A researcher found it with a CCADB check on 17 Oct. eMudhra revoked the certificates on 18 Oct, Apple blocked them on 19 Oct, and Microsoft followed on 20 Oct, the day Mozilla made the incident public. eMudhra says only one of the eight was deployed in production, none issued end-entity certificates and its infrastructure was not breached. On 22 Oct it said it would exit the global SSL/TLS business.</p>
+      <p>Eight intermediate CA certificates from the Indian certificate authority eMudhra, six for TLS and two for code signing, were generated with far too little randomness. Each private key was smaller than 256, so anyone holding the public certificate could test every possible value; recovered keys included 4, 56, and 115. A researcher found it with a CCADB check on 17 Oct. eMudhra revoked the certificates on 18 Oct, Apple blocked them on 19 Oct, and Microsoft followed on 20 Oct, the day Mozilla made the incident public. eMudhra says only one of the eight was deployed in production, none issued end-entity certificates and its infrastructure was not breached. On 22 Oct it said it would exit the global SSL/TLS business.</p>
       <dl class="facts">
         <div><dt>Certs affected</dt><dd class="mono">8 intermediates</dd></div>
         <div><dt>Keys reported</dt><dd class="mono">4, 56, 115</dd></div>
@@ -138,7 +138,7 @@ footer{font-size:.8rem;color:var(--muted)}
         <div><dt>Targeted (Microsoft)</dt><dd class="mono">2,250+ tenants</dd></div>
         <div><dt>Activity window</dt><dd class="mono">From 15 Oct</dd></div>
       </dl>
-      <p class="action"><b>Action:</b> If you or your MSP use this product, review Entra sign-in logs for its service principals back to at least 15 Oct, audit application secrets, certificates, OAuth grants and Graph activity added since 13 Oct, and review role changes. Keep ConnectWise integrations disabled until ConnectWise confirms restoration is safe, and do not delete the enterprise applications as a first step.</p>
+      <p class="action"><b>Action:</b> If you or your MSP use this product, review Entra sign-in logs for its service principals back to at least 15 Oct, audit application secrets, certificates, OAuth grants, and Graph activity added since 13 Oct, and review role changes. Keep ConnectWise integrations disabled until ConnectWise confirms restoration is safe, and do not delete the enterprise applications as a first step.</p>
     </article>
   </section>
 
@@ -147,7 +147,7 @@ footer{font-size:.8rem;color:var(--muted)}
     <div class="tbl"><table>
       <thead><tr><th>Product</th><th>CVE</th><th>What it allows</th><th>Status</th></tr></thead>
       <tbody>
-        <tr><td>Ivanti Connect Secure VPN</td><td class="mono">CVE-2026-104935 + 2 chained</td><td>Chained authentication bypass, remote code execution and privilege escalation giving root on fully patched appliances. Actor UTA0576 harvested Active Directory credentials, BitLocker recovery keys and LAPS data with custom Python LDAP and Kerberos tools, and deleted evidence from debug and audit logs. Exploited since 1–3 Oct; added to CISA KEV on 13 Oct. Ivanti's Integrity Checker may not detect compromise because commands run in memory.</td><td><span class="sev crit">Exploited</span><br>Partial fix</td></tr>
+        <tr><td>Ivanti Connect Secure VPN</td><td class="mono">CVE-2026-104935 + 2 chained</td><td>Chained authentication bypass, remote code execution, and privilege escalation giving root on fully patched appliances. Actor UTA0576 harvested Active Directory credentials, BitLocker recovery keys, and LAPS data with custom Python LDAP and Kerberos tools, and deleted evidence from debug and audit logs. Exploited since 1–3 Oct; added to CISA KEV on 13 Oct. Ivanti's Integrity Checker may not detect compromise because commands run in memory.</td><td><span class="sev crit">Exploited</span><br>Partial fix</td></tr>
         <tr><td>Microsoft Patch Tuesday (13 Oct)</td><td class="mono">CVE-2026-96951 (MotW bypass)</td><td>Record ~1,411 CVEs by BleepingComputer's count (some outlets say 1,413), 70 rated Critical. Three zero-days: the exploited Windows Shell Mark of the Web bypass, a publicly disclosed .NET Framework bypass of Windows Defender Application Control (CVE-2026-108398), and a publicly disclosed MessagePack-CSharp denial of service (CVE-2026-92707).</td><td><span class="sev high">Exploited</span><br>Patched</td></tr>
         <tr><td>Cisco Catalyst SD-WAN Manager</td><td class="mono">CVE-2026-76504</td><td>Unauthenticated admin access</td><td><span class="sev crit">Exploited</span></td></tr>
         <tr><td>Fortinet FortiMail</td><td class="mono">CVE-2026-104286</td><td>Arbitrary file write, CVSS 9.8</td><td><span class="sev crit">Exploited</span><br>CISA KEV</td></tr>
@@ -157,7 +157,7 @@ footer{font-size:.8rem;color:var(--muted)}
         <tr><td>BeyondTrust Remote Support</td><td class="mono">CVE-2026-102764</td><td>Exploited since late August by a China-linked group</td><td><span class="sev high">Exploited</span></td></tr>
         <tr><td>Palo Alto PAN-OS · Cisco Secure Email</td><td class="mono">CVE-2026-0322 · CVE-2026-76519</td><td>Code injection and path traversal, added to CISA KEV on 14 Oct</td><td><span class="sev high">Exploited</span></td></tr>
         <tr><td>Zammad helpdesk 6.3.0–6.5.4</td><td class="mono">CVE-2026-102489 / 102490</td><td>Privilege escalation chain used to breach DIVD, the Dutch vulnerability-disclosure institute. Investigators describe the intrusion as agentic-AI-driven.</td><td><span class="sev high">Exploited</span><br>CISA KEV</td></tr>
-        <tr><td>Atlassian Jira / Confluence / Bitbucket and other Data Center products</td><td class="mono">CVE-2026-21589</td><td>Unauthenticated file access, CVSS 9.3, across eight products including Bamboo, Crowd, Crucible and Fisheye. Disclosed 5 Oct. Previdian reported exploitation attempts on its honeypots within two hours of watchTowr publishing a proof of concept; no confirmed compromises were reported.</td><td><span class="sev med">Exploit attempts</span></td></tr>
+        <tr><td>Atlassian Jira / Confluence / Bitbucket and other Data Center products</td><td class="mono">CVE-2026-21589</td><td>Unauthenticated file access, CVSS 9.3, across eight products including Bamboo, Crowd, Crucible, and Fisheye. Disclosed 5 Oct. Previdian reported exploitation attempts on its honeypots within two hours of watchTowr publishing a proof of concept; no confirmed compromises were reported.</td><td><span class="sev med">Exploit attempts</span></td></tr>
       </tbody>
     </table></div>
   </section>
@@ -168,7 +168,7 @@ footer{font-size:.8rem;color:var(--muted)}
       <li><span class="label">LiteLLM 1.107.0</span><p>A poisoned release went out on PyPI and the official Docker images on 21 Oct. The PyPI wheels were live for under two hours and the Docker tags stayed pointed at the bad image for a few hours more. The release pipeline was altered using stolen GitHub credentials from three developer accounts. It ran a credential stealer at every Python startup, even if LiteLLM was never imported, and installed a loader that fetches and runs code from attacker infrastructure every hour. Anyone who installed it should treat every secret on that host as exposed; the clean version is 1.106.2.</p></li>
       <li><span class="label">npm</span><p>Eight malicious packages in a long-running data-theft campaign reached about 40,000 downloads.</p></li>
       <li><span class="label">AI coding agents</span><p>More than 13,000 sensitive screenshots taken during agent-driven development workflows were found committed to public GitHub repositories.</p></li>
-      <li><span class="label">JAMIS Prime (hosted ERP)</span><p>Hosted JAMIS Prime environments used by government contractors have been disrupted for about a week, with access returning unevenly since late October. A post from the accounting firm Corporate Results, Inc. says reports and community updates tie the outage to a security compromise of the environment, and that customer instances are being rebuilt on new AWS infrastructure instead of cleaned in place. Some tenants have basic logins back but report intermittent performance, delayed database imports and broken integrations and reports. No JAMIS statement was found in the sources reviewed, so the cause, scope and number of customers affected are unconfirmed. For contractors the open questions are DCAA timekeeping and billing records kept by hand during the outage, whether the rebuilt environment keeps the FedRAMP Moderate equivalency the post says JAMIS Prime holds, and whether CUI held in an instance triggered 72-hour DFARS 252.204-7012 reporting to DC3.</p></li>
+      <li><span class="label">JAMIS Prime (hosted ERP)</span><p>Hosted JAMIS Prime environments used by government contractors have been disrupted for about a week, with access returning unevenly since late October. A post from the accounting firm Corporate Results, Inc. says reports and community updates tie the outage to a security compromise of the environment, and that customer instances are being rebuilt on new AWS infrastructure instead of cleaned in place. Some tenants have basic logins back but report intermittent performance, delayed database imports, and broken integrations and reports. No JAMIS statement was found in the sources reviewed, so the cause, scope, and number of customers affected are unconfirmed. For contractors the open questions are DCAA timekeeping and billing records kept by hand during the outage, whether the rebuilt environment keeps the FedRAMP Moderate equivalency the post says JAMIS Prime holds, and whether CUI held in an instance triggered 72-hour DFARS 252.204-7012 reporting to DC3.</p></li>
     </ul>
   </section>
 
@@ -178,7 +178,7 @@ footer{font-size:.8rem;color:var(--muted)}
       <thead><tr><th>Organization</th><th>People / records</th><th>Cause and data</th></tr></thead>
       <tbody>
         <tr><td>Oracle Health (Cerner)</td><td>~20M patients</td><td>Customer credentials stolen and used on an unmigrated legacy server. The intrusion ran from January to April 2025; the near-20M tally surfaced from a Texas attorney general filing posted 2 Oct. Oracle has not published an official figure.</td></tr>
-        <tr><td>Burger King Japan</td><td>~11.18M app members</td><td>Names, birth dates, gender, emails, phone numbers and order history taken 2–7 Oct and announced 15 Oct. The server held no card numbers.</td></tr>
+        <tr><td>Burger King Japan</td><td>~11.18M app members</td><td>Names, birth dates, gender, emails, phone numbers, and order history taken 2–7 Oct and announced 15 Oct. The server held no card numbers.</td></tr>
         <tr><td>Denmark CPR register</td><td>~8.8M (≈80% of population)</td><td>Third-party breach combined with brute-forced CPR numbers</td></tr>
         <tr><td>Daiichikosho (karaoke)</td><td>~8.72M customers</td><td>Breached through a contractor's system</td></tr>
         <tr><td>iRhythm Technologies</td><td>8.2M (revised up from 370K)</td><td>Zio cardiac monitor maker. Insurance and patient data taken during a June intrusion, followed by a ransom demand.</td></tr>
@@ -192,7 +192,7 @@ footer{font-size:.8rem;color:var(--muted)}
         <tr><td>GMO Onamae Desktop Cloud</td><td>Up to ~26.7K servers</td><td>Confirmed 20 Oct. An outside party installed malware and GMO shut down customer servers. How they got in has not been disclosed, and no data leak is confirmed.</td></tr>
       </tbody>
     </table></div>
-    <p class="label">Unverified claims: PwC (Everest claims ~590 GB, posted 22 Oct; PwC confirms only an incident at a third-party platform that hosts employee learning records), JAMIS Prime outage (cause, timeline and scope rest on one post by Corporate Results, Inc., a firm that sells recovery and ERP migration services, plus unnamed community updates; no JAMIS statement or other coverage was found)</p>
+    <p class="label">Unverified claims: PwC (Everest claims ~590 GB, posted 22 Oct; PwC confirms only an incident at a third-party platform that hosts employee learning records), JAMIS Prime outage (cause, timeline, and scope rest on one post by Corporate Results, Inc., a firm that sells recovery and ERP migration services, plus unnamed community updates; no JAMIS statement or other coverage was found)</p>
   </section>
 
   <section aria-labelledby="other">
@@ -208,12 +208,12 @@ footer{font-size:.8rem;color:var(--muted)}
     <ol class="todo">
       <li>Patch PHP everywhere and hunt for web shells on internet-facing PHP hosts, checking vendor changelogs for the two CVEs.</li>
       <li>Replace any certificate chaining to eMudhra.</li>
-      <li>Patch Ivanti, Cisco SD-WAN, FortiMail, NetScaler, VeloCloud, BeyondTrust and PAN-OS, then check those devices for signs of prior compromise. Patching does not remove an attacker who is already in.</li>
+      <li>Patch Ivanti, Cisco SD-WAN, FortiMail, NetScaler, VeloCloud, BeyondTrust, and PAN-OS, then check those devices for signs of prior compromise. Patching does not remove an attacker who is already in.</li>
       <li>Apply October Patch Tuesday, starting with the exploited Windows Shell Mark of the Web bypass (CVE-2026-96951).</li>
-      <li>Audit third-party app identities in Microsoft 365 (backup, MSP and RMM tools) and rotate their secrets.</li>
+      <li>Audit third-party app identities in Microsoft 365 (backup, MSP, and RMM tools) and rotate their secrets.</li>
       <li>Check Python environments for LiteLLM 1.107.0, move to 1.106.2, and rotate secrets on any host that installed it.</li>
       <li>Replace long-lived admin tokens and plaintext environment variables at hosting providers with short-lived, scoped credentials.</li>
-      <li>If you run hosted JAMIS Prime, document when the system went down and how manual timecards were collected, signed and approved, ask JAMIS in writing whether the rebuilt environment keeps your FedRAMP equivalency and security boundary, and decide whether DFARS 252.204-7012 reporting applies to CUI held in the instance.</li>
+      <li>If you run hosted JAMIS Prime, document when the system went down and how manual timecards were collected, signed, and approved, ask JAMIS in writing whether the rebuilt environment keeps your FedRAMP equivalency and security boundary, and decide whether DFARS 252.204-7012 reporting applies to CUI held in the instance.</li>
     </ol>
   </section>
 

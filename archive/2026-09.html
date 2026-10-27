@@ -55,7 +55,7 @@
         <div><dt>Adobe bulletin</dt><dd class="mono">APSB26-146, hotfix VULN-39341</dd></div>
         <div><dt>First exploitation</dt><dd class="mono">4 Sep</dd></div>
       </dl>
-      <p class="action"><b>Action:</b> Apply the Adobe hotfix and confirm it covers your exact release. Review templates and email logs for injected PHP, and look for processes named kworker/u:8:0, fc-cache or chronyd running from unexpected paths. Stores older than 2.4.4 have no vendor fix and need an upgrade or isolation.</p>
+      <p class="action"><b>Action:</b> Apply the Adobe hotfix and confirm it covers your exact release. Review templates and email logs for injected PHP, and look for processes named kworker/u:8:0, fc-cache, or chronyd running from unexpected paths. Stores older than 2.4.4 have no vendor fix and need an upgrade or isolation.</p>
     </article>
 
     <article class="item">
@@ -66,7 +66,7 @@
         <div><dt>Wormable DNS</dt><dd class="mono">CVE-2026-69730</dd></div>
         <div><dt>Other notable</dt><dd class="mono">CVE-2026-69676 (Kerberos, domain controller RCE)<br>CVE-2026-55007 (Exchange, malicious Visio attachment)</dd></div>
       </dl>
-      <p class="action"><b>Action:</b> Patch Windows DNS servers and domain controllers first, then the two exploited bugs, Exchange and endpoints. A public proof of concept reportedly bypasses the patch for the Defender flaw CVE-2026-69414, so verify Defender versions after updating.</p>
+      <p class="action"><b>Action:</b> Patch Windows DNS servers and domain controllers first, then the two exploited bugs, Exchange, and endpoints. A public proof of concept reportedly bypasses the patch for the Defender flaw CVE-2026-69414, so verify Defender versions after updating.</p>
     </article>
   </section>
 
@@ -76,7 +76,7 @@
       <thead><tr><th>Product</th><th>CVE</th><th>What it allows</th><th>Status</th></tr></thead>
       <tbody>
         <tr><td>Citrix NetScaler ADC / Gateway</td><td class="mono">CVE-2026-88771, CVE-2026-88772</td><td>Unauthenticated command execution (88771). Memory overflow leading to RCE or denial of service when DTLS is on (88772).</td><td><span class="sev crit">Exploited</span><br>CISA KEV 27 Sep. Exploited since early Sep per Mandiant.</td></tr>
-        <tr><td>Cisco Secure Firewall Management Center</td><td class="mono">CVE-2026-20079</td><td>Unauthenticated authentication bypass, script execution and possible root access. Talos tracks three clusters, including Qilin ransomware operators (UAT-11988) and a group with tooling that overlaps Sandworm (UAT-11823).</td><td><span class="sev crit">Exploited</span><br>CISA KEV, federal deadline 12 Sep. The Sandworm link is tooling overlap only, not confirmed attribution.</td></tr>
+        <tr><td>Cisco Secure Firewall Management Center</td><td class="mono">CVE-2026-20079</td><td>Unauthenticated authentication bypass, script execution, and possible root access. Talos tracks three clusters, including Qilin ransomware operators (UAT-11988) and a group with tooling that overlaps Sandworm (UAT-11823).</td><td><span class="sev crit">Exploited</span><br>CISA KEV, federal deadline 12 Sep. The Sandworm link is tooling overlap only, not confirmed attribution.</td></tr>
         <tr><td>Magento / Adobe Commerce 2.4.4 to 2.4.9</td><td class="mono">CVE-2026-75650</td><td>Unauthenticated RCE through template injection (CVSS 10.0)</td><td><span class="sev crit">Exploited</span><br>Hotfix 7 Sep. No fix for versions older than 2.4.4.</td></tr>
         <tr><td>Check Point Security Gateway / Spark</td><td class="mono">CVE-2026-85102</td><td>Pre-authentication bypass and remote code execution</td><td><span class="sev crit">Exploited</span><br>Patched 9 Sep. Exploitation attempts from 12 Sep. CISA KEV 22 Sep.</td></tr>
         <tr><td>Check Point Management Server</td><td class="mono">CVE-2026-93616</td><td>Pre-authentication path traversal, upload and execution of scripts on the management server</td><td><span class="sev crit">Exploited</span><br>Attacks since at least 23 Jul against a handful of customers. Hotfix SK1000171. CISA KEV 22 Sep.</td></tr>
@@ -99,7 +99,7 @@
       <li><span class="label">BigCommerce / Ribon apps</span><p>A compromised application key for the Ribon apps, tied to a Fastr system breach, was used to inject malicious scripts into a small number of storefronts. BigCommerce says its own platform was not breached. Merchants were notified from 17 to 18 Sep and the number of affected stores and shoppers has not been published.</p></li>
       <li><span class="label">npm</span><p>On 7 Sep Aikido Security reported four npm packages published by one account within an hour, carrying a Shai-Hulud payload with the same hash as one used in the 19 May @antv compromise. The payload runs from a preinstall script. The sources do not say how the publishing account was accessed or whether other packages were affected.</p></li>
       <li><span class="label">AI coding agents</span><p>More than 13,000 sensitive screenshots taken during agent-driven development workflows were found committed to public GitHub repositories, reported 29 Sep to 1 Oct.</p></li>
-      <li><span class="label">Scope of this section</span><p>No September npm, PyPI or GitHub Actions compromise on the scale of earlier 2026 incidents turned up in the sources reviewed.</p></li>
+      <li><span class="label">Scope of this section</span><p>No September npm, PyPI, or GitHub Actions compromise on the scale of earlier 2026 incidents turned up in the sources reviewed.</p></li>
     </ul>
   </section>
 
@@ -128,7 +128,7 @@
   <section aria-labelledby="other">
     <h2 id="other">Law enforcement and research</h2>
     <ul class="list">
-      <li><span class="label">KillSec takedown</span><p>On 30 Sep, in an operation called KillSwitch led by Hamburg police and prosecutors, authorities took control of the ransomware group's leak site and secured at least 110 TB of data. Three people were provisionally arrested and eight searches were carried out in Greece, Romania, Spain and the United Kingdom. A 16-year-old is named as the suspected main operator. The group is linked to about 1,000 suspected attacks, about 500 of them identified as successful, and the figures may change as evidence is analysed. Ten countries, Europol and Eurojust took part, with support from Bitdefender and Group-IB. Police announced it on 1 Oct.</p></li>
+      <li><span class="label">KillSec takedown</span><p>On 30 Sep, in an operation called KillSwitch led by Hamburg police and prosecutors, authorities took control of the ransomware group's leak site and secured at least 110 TB of data. Three people were provisionally arrested and eight searches were carried out in Greece, Romania, Spain, and the United Kingdom. A 16-year-old is named as the suspected main operator. The group is linked to about 1,000 suspected attacks, about 500 of them identified as successful, and the figures may change as evidence is analysed. Ten countries, Europol, and Eurojust took part, with support from Bitdefender and Group-IB. Police announced it on 1 Oct.</p></li>
       <li><span class="label">Liquid Network (Blockstream)</span><p>On 6 Sep roughly 4,000 of the 4,200 BTC in the federation wallet was drained after a bug in the Elements code let unbacked L-BTC be redeemed through SideSwap's peg-out. The attackers returned about 3,400 BTC (~$262.6M) and kept about 598 BTC (~$47M). One report says no keys or credentials were stolen.</p></li>
       <li><span class="label">Bitget</span><p>On 24 Sep the exchange reported unauthorized transfers from a limited number of hot wallets and suspended withdrawals. The loss was first put at about $351.6M and revised to about $387.5M on 25 Sep. The attack method has not been described in the sources reviewed.</p></li>
       <li><span class="label">Research and disclosure</span><p>A public proof of concept called ShieldCrash reportedly bypasses the patch for the Microsoft Defender privilege escalation flaw CVE-2026-69414 (ShieldBreak), which was fixed on 8 Sep. No Pwn2Own event or major conference disclosure dated September was found in the sources reviewed.</p></li>
@@ -139,11 +139,11 @@
   <section aria-labelledby="do">
     <h2 id="do">What to do</h2>
     <ol class="todo">
-      <li>Update every NetScaler ADC and Gateway, then hunt for WHIPSHOT, SLAPSHOT and a setuid /bin/sh dating back to early September.</li>
+      <li>Update every NetScaler ADC and Gateway, then hunt for WHIPSHOT, SLAPSHOT, and a setuid /bin/sh dating back to early September.</li>
       <li>Apply the Adobe hotfix to Magento and Adobe Commerce, and move any store older than 2.4.4 to a supported release.</li>
-      <li>Patch Check Point gateways and management servers, F5 BIG-IP APM, Arista VeloCloud and Cisco Secure Email Gateway, then check for prior compromise, since patching does not evict an attacker already inside.</li>
-      <li>Restrict management interfaces for Check Point, Cisco FMC and VeloCloud to trusted internal addresses.</li>
-      <li>Apply the September Patch Tuesday updates, starting with DNS servers, domain controllers and the two exploited privilege escalation bugs.</li>
+      <li>Patch Check Point gateways and management servers, F5 BIG-IP APM, Arista VeloCloud, and Cisco Secure Email Gateway, then check for prior compromise, since patching does not evict an attacker already inside.</li>
+      <li>Restrict management interfaces for Check Point, Cisco FMC, and VeloCloud to trusted internal addresses.</li>
+      <li>Apply the September Patch Tuesday updates, starting with DNS servers, domain controllers, and the two exploited privilege escalation bugs.</li>
       <li>Update WordPress to 7.1.2, 7.0.6, 6.9.9 or 6.8.10 and check themes for directories beginning with page-.</li>
       <li>Enforce multifactor authentication on SaaS and consumer-linked accounts, and remove legacy sign-in integrations such as Lenovo ID where they are not needed.</li>
       <li>Rotate API keys and application credentials held by third-party apps and email or e-commerce platforms, and review which vendors hold long-lived keys to your systems.</li>
@@ -159,7 +159,7 @@
       <li><a href="https://thehackernews.com/2026/09/cisa-says-attackers-are-exploiting-two.html">The Hacker News: CISA on exploited Citrix flaws</a></li>
       <li><a href="https://securityaffairs.com/198884/cyber-crime/attackers-exploit-critical-cisco-fmc-flaw-to-deploy-qilin-ransomware.html">Security Affairs: Cisco FMC flaw and Qilin ransomware</a></li>
       <li><a href="https://sansec.io/research/stylesmuggler">Sansec: StyleSmuggler</a></li>
-      <li><a href="https://www.helpnetsecurity.com/?p=385473">Help Net Security: Check Point, Arista and F5 attacks</a></li>
+      <li><a href="https://www.helpnetsecurity.com/?p=385473">Help Net Security: Check Point, Arista, and F5 attacks</a></li>
       <li><a href="https://thehackernews.com/2026/09/cisco-secure-email-gateway-flaw.html">The Hacker News: Cisco Secure Email Gateway flaw</a></li>
       <li><a href="https://thehackernews.com/2026/09/attackers-exploit-wordpress-cve-2026.html">The Hacker News: WordPress CVE-2026-87902 exploited</a></li>
       <li><a href="https://strobes.co/blog/biggest-data-breaches-september-2026">Strobes: Biggest data breaches of September 2026</a></li>

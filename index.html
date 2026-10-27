@@ -101,38 +101,44 @@ footer{font-size:.8rem;color:var(--muted)}
   <header>
     <div class="marking"><span class="tlp">TLP:CLEAR</span><span>Period 27 Sep – 27 Oct 2026</span><span>Issued 27 Oct 2026</span></div>
     <h1>October 2026 <span>Threat Brief</span></h1>
-    <p class="lede">A month defined by two internet-wide trust failures, a PHP remote-code-execution pair and a certificate authority with guessable keys, plus a run of exploited edge-device zero-days and credential-driven breaches at hosting and SaaS providers.</p>
+    <p class="lede">A month defined by two internet-wide trust failures, critical PHP flaws and a certificate authority with recoverable keys, plus a run of exploited edge-device zero-days and credential-driven breaches at hosting and SaaS providers.</p>
   </header>
 
   <section class="lead" aria-labelledby="top">
     <h2 id="top">Top items</h2>
 
     <article class="item">
-      <div class="item-head"><h3>PHP2Shell: unauthenticated RCE in PHP core</h3><span class="sev crit">Critical · exploited</span></div>
-      <p>Two memory-safety flaws in PHP 5.4 through 8.5 let a remote, unauthenticated attacker run code on affected web servers. The bugs were found with AI assistance in August. Details leaked on Hacker News on 20 Oct, a day before advisories were published on 21 Oct. Amazon saw an exploit attempt on 17 Oct, four days before disclosure, and watchTowr and Cloudflare confirmed in-the-wild exploitation by 21 Oct.</p>
+      <div class="item-head"><h3>PHP2Shell: critical flaws in PHP core</h3><span class="sev crit">Critical · exploitation attempts</span></div>
+      <p>Two critical flaws affect nearly every PHP version back to 5.4, across PHP-FPM, Apache mod_php, php-cgi, FrankenPHP and LiteSpeed, with mod_php at highest risk. Wiz Research, Calif and OpenAI's Codex Security team reported them, and the researchers say AI tools helped turn them into working exploits. Details leaked online on 20 Oct, and PHP moved its release up to 21 Oct. Amazon logged exploitation attempts from 17 Oct, four days before the patches, and Cloudflare and watchTowr also reported attempts. Sources disagree on impact: Amazon's CISO says the flaws are being broadly exploited, while Dataminr reports only scanning and non-working exploits with no known compromises.</p>
       <dl class="facts">
         <div><dt>CVE</dt><dd class="mono">CVE-2026-109618<br>CVE-2026-109619</dd></div>
-        <div><dt>CVSS v4</dt><dd>9.2</dd></div>
+        <div><dt>CVSS v4</dt><dd class="mono">9.2 (PHP rating)</dd></div>
         <div><dt>Fixed in</dt><dd class="mono">8.5.12 · 8.4.27 · 8.3.36 · 8.2.35</dd></div>
       </dl>
-      <p class="action"><b>Action:</b> Patch every PHP install now, including vendor appliances and hosted CMSs. Hunt for web shells on anything exposed since 17 Oct. Versions older than 8.2 receive no fix and need replacing or isolating.</p>
+      <p class="action"><b>Action:</b> Patch every PHP install now, including vendor appliances and hosted CMSs. Hunt for web shells on anything exposed since 17 Oct. Source backports exist for 7.4, 8.0 and 8.1, which PHP no longer supports, and distributions may backport fixes under older version numbers, so check changelogs for the CVEs. Disabling session upload progress and setting memory limits reduce exposure but do not make servers safe.</p>
     </article>
 
     <article class="item">
       <div class="item-head"><h3>eMudhra CA: intermediate certificate keys trivially recoverable</h3><span class="sev crit">Critical · contained</span></div>
-      <p>Eight intermediate CA certificates from the Indian certificate authority eMudhra used P-384 private keys with 3 to 8 bits of entropy. One key was literally the number 4. Anyone holding the public certificate could derive the key in under a second and issue trusted HTTPS certificates for any domain. A researcher found it via a CCADB check on 17 Oct. eMudhra revoked the certificates on 18 Oct, and Chrome, Firefox, Apple and Microsoft all blocked them by 20 Oct. On 22 Oct eMudhra said it would exit the global SSL/TLS business.</p>
+      <p>Eight intermediate CA certificates from the Indian certificate authority eMudhra, six for TLS and two for code signing, were generated with far too little randomness. Each private key was smaller than 256, so anyone holding the public certificate could test every possible value; recovered keys included 4, 56 and 115. A researcher found it with a CCADB check on 17 Oct. eMudhra revoked the certificates on 18 Oct, Apple blocked them on 19 Oct, and Microsoft followed on 20 Oct, the day Mozilla made the incident public. eMudhra says only one of the eight was deployed in production, none issued end-entity certificates and its infrastructure was not breached. On 22 Oct it said it would exit the global SSL/TLS business.</p>
       <dl class="facts">
-        <div><dt>Certs affected</dt><dd>8 intermediates</dd></div>
-        <div><dt>Key values</dt><dd class="mono">4, 56, 66, 115, 155, 156, 230, 237</dd></div>
-        <div><dt>Browser block</dt><dd>17–20 Oct</dd></div>
+        <div><dt>Certs affected</dt><dd class="mono">8 intermediates</dd></div>
+        <div><dt>Keys reported</dt><dd class="mono">4, 56, 115</dd></div>
+        <div><dt>Discovered / revoked</dt><dd class="mono">17 Oct / 18 Oct</dd></div>
+        <div><dt>Browser blocks</dt><dd class="mono">19–20 Oct</dd></div>
       </dl>
       <p class="action"><b>Action:</b> Inventory any certificates chaining to eMudhra and replace them with another CA. Make sure browsers and OS trust stores are current. Check Certificate Transparency logs for certificates issued for your domains under these intermediates.</p>
     </article>
 
     <article class="item">
       <div class="item-head"><h3>ConnectWise Cloud Backup (formerly SkyKick) used to reach Microsoft 365 tenants</h3><span class="sev crit">Critical · supply chain</span></div>
-      <p>Starting 15 Oct, attackers abused the backup platform's application identities to sign into customer Microsoft 365 tenants. Nearly 1,000 Entra tenants were targeted, with 300+ successful sign-ins and at least 162 tenants confirmed compromised in early counts. Reports blaming a China-linked actor using AI agents are not supported by primary sources so far.</p>
-      <p class="action"><b>Action:</b> If you or your MSP use this product, review Entra sign-in logs for its service principals since 15 Oct, rotate its credentials and consent grants, and audit mailbox and SharePoint access.</p>
+      <p>Starting 15 Oct, attackers abused the backup platform's application identities to sign into customer Microsoft 365 tenants, so MFA never applied. Huntress confirmed unauthorized sign-ins in 162 tenants by 16 Oct and later found nearly 1,000 tenants with sign-in activity from the attacker's address, with more than 300 successful. On 21 Oct Microsoft attributed the campaign to Storm-0940, a China-aligned group, and said it used ARTEX, an open-source agentic AI penetration-testing framework, and tried to sign in to more than 2,250 tenants. In some cases the attackers reached privileged cloud access in under three hours and added credentials and role changes that can persist after the app itself is fixed. ConnectWise says it has no indication that backup data was compromised and began restoring the service in stages on 21 Oct.</p>
+      <dl class="facts">
+        <div><dt>Confirmed (Huntress)</dt><dd class="mono">162 tenants</dd></div>
+        <div><dt>Targeted (Microsoft)</dt><dd class="mono">2,250+ tenants</dd></div>
+        <div><dt>Activity window</dt><dd class="mono">From 15 Oct</dd></div>
+      </dl>
+      <p class="action"><b>Action:</b> If you or your MSP use this product, review Entra sign-in logs for its service principals back to at least 15 Oct, audit application secrets, certificates, OAuth grants and Graph activity added since 13 Oct, and review role changes. Keep ConnectWise integrations disabled until ConnectWise confirms restoration is safe, and do not delete the enterprise applications as a first step.</p>
     </article>
   </section>
 
@@ -141,17 +147,17 @@ footer{font-size:.8rem;color:var(--muted)}
     <div class="tbl"><table>
       <thead><tr><th>Product</th><th>CVE</th><th>What it allows</th><th>Status</th></tr></thead>
       <tbody>
-        <tr><td>Ivanti Connect Secure VPN</td><td class="mono">CVE-2026-104935 + 2 chained</td><td>Unauthenticated root code execution on fully patched appliances. Actor UTA0576 harvested AD data and BitLocker keys, used no malware and edited logs. Exploited since 1–3 Oct.</td><td><span class="sev crit">Exploited</span><br>Partial fix</td></tr>
-        <tr><td>Microsoft Patch Tuesday (13 Oct)</td><td class="mono">CVE-2026-96951 (MotW bypass)</td><td>Record ~1,413 CVEs. Also Outlook and PowerPoint preview-pane RCEs, an email-triggered Exchange RCE, and a .NET/WDAC bypass.</td><td><span class="sev high">Exploited</span><br>Patched</td></tr>
+        <tr><td>Ivanti Connect Secure VPN</td><td class="mono">CVE-2026-104935 + 2 chained</td><td>Chained authentication bypass, remote code execution and privilege escalation giving root on fully patched appliances. Actor UTA0576 harvested Active Directory credentials, BitLocker recovery keys and LAPS data with custom Python LDAP and Kerberos tools, and deleted evidence from debug and audit logs. Exploited since 1–3 Oct; added to CISA KEV on 13 Oct. Ivanti's Integrity Checker may not detect compromise because commands run in memory.</td><td><span class="sev crit">Exploited</span><br>Partial fix</td></tr>
+        <tr><td>Microsoft Patch Tuesday (13 Oct)</td><td class="mono">CVE-2026-96951 (MotW bypass)</td><td>Record ~1,411 CVEs by BleepingComputer's count (some outlets say 1,413), 70 rated Critical. Three zero-days: the exploited Windows Shell Mark of the Web bypass, a publicly disclosed .NET Framework bypass of Windows Defender Application Control (CVE-2026-108398), and a publicly disclosed MessagePack-CSharp denial of service (CVE-2026-92707).</td><td><span class="sev high">Exploited</span><br>Patched</td></tr>
         <tr><td>Cisco Catalyst SD-WAN Manager</td><td class="mono">CVE-2026-76504</td><td>Unauthenticated admin access</td><td><span class="sev crit">Exploited</span></td></tr>
         <tr><td>Fortinet FortiMail</td><td class="mono">CVE-2026-104286</td><td>Arbitrary file write, CVSS 9.8</td><td><span class="sev crit">Exploited</span><br>CISA KEV</td></tr>
-        <tr><td>Citrix NetScaler ADC / Gateway</td><td class="mono">Multiple</td><td>Memory overflow under SAML configurations</td><td><span class="sev crit">Exploited</span></td></tr>
+        <tr><td>Citrix NetScaler ADC / Gateway</td><td class="mono">CVE-2026-88771 · 88772 · 88779 · 107406</td><td>CVE-2026-88771 (unauthenticated command execution) and CVE-2026-88772 (memory overflow with DTLS enabled) were disclosed 27 Sep and added to CISA KEV the same day, with exploitation since early September per Mandiant. CVE-2026-88779 (disclosed 4 Oct, CVSS 8.7) is a SAML memory overflow that causes denial of service and is being exploited. CVE-2026-107406 (disclosed 8 Oct, CVSS 9.5) is a separate SAML memory overflow with no known exploitation. Earlier September fixes may not cover the later flaws, so a second upgrade may be needed.</td><td><span class="sev crit">Exploited</span><br>CISA KEV</td></tr>
         <tr><td>AhsayCBS backup (MSP platform)</td><td class="mono">CVE-2026-105133 / 105134</td><td>Auth bypass plus unauthenticated RCE. Attackers deployed JSP web shells and XMRig miners. The first fix was incomplete.</td><td><span class="sev high">Exploited</span><br>Hotfix 10.3.4.45 / 9.15.2.70</td></tr>
         <tr><td>Arista VeloCloud Orchestrator</td><td class="mono">CVE-2026-93952</td><td>The third exploited VeloCloud zero-day in four months</td><td><span class="sev high">Exploited</span><br>CISA KEV</td></tr>
         <tr><td>BeyondTrust Remote Support</td><td class="mono">CVE-2026-102764</td><td>Exploited since late August by a China-linked group</td><td><span class="sev high">Exploited</span></td></tr>
         <tr><td>Palo Alto PAN-OS · Cisco Secure Email</td><td class="mono">CVE-2026-0322 · CVE-2026-76519</td><td>Code injection and path traversal, added to CISA KEV on 14 Oct</td><td><span class="sev high">Exploited</span></td></tr>
         <tr><td>Zammad helpdesk 6.3.0–6.5.4</td><td class="mono">CVE-2026-102489 / 102490</td><td>Privilege escalation chain used to breach DIVD, the Dutch vulnerability-disclosure institute. Investigators describe the intrusion as agentic-AI-driven.</td><td><span class="sev high">Exploited</span><br>CISA KEV</td></tr>
-        <tr><td>Atlassian Jira / Confluence / Bitbucket DC</td><td class="mono">CVE-2026-21589</td><td>Unauthenticated file access, CVSS 9.3</td><td><span class="sev med">Not yet exploited</span></td></tr>
+        <tr><td>Atlassian Jira / Confluence / Bitbucket and other Data Center products</td><td class="mono">CVE-2026-21589</td><td>Unauthenticated file access, CVSS 9.3, across eight products including Bamboo, Crowd, Crucible and Fisheye. Disclosed 5 Oct. Previdian reported exploitation attempts on its honeypots within two hours of watchTowr publishing a proof of concept; no confirmed compromises were reported.</td><td><span class="sev med">Exploit attempts</span></td></tr>
       </tbody>
     </table></div>
   </section>
@@ -159,7 +165,7 @@ footer{font-size:.8rem;color:var(--muted)}
   <section aria-labelledby="supply">
     <h2 id="supply">Supply chain</h2>
     <ul class="list">
-      <li><span class="label">LiteLLM 1.107.0</span><p>A poisoned release went out on PyPI and the official Docker images on 21 Oct and stayed up about two hours. It ran a credential stealer at Python startup and installed a remote-access backdoor. Attackers published it with stolen maintainer GitHub tokens. Anyone who installed it should treat every secret on that host as exposed.</p></li>
+      <li><span class="label">LiteLLM 1.107.0</span><p>A poisoned release went out on PyPI and the official Docker images on 21 Oct. The PyPI wheels were live for under two hours and the Docker tags stayed pointed at the bad image for a few hours more. The release pipeline was altered using stolen GitHub credentials from three developer accounts. It ran a credential stealer at every Python startup, even if LiteLLM was never imported, and installed a loader that fetches and runs code from attacker infrastructure every hour. Anyone who installed it should treat every secret on that host as exposed; the clean version is 1.106.2.</p></li>
       <li><span class="label">npm</span><p>Eight malicious packages in a long-running data-theft campaign reached about 40,000 downloads.</p></li>
       <li><span class="label">AI coding agents</span><p>More than 13,000 sensitive screenshots taken during agent-driven development workflows were found committed to public GitHub repositories.</p></li>
     </ul>
@@ -170,41 +176,41 @@ footer{font-size:.8rem;color:var(--muted)}
     <div class="tbl"><table>
       <thead><tr><th>Organization</th><th>People / records</th><th>Cause and data</th></tr></thead>
       <tbody>
-        <tr><td>Oracle Health (Cerner)</td><td>~20M patients</td><td>Compromised customer credentials used on legacy systems. The intrusion dates to 2025 and notices went out in October.</td></tr>
-        <tr><td>Burger King Japan</td><td>~11.18M app members</td><td>Emails, phone numbers and dates of birth taken 2–7 Oct. No card data was stored on the server.</td></tr>
+        <tr><td>Oracle Health (Cerner)</td><td>~20M patients</td><td>Customer credentials stolen and used on an unmigrated legacy server. The intrusion ran from January to April 2025; the near-20M tally surfaced from a Texas attorney general filing posted 2 Oct. Oracle has not published an official figure.</td></tr>
+        <tr><td>Burger King Japan</td><td>~11.18M app members</td><td>Names, birth dates, gender, emails, phone numbers and order history taken 2–7 Oct and announced 15 Oct. The server held no card numbers.</td></tr>
         <tr><td>Denmark CPR register</td><td>~8.8M (≈80% of population)</td><td>Third-party breach combined with brute-forced CPR numbers</td></tr>
         <tr><td>Daiichikosho (karaoke)</td><td>~8.72M customers</td><td>Breached through a contractor's system</td></tr>
         <tr><td>iRhythm Technologies</td><td>8.2M (revised up from 370K)</td><td>Zio cardiac monitor maker. Insurance and patient data taken during a June intrusion, followed by a ransom demand.</td></tr>
         <tr><td>Times Mobility (Japan)</td><td>~6.6M accounts</td><td>Driver's licence images exposed</td></tr>
-        <tr><td>ETS</td><td>5.7–7M records</td><td>California student data, including disability status and test results, taken with one stolen login</td></tr>
+        <tr><td>ETS</td><td>~7M California students</td><td>Files copied between 22 May and 18 Sep using one compromised login. Discovered 25 Sep, districts told 2 Oct. Includes disability status and program eligibility; no SSNs.</td></tr>
         <tr><td>Zeabur (hosting)</td><td>3.2M env-var records / 321K accounts</td><td>A leaked non-expiring admin token. The platform will shut down by 31 Dec.</td></tr>
         <tr><td>Pentagon DMDC</td><td>~3.05M people</td><td>Unencrypted SSNs and military personnel data accessed Oct 2025–Jul 2026. Disclosed 1 Oct.</td></tr>
         <tr><td>Nikkei</td><td>~1.83M records</td><td>Stolen credentials to a cloud development service. Its third incident in about a month.</td></tr>
         <tr><td>Railway (hosting)</td><td>Limited</td><td>Customer environment variables, some decrypted. Part of a wider campaign against hosting and AI-inference providers.</td></tr>
-        <tr><td>IDC Frontier (SoftBank)</td><td>495 customers disrupted</td><td>Ransomware attack on 7 Oct. Japan declared a "state of emergency in cyberspace."</td></tr>
-        <tr><td>GMO Onamae Desktop Cloud</td><td>~26.7K servers</td><td>Malware planted after a credential compromise. No data leak confirmed yet.</td></tr>
+        <tr><td>IDC Frontier (SoftBank)</td><td>495 companies and local governments disrupted</td><td>Ransomware attack on 7 Oct. Separately, Japan's cybersecurity strategy head described a "state of emergency in cyberspace" on 15 Oct after attacks on more than 20 major companies.</td></tr>
+        <tr><td>GMO Onamae Desktop Cloud</td><td>Up to ~26.7K servers</td><td>Confirmed 20 Oct. An outside party installed malware and GMO shut down customer servers. How they got in has not been disclosed, and no data leak is confirmed.</td></tr>
       </tbody>
     </table></div>
-    <p class="label">Unverified claims: PwC (Everest, ~590 GB claimed; PwC confirms only a vendor learning-records incident), Anne Arundel County MD (Rhysida, 2.6 TB claimed)</p>
+    <p class="label">Unverified claims: PwC (Everest claims ~590 GB, posted 22 Oct; PwC confirms only an incident at a third-party platform that hosts employee learning records)</p>
   </section>
 
   <section aria-labelledby="other">
     <h2 id="other">Law enforcement and research</h2>
     <ul class="list">
       <li><span class="label">KillSec takedown</span><p>An international operation seized the ransomware group's leak site and five core servers holding at least 110 TB of stolen data. Suspects were arrested.</p></li>
-      <li><span class="label">Pwn2Own Ireland</span><p>98 zero-days and $1.26M paid out over 6–8 Oct. The Pixel 10 and Galaxy S26 were each compromised four times. Nobody attempted the iPhone 17.</p></li>
+      <li><span class="label">Pwn2Own Ireland</span><p>98 zero-days and $1.262M paid out. The Galaxy S26 was compromised seven times and the Pixel 10 three times. Nobody registered to attack the iPhone 17.</p></li>
     </ul>
   </section>
 
   <section aria-labelledby="do">
     <h2 id="do">What to do this week</h2>
     <ol class="todo">
-      <li>Patch PHP everywhere and hunt for web shells on internet-facing PHP hosts.</li>
+      <li>Patch PHP everywhere and hunt for web shells on internet-facing PHP hosts, checking vendor changelogs for the two CVEs.</li>
       <li>Replace any certificate chaining to eMudhra.</li>
       <li>Patch Ivanti, Cisco SD-WAN, FortiMail, NetScaler, VeloCloud, BeyondTrust and PAN-OS, then check those devices for signs of prior compromise. Patching does not remove an attacker who is already in.</li>
-      <li>Apply October Patch Tuesday, prioritising Outlook, Exchange and Windows Shell.</li>
+      <li>Apply October Patch Tuesday, starting with the exploited Windows Shell Mark of the Web bypass (CVE-2026-96951).</li>
       <li>Audit third-party app identities in Microsoft 365 (backup, MSP and RMM tools) and rotate their secrets.</li>
-      <li>Check Python environments for LiteLLM 1.107.0 and rotate secrets on any host that installed it.</li>
+      <li>Check Python environments for LiteLLM 1.107.0, move to 1.106.2, and rotate secrets on any host that installed it.</li>
       <li>Replace long-lived admin tokens and plaintext environment variables at hosting providers with short-lived, scoped credentials.</li>
     </ol>
   </section>

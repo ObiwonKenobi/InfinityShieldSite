@@ -11,10 +11,22 @@
       "status": "Critical · exploited",
       "body": "Citrix disclosed CVE-2026-88771 and CVE-2026-88772 on Sunday 27 Sep. CISA added both to the KEV catalog the same day. The first lets an unauthenticated attacker run commands on any NetScaler ADC or Gateway. The second is a memory overflow reachable when DTLS is enabled, which is the default on VPN virtual servers. Mandiant says attacks began in at least early September, in North America and Europe, and that the observed campaign is tied to CVE-2026-88772. It deployed a PHP web shell (WHIPSHOT) and a Python tunnelling tool (SLAPSHOT) and set the setuid bit on /bin/sh to keep root. GreyNoise saw a failed attempt on 24 Sep, three days before disclosure. Citrix says 88771 is also exploited. Sources differ on which flaw the early attacks used.",
       "facts": [
-        ["CVE", "CVE-2026-88771\nCVE-2026-88772"],
-        ["CVSS", "9.5 (both)"],
-        ["CISA KEV", "27 Sep, federal deadline 30 Sep"],
-        ["Citrix advisory", "CTX697096"]
+        [
+          "CVE",
+          "CVE-2026-88771\nCVE-2026-88772"
+        ],
+        [
+          "CVSS",
+          "9.5 (both)"
+        ],
+        [
+          "CISA KEV",
+          "27 Sep, federal deadline 30 Sep"
+        ],
+        [
+          "Citrix advisory",
+          "CTX697096"
+        ]
       ],
       "action": "Install the latest NetScaler security updates now. Disabling DTLS or blocking inbound UDP/443 helps only against 88772 and does not protect against 88771. Because attacks predate disclosure, check appliances for web shells and a setuid /bin/sh going back to early September."
     },
@@ -24,10 +36,22 @@
       "status": "Critical · exploited",
       "body": "Attackers inject PHP into Magento's template system and trigger it through a failed-payment email. Sansec recorded unsuccessful probes on 23 Aug and the first confirmed exploitation on 4 Sep. Adobe shipped a hotfix on 7 Sep. All versions from 2.4.4 through 2.4.9 are affected. Adobe tested the fix only on the August 2026 releases of those branches and publishes no fix for 2.2, 2.3 or 2.4.0 to 2.4.3. A successful attack starts a small Rust backdoor that connects to a command server and hides under process names such as chronyd. Sansec has no sign yet that the backdoor has been used. Other operators left web shells and a RAT on some stores.",
       "facts": [
-        ["CVE", "CVE-2026-75650"],
-        ["CVSS", "10.0"],
-        ["Adobe bulletin", "APSB26-146, hotfix VULN-39341"],
-        ["First exploitation", "4 Sep"]
+        [
+          "CVE",
+          "CVE-2026-75650"
+        ],
+        [
+          "CVSS",
+          "10.0"
+        ],
+        [
+          "Adobe bulletin",
+          "APSB26-146, hotfix VULN-39341"
+        ],
+        [
+          "First exploitation",
+          "4 Sep"
+        ]
       ],
       "action": "Apply the Adobe hotfix and confirm it covers your exact release. Review templates and email logs for injected PHP, and look for processes named kworker/u:8:0, fc-cache or chronyd running from unexpected paths. Stores older than 2.4.4 have no vendor fix and need an upgrade or isolation."
     },
@@ -37,9 +61,18 @@
       "status": "High · exploited",
       "body": "The 8 Sep release was the largest on record. Microsoft's notes list 974 CVEs, of which 964 need customer action (104 Critical, 860 Important). Third-party trackers report totals from 966 to 973 depending on how they count. Two local privilege escalation bugs, both CVSS 7.8, were exploited before the patch: one in the Windows Update stack and one in Windows ALPC that allows escape from an AppContainer sandbox. Trend Micro ZDI calls the DNS flaw CVE-2026-69730 the spiritual successor to SigRed. It is one of 20 wormable bugs that allow unauthenticated remote code execution on most supported Windows versions.",
       "facts": [
-        ["Exploited", "CVE-2026-81963 (Windows Update stack)\nCVE-2026-85880 (Windows ALPC)"],
-        ["Wormable DNS", "CVE-2026-69730"],
-        ["Other notable", "CVE-2026-69676 (Kerberos, domain controller RCE)\nCVE-2026-55007 (Exchange, malicious Visio attachment)"]
+        [
+          "Exploited",
+          "CVE-2026-81963 (Windows Update stack)\nCVE-2026-85880 (Windows ALPC)"
+        ],
+        [
+          "Wormable DNS",
+          "CVE-2026-69730"
+        ],
+        [
+          "Other notable",
+          "CVE-2026-69676 (Kerberos, domain controller RCE)\nCVE-2026-55007 (Exchange, malicious Visio attachment)"
+        ]
       ],
       "action": "Patch Windows DNS servers and domain controllers first, then the two exploited bugs, Exchange and endpoints. A public proof of concept reportedly bypasses the patch for the Defender flaw CVE-2026-69414, so verify Defender versions after updating."
     }
@@ -124,6 +157,22 @@
       "sev": "high",
       "status": "Exploited",
       "note": "Zero-days fixed in the 8 Sep Patch Tuesday."
+    },
+    {
+      "product": "Cisco Catalyst SD-WAN Manager",
+      "cve": "CVE-2026-76504",
+      "allows": "Unauthenticated admin access",
+      "sev": "crit",
+      "status": "Exploited",
+      "note": "Advisory and CISA KEV 30 Sep."
+    },
+    {
+      "product": "Zammad helpdesk 6.3.0 to 6.5.4",
+      "cve": "CVE-2026-102489 / 102490",
+      "allows": "Privilege escalation chain used to breach DIVD, the Dutch vulnerability-disclosure institute. Investigators describe the intrusion as agentic-AI-driven.",
+      "sev": "high",
+      "status": "Exploited",
+      "note": "Reported 30 Sep. CISA KEV."
     }
   ],
   "supply": [
@@ -142,6 +191,10 @@
     {
       "label": "npm",
       "text": "On 7 Sep Aikido Security reported four npm packages published by one account within an hour, carrying a Shai-Hulud payload with the same hash as one used in the 19 May @antv compromise. The payload runs from a preinstall script. The sources do not say how the publishing account was accessed or whether other packages were affected."
+    },
+    {
+      "label": "AI coding agents",
+      "text": "More than 13,000 sensitive screenshots taken during agent-driven development workflows were found committed to public GitHub repositories, reported 29 Sep to 1 Oct."
     },
     {
       "label": "Scope of this section",
@@ -244,20 +297,65 @@
     "Rotate API keys and application credentials held by third-party apps and email or e-commerce platforms, and review which vendors hold long-lived keys to your systems."
   ],
   "sources": [
-    {"title": "Help Net Security: September 2026 Patch Tuesday", "url": "https://www.helpnetsecurity.com/2026/09/09/september-2026-patch-tuesday-zero-days-sigred-successor/"},
-    {"title": "Malwarebytes: Microsoft fixes record 964 flaws", "url": "https://www.malwarebytes.com/blog/news/2026/09/microsoft-fixes-record-964-flaws-including-2-exploited-zero-days"},
-    {"title": "BleepingComputer: Citrix NetScaler zero-day and web shells", "url": "https://www.bleepingcomputer.com/news/security/hackers-exploit-citrix-netscaler-zero-day-to-deploy-web-shells/"},
-    {"title": "The Hacker News: CISA on exploited Citrix flaws", "url": "https://thehackernews.com/2026/09/cisa-says-attackers-are-exploiting-two.html"},
-    {"title": "Security Affairs: Cisco FMC flaw and Qilin ransomware", "url": "https://securityaffairs.com/198884/cyber-crime/attackers-exploit-critical-cisco-fmc-flaw-to-deploy-qilin-ransomware.html"},
-    {"title": "Sansec: StyleSmuggler", "url": "https://sansec.io/research/stylesmuggler"},
-    {"title": "Help Net Security: Check Point, Arista and F5 attacks", "url": "https://www.helpnetsecurity.com/?p=385473"},
-    {"title": "The Hacker News: Cisco Secure Email Gateway flaw", "url": "https://thehackernews.com/2026/09/cisco-secure-email-gateway-flaw.html"},
-    {"title": "The Hacker News: WordPress CVE-2026-87902 exploited", "url": "https://thehackernews.com/2026/09/attackers-exploit-wordpress-cve-2026.html"},
-    {"title": "Strobes: Biggest data breaches of September 2026", "url": "https://strobes.co/blog/biggest-data-breaches-september-2026"},
-    {"title": "GRC Solutions: Global data breaches, September 2026", "url": "https://grcsolutions.io/global-data-breaches-and-cyber-attacks-in-september-2026/"},
-    {"title": "Help Net Security: Pentagon DMDC breach", "url": "https://www.helpnetsecurity.com/2026/10/01/pentagon-dmdc-data-breach-3-million-people/"},
-    {"title": "Lovguiden: KillSec operation", "url": "https://www.lovguiden.dk/en/det-offentlige/europol/2026-10-01-killsec-ransomwaregruppe-16-aarig-mistaenkt-servere-og-leak-site-beslaglagt"},
-    {"title": "Security Affairs: Liquid Network drain", "url": "https://securityaffairs.com/?p=198697"},
-    {"title": "Safeguard: Shai-Hulud payload resurfaces on npm", "url": "https://safeguard.sh/resources/blog/shai-hulud-payload-resurfaces-after-111-days"}
+    {
+      "title": "Help Net Security: September 2026 Patch Tuesday",
+      "url": "https://www.helpnetsecurity.com/2026/09/09/september-2026-patch-tuesday-zero-days-sigred-successor/"
+    },
+    {
+      "title": "Malwarebytes: Microsoft fixes record 964 flaws",
+      "url": "https://www.malwarebytes.com/blog/news/2026/09/microsoft-fixes-record-964-flaws-including-2-exploited-zero-days"
+    },
+    {
+      "title": "BleepingComputer: Citrix NetScaler zero-day and web shells",
+      "url": "https://www.bleepingcomputer.com/news/security/hackers-exploit-citrix-netscaler-zero-day-to-deploy-web-shells/"
+    },
+    {
+      "title": "The Hacker News: CISA on exploited Citrix flaws",
+      "url": "https://thehackernews.com/2026/09/cisa-says-attackers-are-exploiting-two.html"
+    },
+    {
+      "title": "Security Affairs: Cisco FMC flaw and Qilin ransomware",
+      "url": "https://securityaffairs.com/198884/cyber-crime/attackers-exploit-critical-cisco-fmc-flaw-to-deploy-qilin-ransomware.html"
+    },
+    {
+      "title": "Sansec: StyleSmuggler",
+      "url": "https://sansec.io/research/stylesmuggler"
+    },
+    {
+      "title": "Help Net Security: Check Point, Arista and F5 attacks",
+      "url": "https://www.helpnetsecurity.com/?p=385473"
+    },
+    {
+      "title": "The Hacker News: Cisco Secure Email Gateway flaw",
+      "url": "https://thehackernews.com/2026/09/cisco-secure-email-gateway-flaw.html"
+    },
+    {
+      "title": "The Hacker News: WordPress CVE-2026-87902 exploited",
+      "url": "https://thehackernews.com/2026/09/attackers-exploit-wordpress-cve-2026.html"
+    },
+    {
+      "title": "Strobes: Biggest data breaches of September 2026",
+      "url": "https://strobes.co/blog/biggest-data-breaches-september-2026"
+    },
+    {
+      "title": "GRC Solutions: Global data breaches, September 2026",
+      "url": "https://grcsolutions.io/global-data-breaches-and-cyber-attacks-in-september-2026/"
+    },
+    {
+      "title": "Help Net Security: Pentagon DMDC breach",
+      "url": "https://www.helpnetsecurity.com/2026/10/01/pentagon-dmdc-data-breach-3-million-people/"
+    },
+    {
+      "title": "Lovguiden: KillSec operation",
+      "url": "https://www.lovguiden.dk/en/det-offentlige/europol/2026-10-01-killsec-ransomwaregruppe-16-aarig-mistaenkt-servere-og-leak-site-beslaglagt"
+    },
+    {
+      "title": "Security Affairs: Liquid Network drain",
+      "url": "https://securityaffairs.com/?p=198697"
+    },
+    {
+      "title": "Safeguard: Shai-Hulud payload resurfaces on npm",
+      "url": "https://safeguard.sh/resources/blog/shai-hulud-payload-resurfaces-after-111-days"
+    }
   ]
 }

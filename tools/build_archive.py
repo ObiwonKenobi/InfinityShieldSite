@@ -213,7 +213,7 @@ def build_index(months):
         '  <header>',
         '    <div class="marking"><span class="tlp">TLP:CLEAR</span><span>Calendar month briefs</span></div>',
         '    <h1>Threat Brief <span>Archive</span></h1>',
-        '    <p class="lede">One brief for each calendar month, added after the month closes. The rolling 30 day brief stays on the <a href="/">home page</a> and is not archived here.</p>',
+        '    <p class="lede">One brief for each calendar month, added after the month closes. The current month is posted month to date and finalized when it closes. The rolling 30 day brief stays on the <a href="/">home page</a> and is not archived here.</p>',
         '  </header>',
         '',
         '  <section aria-labelledby="months">',

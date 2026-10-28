@@ -3,11 +3,11 @@
 Build the monthly threat brief archive for infinityshield.co.
 
 Reads one JSON file per calendar month from archive/data/YYYY-MM.json and writes:
-  archive/YYYY-MM.html   one page per month, same layout as the 30 day brief on the home page
+  archive/YYYY-MM.html   one page per month
   archive/index.html     the archive listing, newest month first
 
-The 30 day rolling brief (index.html) is not touched by this script.
-Styling comes from /brief.css, which was lifted from the home page.
+The business home page (index.html) is not touched by this script.
+Styling comes from /brief.css, which shares its palette with the home page.
 
 Usage (from the repo root):  python3 tools/build_archive.py
 """
@@ -48,7 +48,7 @@ def nav(current):
         '  <div class="site-nav-inner">',
         '    <a href="/" class="site-brand"><img src="/logo-transparent.png" alt="">Infinity Shield</a>',
         '    <ul class="site-links">',
-        link("/", "Threat Brief", "home"),
+        link("/", "Home", "home"),
         link("/archive/", "Archive", "archive"),
         link("/about.html", "About", "about"),
         '    </ul>',
@@ -63,16 +63,17 @@ def head(title, description):
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self'; base-uri 'none'; form-action 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="description" content="{attr(description)}">
 <style>*,*::before,*::after{{box-sizing:border-box}}body{{margin:0}}img{{max-width:100%}}</style><title>{esc(title)}</title>
 <link rel="icon" type="image/png" href="/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Public+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="/brief.css">
 </head>
 <body>
-<div class="circuit-bg" aria-hidden="true"></div>
 """
 
 
@@ -191,7 +192,7 @@ def build_month(data):
     parts.append(
         f'  <footer>Compiled from public reporting as of {esc(data["issued"])}. '
         'Figures are as first reported and may be revised. · '
-        '<a href="/archive/">All months</a> · <a href="/">Current 30 day brief</a> · '
+        '<a href="/archive/">All months</a> · <a href="/">Home</a> · '
         '<a href="/about.html">About Infinity Shield</a></footer>'
     )
     parts.append('</div>')
@@ -206,14 +207,14 @@ def build_index(months):
     parts = [
         head(
             "Archive | Infinity Shield",
-            "Monthly cybersecurity threat briefs, one per calendar month. The current 30 day brief is on the home page.",
+            "Monthly cybersecurity threat briefs, one per calendar month. The current month is posted month to date and finalized when it closes.",
         ),
         nav("archive"),
         '<div class="wrap">',
         '  <header>',
         '    <div class="marking"><span class="tlp">TLP:CLEAR</span><span>Calendar month briefs</span></div>',
         '    <h1>Threat Brief <span>Archive</span></h1>',
-        '    <p class="lede">One brief for each calendar month, added after the month closes. The current month is posted month to date and finalized when it closes. The rolling 30 day brief stays on the <a href="/">home page</a> and is not archived here.</p>',
+        '    <p class="lede">One brief for each calendar month. The current month is posted month to date, linked from the <a href="/">home page</a>, and finalized when it closes.</p>',
         '  </header>',
         '',
         '  <section aria-labelledby="months">',
@@ -230,7 +231,7 @@ def build_index(months):
         '  </section>',
         '',
         '  <footer>Compiled from public reporting. Figures are as first reported and may be revised. · '
-        '<a href="/">Current 30 day brief</a> · <a href="/about.html">About Infinity Shield</a></footer>',
+        '<a href="/">Home</a> · <a href="/about.html">About Infinity Shield</a></footer>',
         '</div>',
         '',
         '</body>',

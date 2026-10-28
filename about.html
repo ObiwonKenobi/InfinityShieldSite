@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self'; base-uri 'none'; form-action 'none'; upgrade-insecure-requests" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
   <title>Dr. Chris Opp, DIT, CISSP | Network Architect &amp; Cybersecurity Consultant</title>
   <meta name="description" content="Network architect and cybersecurity consultant with 28+ years of Federal and DoD experience. Enterprise SD-WAN, network design, FedRAMP, CMMC 2.0, Zero Trust, and NIST 800-171 at federal scale." />
   <link rel="icon" type="image/png" href="/favicon.png" />
@@ -921,12 +923,8 @@
   <!-- ─── Footer ───────────────────────────────────────────────── -->
   <footer>
     <p>Dr. Chris Opp, DIT, CISSP &mdash; Cheyenne, Wyoming</p>
-    <p>&copy; <span id="yr"></span> Infinity Shield. All rights reserved.</p>
+    <p>&copy; 2026 Infinity Shield. All rights reserved.</p>
   </footer>
-
-  <script>
-    document.getElementById('yr').textContent = new Date().getFullYear();
-  </script>
 
 </body>
 </html>

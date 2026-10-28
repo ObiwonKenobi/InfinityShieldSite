@@ -3,7 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Monthly cybersecurity threat briefs, one per calendar month. The current 30 day brief is on the home page.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self'; base-uri 'none'; form-action 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="description" content="Monthly cybersecurity threat briefs, one per calendar month. The current month is posted month to date and finalized when it closes.">
 <style>*,*::before,*::after{box-sizing:border-box}body{margin:0}img{max-width:100%}</style><title>Archive | Infinity Shield</title>
 <link rel="icon" type="image/png" href="/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,7 +14,6 @@
 <link rel="stylesheet" href="/brief.css">
 </head>
 <body>
-<div class="circuit-bg" aria-hidden="true"></div>
 
 <nav class="site-nav" aria-label="Main navigation">
   <div class="site-nav-inner">
@@ -28,7 +29,7 @@
   <header>
     <div class="marking"><span class="tlp">TLP:CLEAR</span><span>Calendar month briefs</span></div>
     <h1>Threat Brief <span>Archive</span></h1>
-    <p class="lede">One brief for each calendar month, added after the month closes. The current month is posted month to date and finalized when it closes. The rolling 30 day brief stays on the <a href="/">home page</a> and is not archived here.</p>
+    <p class="lede">One brief for each calendar month. The current month is posted month to date, linked from the <a href="/">home page</a>, and finalized when it closes.</p>
   </header>
 
   <section aria-labelledby="months">
@@ -41,7 +42,7 @@
     </ul>
   </section>
 
-  <footer>Compiled from public reporting. Figures are as first reported and may be revised. · <a href="/">Current 30 day brief</a> · <a href="/about.html">About Infinity Shield</a></footer>
+  <footer>Compiled from public reporting. Figures are as first reported and may be revised. · <a href="/">Home</a> · <a href="/about.html">About Infinity Shield</a></footer>
 </div>
 
 </body>

@@ -317,34 +317,67 @@
       color: var(--text);
     }
 
-    /* ─── Briefs callout ─────────────────────────────────── */
-    .briefs-band {
-      padding: 3rem 2rem;
+    /* ─── Current brief ─────────────────────────────────── */
+    .current-brief {
+      background: var(--bg-alt);
+      border-top: 1px solid var(--border-lt);
       border-bottom: 1px solid var(--border-lt);
+      padding: 3.5rem 2rem;
     }
 
-    .briefs-inner {
+    .current-brief-inner {
       max-width: 1100px;
       margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 2rem;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 3rem;
+      align-items: start;
     }
 
-    .briefs-inner p {
-      font-size: .95rem;
-      color: var(--muted);
-      max-width: 480px;
+    .brief-meta {
+      min-width: 160px;
     }
 
-    .briefs-inner h3 {
+    .brief-meta .brief-tag {
+      display: inline-block;
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      background: var(--accent);
+      color: #fff;
+      padding: .22rem .6rem;
+      border-radius: 3px;
+      margin-bottom: .75rem;
+    }
+
+    .brief-meta h3 {
       font-family: "Merriweather", Georgia, serif;
-      font-size: 1.15rem;
+      font-size: 1rem;
       font-weight: 700;
       color: var(--text);
-      margin-bottom: .4rem;
+      line-height: 1.3;
+      margin-bottom: .3rem;
+    }
+
+    .brief-meta .brief-period {
+      font-size: .76rem;
+      color: var(--subtle);
+    }
+
+    .brief-body p {
+      font-size: .97rem;
+      color: var(--muted);
+      max-width: 620px;
+      margin-bottom: 1.5rem;
+      line-height: 1.7;
+    }
+
+    .brief-actions {
+      display: flex;
+      gap: .75rem;
+      flex-wrap: wrap;
+      align-items: center;
     }
 
     /* ─── Footer ─────────────────────────────────────────── */
@@ -403,16 +436,17 @@
 
     /* ─── Responsive ─────────────────────────────────────── */
     @media (max-width: 800px) {
-      .hero-inner    { grid-template-columns: 1fr; }
-      .hero-creds    { flex-direction: row; flex-wrap: wrap; min-width: 0; gap: 1rem; }
-      .about-inner   { grid-template-columns: 1fr; gap: 1.5rem; }
-      .service-grid  { grid-template-columns: 1fr; }
+      .hero-inner           { grid-template-columns: 1fr; }
+      .hero-creds           { flex-direction: row; flex-wrap: wrap; min-width: 0; gap: 1rem; }
+      .about-inner          { grid-template-columns: 1fr; gap: 1.5rem; }
+      .service-grid         { grid-template-columns: 1fr; }
+      .current-brief-inner  { grid-template-columns: 1fr; gap: 1.25rem; }
     }
 
     @media (max-width: 520px) {
       .header-inner { padding: .8rem 1rem; }
       .hero         { padding: 3rem 1rem 2.5rem; }
-      .about, .services, .briefs-band { padding: 2.5rem 1rem; }
+      .about, .services, .current-brief { padding: 2.5rem 1rem; }
       nav a:not(.nav-cta) { display: none; }
     }
   </style>
@@ -451,12 +485,12 @@
             Service-Disabled<br>Veteran-Owned
           </div>
           <div class="cred-item">
-            <strong>AIAN-Owned</strong>
-            American Indian &amp;<br>Alaska Native
-          </div>
-          <div class="cred-item">
             <strong>28+ Years</strong>
             Federal &amp; Leadership<br>Experience
+          </div>
+          <div class="cred-item">
+            <strong>Cheyenne, WY</strong>
+            Headquartered in<br>Wyoming
           </div>
         </div>
       </div>
@@ -515,13 +549,20 @@
       </div>
     </section>
 
-    <section class="briefs-band">
-      <div class="briefs-inner">
-        <div>
-          <h3>Threat Intelligence Briefs</h3>
-          <p>Monthly threat briefs covering cybersecurity developments relevant to federal contractors, SMBs, and managed service providers.</p>
+    <section class="current-brief">
+      <div class="current-brief-inner">
+        <div class="brief-meta">
+          <span class="brief-tag">Current Brief</span>
+          <h3>October 2026<br>Threat Brief</h3>
+          <p class="brief-period">1 – 27 Oct 2026</p>
         </div>
-        <a class="btn btn-ghost" href="/archive/index.html">View Archive →</a>
+        <div class="brief-body">
+          <p>Two internet-wide trust failures, critical PHP flaws, and a certificate authority with recoverable keys defined the month, alongside a run of exploited edge-device zero-days and credential-driven breaches at hosting, SaaS, and consumer-service providers.</p>
+          <div class="brief-actions">
+            <a class="btn btn-primary" href="/archive/2026-10.html">Read Brief →</a>
+            <a class="btn btn-ghost" href="/archive/index.html">Full Archive</a>
+          </div>
+        </div>
       </div>
     </section>
 

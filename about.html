@@ -585,12 +585,15 @@
     /* ─── Responsive ────────────────────────────────────────────── */
     @media (max-width: 768px) {
       nav { padding: 0.9rem 1.25rem; }
-      .nav-links { display: none; }
+      .nav-links li:nth-child(n+3) { display: none; }
       #hero { padding: 7rem 1.25rem 4rem; }
       section { padding: 4rem 1.25rem; }
       .stat-bar { padding: 1.5rem 1.25rem; }
       .highlights-grid { grid-template-columns: 1fr; }
       footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+    @media (max-width: 480px) {
+      .nav-links li:nth-child(n+2) { display: none; }
     }
   </style>
 </head>

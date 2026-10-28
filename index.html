@@ -21,8 +21,9 @@ html { font-size: 16px; scroll-behavior: smooth; }
   --muted:   #6a8ba5;
   --faint:   #3d5a72;
   --accent:  #4d9fd4;
-  --rule:    rgba(77, 159, 212, 0.15);
+  --rule:    rgba(77,159,212,0.15);
   --border:  rgba(255,255,255,0.07);
+  --gutter:  clamp(1.25rem, 5vw, 2.5rem);
 }
 
 body {
@@ -38,85 +39,97 @@ body {
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 100;
-  padding: 1.25rem 2.5rem;
+  padding: 1.1rem var(--gutter);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 2rem;
+  gap: 1.5rem;
   transition: background .3s, border-color .3s;
   border-bottom: 1px solid transparent;
 }
 .nav.scrolled {
-  background: rgba(6, 11, 16, 0.92);
+  background: rgba(6,11,16,0.94);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
   border-color: var(--border);
 }
 .nav-brand {
-  font-size: .82rem;
+  font-size: .8rem;
   font-weight: 700;
   letter-spacing: .14em;
   text-transform: uppercase;
   color: var(--text);
   text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 .nav-links {
   display: flex;
-  gap: 2.25rem;
+  gap: 1.75rem;
   list-style: none;
+  flex-wrap: nowrap;
 }
 .nav-links a {
-  font-size: .78rem;
+  font-size: .75rem;
   font-weight: 500;
-  letter-spacing: .1em;
+  letter-spacing: .08em;
   text-transform: uppercase;
   color: var(--muted);
   text-decoration: none;
+  white-space: nowrap;
   transition: color .2s;
 }
 .nav-links a:hover { color: var(--text); }
 .nav-links a.cta {
   color: var(--accent);
-  border: 1px solid rgba(77,159,212,.4);
-  padding: .3rem .9rem;
+  border: 1px solid rgba(77,159,212,.35);
+  padding: .28rem .8rem;
   border-radius: 2px;
 }
 .nav-links a.cta:hover { background: rgba(77,159,212,.1); }
+@media (max-width: 680px) {
+  .nav-links .hide-sm { display: none; }
+}
+@media (max-width: 420px) {
+  .nav-links { gap: 1rem; }
+  .nav-links .hide-xs { display: none; }
+}
 
 /* ─── Hero ─────────────────────────────────────────────── */
 .hero {
+  min-height: 100svh;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: 0 2.5rem 7rem;
+  padding: 7rem var(--gutter) 5rem;
   max-width: 1200px;
   margin: 0 auto;
 }
 .hero-eyebrow {
-  font-size: .72rem;
+  font-size: .7rem;
   font-weight: 600;
   letter-spacing: .2em;
   text-transform: uppercase;
   color: var(--accent);
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.25rem;
   display: flex;
   align-items: center;
   gap: .75rem;
 }
 .hero-eyebrow::before {
   content: '';
-  display: block;
-  width: 2rem;
+  flex-shrink: 0;
+  width: 1.75rem;
   height: 1px;
   background: var(--accent);
 }
 .hero h1 {
-  font-size: clamp(3.2rem, 8vw, 7rem);
+  font-size: clamp(2.6rem, 9vw, 7rem);
   font-weight: 800;
   letter-spacing: -.03em;
   line-height: .96;
-  margin-bottom: 2rem;
+  margin-bottom: 1.75rem;
   text-wrap: balance;
 }
 .hero h1 em {
@@ -124,71 +137,71 @@ body {
   color: var(--accent);
 }
 .hero-sub {
-  font-size: clamp(.95rem, 1.5vw, 1.15rem);
+  font-size: clamp(.9rem, 2.5vw, 1.1rem);
   font-weight: 400;
   color: var(--muted);
-  max-width: 440px;
+  max-width: 420px;
   line-height: 1.7;
-  margin-bottom: 2.5rem;
+  margin-bottom: 2rem;
 }
 .hero-actions {
   display: flex;
-  gap: 1rem;
+  gap: .75rem;
   flex-wrap: wrap;
-  align-items: center;
 }
 .btn {
-  font-size: .8rem;
+  font-size: .78rem;
   font-weight: 600;
   letter-spacing: .1em;
   text-transform: uppercase;
   text-decoration: none;
-  padding: .75rem 1.75rem;
+  padding: .7rem 1.5rem;
   border-radius: 2px;
-  transition: background .2s, color .2s, border-color .2s, filter .2s;
+  transition: filter .2s, background .2s, color .2s, border-color .2s;
 }
 .btn-primary { background: var(--accent); color: #000; }
-.btn-primary:hover { filter: brightness(1.1); }
+.btn-primary:hover { filter: brightness(1.12); }
 .btn-outline { border: 1px solid var(--border); color: var(--muted); }
 .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
 .cred-strip {
-  margin-top: 4rem;
-  padding-top: 2rem;
+  margin-top: 3rem;
+  padding-top: 1.75rem;
   border-top: 1px solid var(--border);
   display: flex;
-  gap: 2.5rem;
+  gap: 2rem;
   flex-wrap: wrap;
 }
 .cred-item {
-  font-size: .72rem;
+  font-size: .7rem;
   font-weight: 500;
   letter-spacing: .1em;
   text-transform: uppercase;
   color: var(--faint);
+  line-height: 1.5;
 }
 .cred-item strong {
   display: block;
-  font-size: .78rem;
+  font-size: .75rem;
   color: var(--muted);
-  margin-bottom: .15rem;
+  margin-bottom: .1rem;
 }
 
-/* ─── Section commons ──────────────────────────────────── */
-.section {
-  padding: 8rem 2.5rem;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-.section-full {
-  padding: 7rem 2.5rem;
+/* ─── Content sections ─────────────────────────────────── */
+/* Band = full-bleed background wrapper, no padding */
+.band {
   border-top: 1px solid var(--border);
 }
-.section-full .inner {
+.band.alt { background: var(--bg1); }
+
+/* Padded content container inside every band */
+.band-inner {
   max-width: 1200px;
   margin: 0 auto;
+  padding: 6rem var(--gutter);
 }
+
 .eyebrow {
-  font-size: .7rem;
+  font-size: .68rem;
   font-weight: 600;
   letter-spacing: .2em;
   text-transform: uppercase;
@@ -196,7 +209,7 @@ body {
   margin-bottom: .75rem;
 }
 .section-h2 {
-  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-size: clamp(1.7rem, 4vw, 3rem);
   font-weight: 700;
   letter-spacing: -.025em;
   line-height: 1.1;
@@ -213,118 +226,106 @@ body {
 .about-grid {
   display: grid;
   grid-template-columns: 1fr 2fr;
-  gap: 5rem;
+  gap: 4rem;
   align-items: start;
-  margin-top: 5rem;
+  margin-top: 3.5rem;
 }
 .about-grid p {
+  font-size: .96rem;
   color: var(--muted);
   line-height: 1.8;
-  font-size: .97rem;
 }
-.about-grid p + p { margin-top: 1rem; }
+.about-grid p + p { margin-top: .9rem; }
 
 /* ─── Services ─────────────────────────────────────────── */
-.services-bg {
-  background: var(--bg1);
-}
 .svc-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1px;
   background: var(--border);
-  margin-top: 4rem;
+  margin-top: 3.5rem;
   border: 1px solid var(--border);
 }
 .svc-card {
-  background: var(--bg);
-  padding: 2.75rem 2.25rem;
+  background: var(--bg1);
+  padding: 2.25rem 2rem;
   transition: background .2s;
 }
 .svc-card:hover { background: var(--bg2); }
 .svc-icon {
-  width: 24px;
-  height: 24px;
+  width: 22px;
+  height: 22px;
   color: var(--accent);
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.1rem;
 }
 .svc-card h3 {
-  font-size: .92rem;
+  font-size: .9rem;
   font-weight: 700;
   letter-spacing: -.01em;
-  margin-bottom: .6rem;
+  margin-bottom: .5rem;
 }
 .svc-card p {
-  font-size: .85rem;
+  font-size: .84rem;
   color: var(--muted);
   line-height: 1.65;
 }
 
 /* ─── Current Brief ────────────────────────────────────── */
-.brief-band {
-  background: var(--bg1);
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-}
-.brief-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 5rem 2.5rem;
+.brief-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 4rem;
   align-items: center;
 }
 .brief-meta {
-  font-size: .7rem;
+  font-size: .68rem;
   font-weight: 600;
   letter-spacing: .18em;
   text-transform: uppercase;
   color: var(--accent);
   margin-bottom: .75rem;
 }
-.brief-inner h2 {
-  font-size: clamp(1.4rem, 2.5vw, 2.2rem);
+.brief-grid h2 {
+  font-size: clamp(1.4rem, 3vw, 2.2rem);
   font-weight: 700;
   letter-spacing: -.025em;
   line-height: 1.2;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.1rem;
 }
-.brief-inner p {
-  font-size: .92rem;
+.brief-grid p {
+  font-size: .91rem;
   color: var(--muted);
   line-height: 1.75;
 }
 .brief-actions {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  justify-content: center;
+  gap: .9rem;
 }
 .brief-link {
-  font-size: .8rem;
+  font-size: .78rem;
   font-weight: 600;
   letter-spacing: .1em;
   text-transform: uppercase;
   text-decoration: none;
-  padding: .85rem 1.75rem;
+  padding: .8rem 1.5rem;
   border-radius: 2px;
-  transition: background .2s, border-color .2s, color .2s, filter .2s;
   text-align: center;
+  transition: filter .2s, background .2s, border-color .2s, color .2s;
 }
 .brief-link.primary { background: var(--accent); color: #000; }
-.brief-link.primary:hover { filter: brightness(1.1); }
+.brief-link.primary:hover { filter: brightness(1.12); }
 .brief-link.ghost { border: 1px solid var(--border); color: var(--muted); }
 .brief-link.ghost:hover { border-color: var(--accent); color: var(--accent); }
 
 /* ─── Footer ────────────────────────────────────────────── */
 footer {
   border-top: 1px solid var(--border);
-  padding: 3.5rem 2.5rem;
 }
 .footer-inner {
   max-width: 1200px;
   margin: 0 auto;
+  padding: 3rem var(--gutter);
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
@@ -332,7 +333,7 @@ footer {
   flex-wrap: wrap;
 }
 .footer-brand {
-  font-size: .82rem;
+  font-size: .8rem;
   font-weight: 700;
   letter-spacing: .14em;
   text-transform: uppercase;
@@ -341,21 +342,21 @@ footer {
 .footer-brand span {
   display: block;
   font-weight: 400;
-  font-size: .72rem;
+  font-size: .7rem;
   color: var(--faint);
-  letter-spacing: .08em;
-  margin-top: .25rem;
+  letter-spacing: .06em;
+  margin-top: .2rem;
 }
 .footer-links {
   display: flex;
-  gap: 2rem;
+  gap: 1.5rem;
   flex-wrap: wrap;
   list-style: none;
 }
 .footer-links a {
-  font-size: .75rem;
+  font-size: .73rem;
   font-weight: 500;
-  letter-spacing: .08em;
+  letter-spacing: .07em;
   text-transform: uppercase;
   color: var(--faint);
   text-decoration: none;
@@ -364,28 +365,27 @@ footer {
 .footer-links a:hover { color: var(--text); }
 .footer-copy {
   width: 100%;
-  margin-top: 2.5rem;
   padding-top: 1.5rem;
+  margin-top: 1rem;
   border-top: 1px solid var(--border);
-  font-size: .72rem;
+  font-size: .7rem;
   color: var(--faint);
-  letter-spacing: .04em;
 }
 
 /* ─── Responsive ────────────────────────────────────────── */
 @media (max-width: 900px) {
-  .nav { padding: 1rem 1.25rem; }
-  .hero { padding: 0 1.25rem 5rem; }
-  .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .about-grid { grid-template-columns: 1fr; gap: 2rem; }
   .svc-grid { grid-template-columns: 1fr; }
-  .brief-inner { grid-template-columns: 1fr; gap: 2.5rem; padding: 3.5rem 1.25rem; }
-  .section { padding: 5rem 1.25rem; }
-  .section-full { padding: 5rem 1.25rem; }
-  .footer-inner { padding: 0; }
+  .brief-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .band-inner { padding: 4.5rem var(--gutter); }
 }
 @media (max-width: 600px) {
-  .nav-links { gap: 1.25rem; }
-  .nav-links a:not(.cta) { display: none; }
+  .hero { justify-content: center; padding-top: 5.5rem; min-height: 0; }
+  .hero h1 { font-size: clamp(2.4rem, 12vw, 3.2rem); }
+  .cred-strip { gap: 1.5rem; margin-top: 2rem; }
+  .svc-card { padding: 1.75rem 1.5rem; }
+  .band-inner { padding: 3.5rem var(--gutter); }
+  .footer-links { gap: 1rem; }
 }
 @media (prefers-reduced-motion: reduce) { *, html { transition: none !important; scroll-behavior: auto !important; } }
 </style>
@@ -395,10 +395,10 @@ footer {
 <nav class="nav" id="nav" aria-label="Main navigation">
   <a href="/" class="nav-brand">Infinity Shield</a>
   <ul class="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="/archive/index.html">Threat Briefs</a></li>
-    <li><a href="/about.html">Dr. Opp</a></li>
-    <li><a href="/OppCapstoneFinal.pdf" target="_blank" rel="noopener noreferrer" class="cta">NIST Research ↗</a></li>
+    <li class="hide-sm"><a href="#about">About</a></li>
+    <li class="hide-sm"><a href="/archive/index.html">Threat Briefs</a></li>
+    <li class="hide-xs"><a href="/about.html">Dr. Opp</a></li>
+    <li><a href="/OppCapstoneFinal.pdf" target="_blank" rel="noopener noreferrer" class="cta">NIST ↗</a></li>
   </ul>
 </nav>
 
@@ -419,64 +419,62 @@ footer {
     </div>
   </section>
 
-  <div class="section-full" id="about">
-    <div class="inner">
-      <div class="section" style="padding-top:0;padding-bottom:0;">
-        <p class="eyebrow">About</p>
-        <h2 class="section-h2">Founded on service.<br>Built for results.</h2>
-        <div class="about-grid">
-          <div>
-            <p class="section-lead">Infinity Shield L.L.C. is a Service-Disabled Veteran and American Indian &amp; Alaska Native-Owned cybersecurity and IT consultancy.</p>
-          </div>
-          <div>
-            <p>Founded by Dr. Chris Opp (DIT, CISSP), Infinity Shield brings over 28 years of federal, DoD, and enterprise technology leadership to every engagement. We specialize in delivering agile, secure, and scalable solutions for organizations navigating today's complex compliance and threat landscape.</p>
-            <p>Our work spans cloud architecture, Zero Trust implementations, NIST and CMMC compliance programs, and network security for federal contractors, small businesses, and managed service providers headquartered across the country.</p>
-          </div>
+  <div class="band" id="about">
+    <div class="band-inner">
+      <p class="eyebrow">About</p>
+      <h2 class="section-h2">Founded on service.<br>Built for results.</h2>
+      <div class="about-grid">
+        <div>
+          <p class="section-lead">Infinity Shield L.L.C. is a Service-Disabled Veteran and American Indian &amp; Alaska Native-Owned cybersecurity and IT consultancy.</p>
+        </div>
+        <div>
+          <p>Founded by Dr. Chris Opp (DIT, CISSP), Infinity Shield brings over 28 years of federal, DoD, and enterprise technology leadership to every engagement. We specialize in delivering agile, secure, and scalable solutions for organizations navigating today's complex compliance and threat landscape.</p>
+          <p>Our work spans cloud architecture, Zero Trust implementations, NIST and CMMC compliance programs, and network security for federal contractors, small businesses, and managed service providers headquartered across the country.</p>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="section-full services-bg">
-    <div class="inner">
-      <div class="section" style="padding-top:0;padding-bottom:0;">
-        <p class="eyebrow">Services</p>
-        <h2 class="section-h2">What we do.</h2>
-        <div class="svc-grid" role="list">
+  <div class="band alt">
+    <div class="band-inner">
+      <p class="eyebrow">Services</p>
+      <h2 class="section-h2">What we do.</h2>
+      <div class="svc-grid" role="list">
 
-          <div class="svc-card" role="listitem">
-            <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
-            <h3>Cloud Architecture</h3>
-            <p>Cloud design and migration across AWS GovCloud, Azure IL4, GCC-High, and commercial hyperscalers. From FedRAMP boundary planning to 20+ production migrations.</p>
-          </div>
-
-          <div class="svc-card" role="listitem">
-            <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            <h3>Zero Trust &amp; Compliance</h3>
-            <p>CMMC 2.0 readiness, NIST 800-53/171 remediation, RMF A&amp;A, and Zero Trust architecture. Built for the Defense Industrial Base and federal contractor ecosystem.</p>
-          </div>
-
-          <div class="svc-card" role="listitem">
-            <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-            <h3>Network Security</h3>
-            <p>Enterprise SD-WAN, next-generation firewall platforms, network observability, and identity &amp; access management — built for scale and mission continuity.</p>
-          </div>
-
+        <div class="svc-card" role="listitem">
+          <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+          <h3>Cloud Architecture</h3>
+          <p>Cloud design and migration across AWS GovCloud, Azure IL4, GCC-High, and commercial hyperscalers. From FedRAMP boundary planning to 20+ production migrations.</p>
         </div>
+
+        <div class="svc-card" role="listitem">
+          <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <h3>Zero Trust &amp; Compliance</h3>
+          <p>CMMC 2.0 readiness, NIST 800-53/171 remediation, RMF A&amp;A, and Zero Trust architecture. Built for the Defense Industrial Base and federal contractor ecosystem.</p>
+        </div>
+
+        <div class="svc-card" role="listitem">
+          <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          <h3>Network Security</h3>
+          <p>Enterprise SD-WAN, next-generation firewall platforms, network observability, and identity &amp; access management — built for scale and mission continuity.</p>
+        </div>
+
       </div>
     </div>
   </div>
 
-  <div class="brief-band" aria-label="Current threat brief">
-    <div class="brief-inner">
-      <div>
-        <p class="brief-meta">October 2026 · Month to Date</p>
-        <h2>Current Threat Brief</h2>
-        <p>Two internet-wide trust failures, critical PHP flaws, and a certificate authority with recoverable keys — alongside exploited edge-device zero-days and credential-driven breaches at hosting, SaaS, and consumer-service providers.</p>
-      </div>
-      <div class="brief-actions">
-        <a href="/archive/2026-10.html" class="brief-link primary">Read Brief →</a>
-        <a href="/archive/index.html" class="brief-link ghost">Full Archive</a>
+  <div class="band alt" aria-label="Current threat brief">
+    <div class="band-inner">
+      <div class="brief-grid">
+        <div>
+          <p class="brief-meta">October 2026 · Month to Date</p>
+          <h2>Current Threat Brief</h2>
+          <p>Two internet-wide trust failures, critical PHP flaws, and a certificate authority with recoverable keys — alongside exploited edge-device zero-days and credential-driven breaches at hosting, SaaS, and consumer-service providers.</p>
+        </div>
+        <div class="brief-actions">
+          <a href="/archive/2026-10.html" class="brief-link primary">Read Brief →</a>
+          <a href="/archive/index.html" class="brief-link ghost">Full Archive</a>
+        </div>
       </div>
     </div>
   </div>
@@ -502,7 +500,7 @@ footer {
 
 <script>
   const nav = document.getElementById('nav');
-  const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 60);
+  const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 50);
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 </script>

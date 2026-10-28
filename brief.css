@@ -1,4 +1,4 @@
-/* Shared styles: threat briefs, archive — exact same palette as index.html */
+/* Shared styles: threat briefs, archive: exact same palette as index.html */
 :root {
   color-scheme: dark;
   --bg:      #060b10;
@@ -69,7 +69,7 @@ ol.todo { margin: 0; padding-left: 1.3em; display: flex; flex-direction: column;
 .sources li { break-inside: avoid; margin-bottom: 4px; }
 footer { font-size: .8rem; color: var(--faint); }
 
-/* ─── Nav — matches homepage exactly ─── */
+/* Nav: matches homepage exactly */
 .site-nav {
   position: sticky; top: 0; z-index: 100;
   margin-inline: -20px; padding: 1rem 2.5rem;

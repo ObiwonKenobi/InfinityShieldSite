@@ -1,243 +1,296 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Cybersecurity brief for 27 Sep - 27 Oct 2026: PHP2Shell, the eMudhra CA key failure, exploited zero-days, supply-chain attacks, major breaches, and recommended actions.">
-<style>*,*::before,*::after{box-sizing:border-box}body{margin:0}img{max-width:100%}</style><title>October 2026 Threat Brief | Infinity Shield</title>
-<link rel="icon" type="image/png" href="/favicon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Public+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
-<style>
-/* Layout: single reading column, intel-bulletin style, in the Infinity Shield dark-teal site theme (matches about.html) */
-:root{
-  color-scheme:dark;
-  --paper:#0f1a19; --surface:#1a2523; --chip:#1f2e2c; --ink:#dde8e6; --head:#e8f0ee; --muted:#8faaa7;
-  --rule:rgba(26,123,114,0.25); --teal:#1A7B72; --accent:#23a396; --teal-dim:rgba(26,123,114,0.15);
-  --crit:#f07a72; --high:#e9a25b; --med:#d8c25c;
-  --display:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
-  --body:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
-  --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
-}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <title>Infinity Shield L.L.C. — Cybersecurity &amp; Cloud Resilience</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-body{background:var(--paper);color:var(--ink);font:15px/1.7 var(--body);padding-inline:20px;overflow-x:hidden}
-.circuit-bg{position:fixed;inset:0;z-index:0;opacity:.04;background-image:url('/circuitry-bg-animated.svg');background-size:cover;background-position:center;pointer-events:none}
-.wrap,.site-nav{position:relative;z-index:1}
-h1,h2,h3{color:var(--head)}
-.wrap{max-width:880px;margin:0 auto;padding-block:32px 64px;display:flex;flex-direction:column;gap:40px}
-h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.15}
-h1{font-size:clamp(2rem,4.5vw,3rem);font-weight:800;letter-spacing:-.02em}
-h1 span{color:var(--accent)}
-h2{font-size:1.4rem;font-weight:700;letter-spacing:-.01em;padding-bottom:10px;border-bottom:1px solid var(--teal)}
-h3{font-size:1.08rem;font-weight:700;letter-spacing:-.01em}
-p{margin:0;max-width:68ch}
-a{color:var(--accent)}
-a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.mono{font-family:var(--mono);font-size:.82em}
-.label{font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+    :root {
+      --navy:   #0d2137;
+      --blue:   #1558a0;
+      --text:   #1a1a2e;
+      --muted:  #5a6a7a;
+      --border: #dde3ea;
+      --bg:     #ffffff;
+      --bg-alt: #f4f7fa;
+    }
 
-.marking{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;font-family:var(--mono);font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);border-block:1px solid var(--rule);padding-block:8px}
-.tlp{background:var(--teal-dim);border:1px solid var(--rule);color:var(--accent);padding:2px 8px;font-weight:500;border-radius:2px}
-header{display:flex;flex-direction:column;gap:14px}
-.lede{font-size:1.05rem;color:var(--muted)}
+    html { scroll-behavior: smooth; }
 
-.sev{display:inline-block;font-family:var(--mono);font-size:.68rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;padding:1px 7px;border:1px solid currentColor;border-radius:2px;white-space:nowrap}
-.sev.crit{color:var(--crit)} .sev.high{color:var(--high)} .sev.med{color:var(--med)}
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+      font-size: 1rem;
+      line-height: 1.65;
+      color: var(--text);
+      background: var(--bg);
+    }
 
-.lead{display:flex;flex-direction:column;gap:16px}
-.item{background:var(--surface);border:1px solid var(--rule);border-radius:2px;padding:22px 24px;display:flex;flex-direction:column;gap:10px}
-.item-head{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:baseline;justify-content:space-between}
-.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px 20px;margin:4px 0 0;padding-top:10px;border-top:1px dashed var(--rule)}
-.facts div{display:flex;flex-direction:column;gap:2px}
-.facts dt{font-family:var(--mono);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-.facts dd{margin:0;font-size:.9rem;font-variant-numeric:tabular-nums}
-.action{font-size:.92rem}
-.action b{font-family:var(--display);font-weight:600;color:var(--accent)}
+    /* ── Header ── */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.1rem 2rem;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
 
-section{display:flex;flex-direction:column;gap:14px}
-.tbl{overflow-x:auto;background:var(--surface);border:1px solid var(--rule)}
-table{border-collapse:collapse;width:100%;min-width:640px;font-size:.88rem;font-variant-numeric:tabular-nums}
-th,td{text-align:left;vertical-align:top;padding:10px 12px;border-bottom:1px solid var(--rule)}
-th{font-family:var(--mono);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:500;background:var(--chip)}
-tr:last-child td{border-bottom:0}
-td:first-child{font-weight:600}
-td .mono{color:var(--muted)}
+    header img {
+      height: 52px;
+      width: auto;
+    }
 
-.list{display:flex;flex-direction:column;gap:12px;margin:0;padding:0;list-style:none}
-.list li{display:grid;grid-template-columns:150px 1fr;gap:4px 16px}
-@media (max-width:560px){.list li{grid-template-columns:1fr}h1{font-size:1.9rem}}
+    header a.research-link {
+      font-size: .82rem;
+      font-weight: 500;
+      color: var(--blue);
+      text-decoration: none;
+      border: 1px solid var(--blue);
+      padding: .4rem .9rem;
+      border-radius: 4px;
+      white-space: nowrap;
+      transition: background .15s, color .15s;
+    }
+    header a.research-link:hover {
+      background: var(--blue);
+      color: #fff;
+    }
 
-ol.todo{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:8px;max-width:72ch}
-.sources{font-size:.82rem;color:var(--muted);columns:2 280px;gap:24px;margin:0;padding-left:1.1em}
-.sources li{break-inside:avoid;margin-bottom:4px}
-footer{font-size:.8rem;color:var(--muted)}
+    /* ── Hero ── */
+    .hero {
+      padding: 5rem 2rem 4.5rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
 
-.site-nav{position:sticky;top:0;z-index:100;margin-inline:-20px;padding:1rem 2.5rem;background:rgba(15,26,25,0.88);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--rule)}
-.site-nav-inner{display:flex;flex-wrap:wrap;gap:8px 24px;align-items:center;justify-content:space-between}
-.site-brand{display:flex;align-items:center;gap:.75rem;text-decoration:none;color:var(--accent);font-family:var(--display);font-weight:700;letter-spacing:.04em;text-transform:uppercase;font-size:.95rem}
-.site-brand img{height:36px;width:auto}
-.site-links{display:flex;gap:2rem;list-style:none;margin:0;padding:0;font-family:var(--body);font-size:.85rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase}
-.site-links a{color:var(--muted);text-decoration:none;transition:color .2s}
-.site-links a:hover,.site-links a[aria-current="page"]{color:var(--accent)}
-@media (max-width:768px){.site-nav{padding:.9rem 1.25rem}.site-links{gap:1.25rem;font-size:.78rem}}
-@media (prefers-reduced-motion:reduce){*{transition:none!important}}
-</style>
+    .hero .eyebrow {
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 1rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--navy);
+      margin-bottom: 1.25rem;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      color: var(--muted);
+      max-width: 580px;
+      margin-bottom: 2rem;
+    }
+
+    .hero .contact-btn {
+      display: inline-block;
+      background: var(--navy);
+      color: #fff;
+      font-size: .9rem;
+      font-weight: 600;
+      padding: .7rem 1.6rem;
+      border-radius: 4px;
+      text-decoration: none;
+      letter-spacing: .02em;
+      transition: background .15s;
+    }
+    .hero .contact-btn:hover { background: var(--blue); }
+
+    /* ── Divider ── */
+    hr.section-rule {
+      border: none;
+      border-top: 1px solid var(--border);
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* ── About ── */
+    .about {
+      background: var(--bg-alt);
+      padding: 4rem 2rem;
+    }
+
+    .about-inner {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .about-inner h2 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 1rem;
+    }
+
+    .about-inner p {
+      color: var(--muted);
+      margin-bottom: .75rem;
+    }
+
+    .about-inner .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem 1.5rem;
+      margin-top: 1.5rem;
+      font-size: .85rem;
+      color: var(--muted);
+    }
+
+    .about-inner .meta span::before {
+      content: "— ";
+      color: var(--blue);
+    }
+
+    /* ── Services ── */
+    .services {
+      padding: 4rem 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .services h2 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 2rem;
+    }
+
+    .service-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .service-card {
+      padding: 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--bg);
+    }
+
+    .service-card h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: .4rem;
+    }
+
+    .service-card .indicator {
+      display: block;
+      width: 28px;
+      height: 3px;
+      background: var(--blue);
+      border-radius: 2px;
+      margin-bottom: .9rem;
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 1.5rem 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: .5rem;
+      font-size: .82rem;
+      color: var(--muted);
+      background: var(--bg);
+    }
+
+    footer a {
+      color: var(--blue);
+      text-decoration: none;
+    }
+    footer a:hover { text-decoration: underline; }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      header { padding: 1rem; }
+      .hero  { padding: 3rem 1.25rem; }
+      .about, .services { padding: 3rem 1.25rem; }
+      footer { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
 </head>
 <body>
-<div class="circuit-bg" aria-hidden="true"></div>
 
-<nav class="site-nav" aria-label="Main navigation">
-  <div class="site-nav-inner">
-    <a href="/" class="site-brand"><img src="/logo-transparent.png" alt="">Infinity Shield</a>
-    <ul class="site-links">
-      <li><a href="/" aria-current="page">Threat Brief</a></li>
-      <li><a href="/archive/">Archive</a></li>
-      <li><a href="/about.html">About</a></li>
-    </ul>
-  </div>
-</nav>
-<div class="wrap">
   <header>
-    <div class="marking"><span class="tlp">TLP:CLEAR</span><span>Period 27 Sep – 27 Oct 2026</span><span>Issued 27 Oct 2026</span></div>
-    <h1>October 2026 <span>Threat Brief</span></h1>
-    <p class="lede">A month defined by two internet-wide trust failures, critical PHP flaws, and a certificate authority with recoverable keys, plus a run of exploited edge-device zero-days and credential-driven breaches at hosting and SaaS providers.</p>
+    <img src="/logo-transparent.png" alt="Infinity Shield L.L.C." />
+    <a class="research-link" href="/OppCapstoneFinal.pdf" target="_blank" rel="noopener noreferrer">
+      NIST 800-171 Research ↗
+    </a>
   </header>
 
-  <section class="lead" aria-labelledby="top">
-    <h2 id="top">Top items</h2>
+  <main>
 
-    <article class="item">
-      <div class="item-head"><h3>PHP2Shell: critical flaws in PHP core</h3><span class="sev crit">Critical · exploitation attempts</span></div>
-      <p>Two critical flaws affect nearly every PHP version back to 5.4, across PHP-FPM, Apache mod_php, php-cgi, FrankenPHP, and LiteSpeed, with mod_php at highest risk. Wiz Research, Calif, and OpenAI's Codex Security team reported them, and the researchers say AI tools helped turn them into working exploits. Details leaked online on 20 Oct, and PHP moved its release up to 21 Oct. Amazon logged exploitation attempts from 17 Oct, four days before the patches, and Cloudflare and watchTowr also reported attempts. Sources disagree on impact: Amazon's CISO says the flaws are being broadly exploited, while Dataminr reports only scanning and non-working exploits with no known compromises.</p>
-      <dl class="facts">
-        <div><dt>CVE</dt><dd class="mono">CVE-2026-109618<br>CVE-2026-109619</dd></div>
-        <div><dt>CVSS v4</dt><dd class="mono">9.2 (PHP rating)</dd></div>
-        <div><dt>Fixed in</dt><dd class="mono">8.5.12 · 8.4.27 · 8.3.36 · 8.2.35</dd></div>
-      </dl>
-      <p class="action"><b>Action:</b> Patch every PHP install now, including vendor appliances and hosted CMSs. Hunt for web shells on anything exposed since 17 Oct. Source backports exist for 7.4, 8.0 and 8.1, which PHP no longer supports, and distributions may backport fixes under older version numbers, so check changelogs for the CVEs. Disabling session upload progress and setting memory limits reduce exposure but do not make servers safe.</p>
-    </article>
+    <section class="hero">
+      <p class="eyebrow">Infinity Shield L.L.C.</p>
+      <h1>Cybersecurity &amp;<br>Cloud Resilience</h1>
+      <p>Veteran-led. Compliance-Driven. Scalable Protection for Your Digital Future.</p>
+      <a class="contact-btn" href="mailto:chris@infinityshield.co">Get in Touch</a>
+    </section>
 
-    <article class="item">
-      <div class="item-head"><h3>eMudhra CA: intermediate certificate keys trivially recoverable</h3><span class="sev crit">Critical · contained</span></div>
-      <p>Eight intermediate CA certificates from the Indian certificate authority eMudhra, six for TLS and two for code signing, were generated with far too little randomness. Each private key was smaller than 256, so anyone holding the public certificate could test every possible value; recovered keys included 4, 56, and 115. A researcher found it with a CCADB check on 17 Oct. eMudhra revoked the certificates on 18 Oct, Apple blocked them on 19 Oct, and Microsoft followed on 20 Oct, the day Mozilla made the incident public. eMudhra says only one of the eight was deployed in production, none issued end-entity certificates and its infrastructure was not breached. On 22 Oct it said it would exit the global SSL/TLS business.</p>
-      <dl class="facts">
-        <div><dt>Certs affected</dt><dd class="mono">8 intermediates</dd></div>
-        <div><dt>Keys reported</dt><dd class="mono">4, 56, 115</dd></div>
-        <div><dt>Discovered / revoked</dt><dd class="mono">17 Oct / 18 Oct</dd></div>
-        <div><dt>Browser blocks</dt><dd class="mono">19–20 Oct</dd></div>
-      </dl>
-      <p class="action"><b>Action:</b> Inventory any certificates chaining to eMudhra and replace them with another CA. Make sure browsers and OS trust stores are current. Check Certificate Transparency logs for certificates issued for your domains under these intermediates.</p>
-    </article>
+    <hr class="section-rule" />
 
-    <article class="item">
-      <div class="item-head"><h3>ConnectWise Cloud Backup (formerly SkyKick) used to reach Microsoft 365 tenants</h3><span class="sev crit">Critical · supply chain</span></div>
-      <p>Starting 15 Oct, attackers abused the backup platform's application identities to sign into customer Microsoft 365 tenants, so MFA never applied. Huntress confirmed unauthorized sign-ins in 162 tenants by 16 Oct and later found nearly 1,000 tenants with sign-in activity from the attacker's address, with more than 300 successful. On 21 Oct Microsoft attributed the campaign to Storm-0940, a China-aligned group, and said it used ARTEX, an open-source agentic AI penetration-testing framework, and tried to sign in to more than 2,250 tenants. In some cases the attackers reached privileged cloud access in under three hours and added credentials and role changes that can persist after the app itself is fixed. ConnectWise says it has no indication that backup data was compromised and began restoring the service in stages on 21 Oct.</p>
-      <dl class="facts">
-        <div><dt>Confirmed (Huntress)</dt><dd class="mono">162 tenants</dd></div>
-        <div><dt>Targeted (Microsoft)</dt><dd class="mono">2,250+ tenants</dd></div>
-        <div><dt>Activity window</dt><dd class="mono">From 15 Oct</dd></div>
-      </dl>
-      <p class="action"><b>Action:</b> If you or your MSP use this product, review Entra sign-in logs for its service principals back to at least 15 Oct, audit application secrets, certificates, OAuth grants, and Graph activity added since 13 Oct, and review role changes. Keep ConnectWise integrations disabled until ConnectWise confirms restoration is safe, and do not delete the enterprise applications as a first step.</p>
-    </article>
-  </section>
+    <section class="about">
+      <div class="about-inner">
+        <h2>About Infinity Shield</h2>
+        <p>
+          Founded by Dr. Chris Opp, Infinity Shield is an American Indian and
+          Service-Disabled Veteran-Owned cybersecurity and information technology
+          consultancy headquartered in Cheyenne, Wyoming. Backed by over 28 years
+          of federal and leadership experience, we specialize in delivering agile,
+          scalable, and secure IT solutions for small and mid-sized businesses,
+          managed service providers, and federal organizations and contractors.
+        </p>
+        <div class="meta">
+          <span>American Indian &amp; SDVOSB</span>
+          <span>28+ Years Experience</span>
+          <span>Cheyenne, WY</span>
+        </div>
+      </div>
+    </section>
 
-  <section aria-labelledby="vulns">
-    <h2 id="vulns">Exploited vulnerabilities and zero-days</h2>
-    <div class="tbl"><table>
-      <thead><tr><th>Product</th><th>CVE</th><th>What it allows</th><th>Status</th></tr></thead>
-      <tbody>
-        <tr><td>Ivanti Connect Secure VPN</td><td class="mono">CVE-2026-104935 + 2 chained</td><td>Chained authentication bypass, remote code execution, and privilege escalation giving root on fully patched appliances. Actor UTA0576 harvested Active Directory credentials, BitLocker recovery keys, and LAPS data with custom Python LDAP and Kerberos tools, and deleted evidence from debug and audit logs. Exploited since 1–3 Oct; added to CISA KEV on 13 Oct. Ivanti's Integrity Checker may not detect compromise because commands run in memory.</td><td><span class="sev crit">Exploited</span><br>Partial fix</td></tr>
-        <tr><td>Microsoft Patch Tuesday (13 Oct)</td><td class="mono">CVE-2026-96951 (MotW bypass)</td><td>Record ~1,411 CVEs by BleepingComputer's count (some outlets say 1,413), 70 rated Critical. Three zero-days: the exploited Windows Shell Mark of the Web bypass, a publicly disclosed .NET Framework bypass of Windows Defender Application Control (CVE-2026-108398), and a publicly disclosed MessagePack-CSharp denial of service (CVE-2026-92707).</td><td><span class="sev high">Exploited</span><br>Patched</td></tr>
-        <tr><td>Cisco Catalyst SD-WAN Manager</td><td class="mono">CVE-2026-76504</td><td>Unauthenticated admin access</td><td><span class="sev crit">Exploited</span></td></tr>
-        <tr><td>Fortinet FortiMail</td><td class="mono">CVE-2026-104286</td><td>Arbitrary file write, CVSS 9.8</td><td><span class="sev crit">Exploited</span><br>CISA KEV</td></tr>
-        <tr><td>Citrix NetScaler ADC / Gateway</td><td class="mono">CVE-2026-88771 · 88772 · 88779 · 107406</td><td>CVE-2026-88771 (unauthenticated command execution) and CVE-2026-88772 (memory overflow with DTLS enabled) were disclosed 27 Sep and added to CISA KEV the same day, with exploitation since early September per Mandiant. CVE-2026-88779 (disclosed 4 Oct, CVSS 8.7) is a SAML memory overflow that causes denial of service and is being exploited. CVE-2026-107406 (disclosed 8 Oct, CVSS 9.5) is a separate SAML memory overflow with no known exploitation. Earlier September fixes may not cover the later flaws, so a second upgrade may be needed.</td><td><span class="sev crit">Exploited</span><br>CISA KEV</td></tr>
-        <tr><td>AhsayCBS backup (MSP platform)</td><td class="mono">CVE-2026-105133 / 105134</td><td>Auth bypass plus unauthenticated RCE. Attackers deployed JSP web shells and XMRig miners. The first fix was incomplete.</td><td><span class="sev high">Exploited</span><br>Hotfix 10.3.4.45 / 9.15.2.70</td></tr>
-        <tr><td>Arista VeloCloud Orchestrator</td><td class="mono">CVE-2026-93952</td><td>The third exploited VeloCloud zero-day in four months</td><td><span class="sev high">Exploited</span><br>CISA KEV</td></tr>
-        <tr><td>BeyondTrust Remote Support</td><td class="mono">CVE-2026-102764</td><td>Exploited since late August by a China-linked group</td><td><span class="sev high">Exploited</span></td></tr>
-        <tr><td>Palo Alto PAN-OS · Cisco Secure Email</td><td class="mono">CVE-2026-0322 · CVE-2026-76519</td><td>Code injection and path traversal, added to CISA KEV on 14 Oct</td><td><span class="sev high">Exploited</span></td></tr>
-        <tr><td>Zammad helpdesk 6.3.0–6.5.4</td><td class="mono">CVE-2026-102489 / 102490</td><td>Privilege escalation chain used to breach DIVD, the Dutch vulnerability-disclosure institute. Investigators describe the intrusion as agentic-AI-driven.</td><td><span class="sev high">Exploited</span><br>CISA KEV</td></tr>
-        <tr><td>Atlassian Jira / Confluence / Bitbucket and other Data Center products</td><td class="mono">CVE-2026-21589</td><td>Unauthenticated file access, CVSS 9.3, across eight products including Bamboo, Crowd, Crucible, and Fisheye. Disclosed 5 Oct. Previdian reported exploitation attempts on its honeypots within two hours of watchTowr publishing a proof of concept; no confirmed compromises were reported.</td><td><span class="sev med">Exploit attempts</span></td></tr>
-      </tbody>
-    </table></div>
-  </section>
+    <section class="services">
+      <h2>Our Services</h2>
+      <div class="service-grid">
+        <div class="service-card">
+          <span class="indicator"></span>
+          <h3>Cloud Services</h3>
+        </div>
+        <div class="service-card">
+          <span class="indicator"></span>
+          <h3>Network Security</h3>
+        </div>
+        <div class="service-card">
+          <span class="indicator"></span>
+          <h3>Zero Trust</h3>
+        </div>
+      </div>
+    </section>
 
-  <section aria-labelledby="supply">
-    <h2 id="supply">Supply chain</h2>
-    <ul class="list">
-      <li><span class="label">LiteLLM 1.107.0</span><p>A poisoned release went out on PyPI and the official Docker images on 21 Oct. The PyPI wheels were live for under two hours and the Docker tags stayed pointed at the bad image for a few hours more. The release pipeline was altered using stolen GitHub credentials from three developer accounts. It ran a credential stealer at every Python startup, even if LiteLLM was never imported, and installed a loader that fetches and runs code from attacker infrastructure every hour. Anyone who installed it should treat every secret on that host as exposed; the clean version is 1.106.2.</p></li>
-      <li><span class="label">npm</span><p>Eight malicious packages in a long-running data-theft campaign reached about 40,000 downloads.</p></li>
-      <li><span class="label">AI coding agents</span><p>More than 13,000 sensitive screenshots taken during agent-driven development workflows were found committed to public GitHub repositories.</p></li>
-      <li><span class="label">JAMIS Prime (hosted ERP)</span><p>Hosted JAMIS Prime environments used by government contractors have been disrupted for about a week, with access returning unevenly since late October. A post from the accounting firm Corporate Results, Inc. says reports and community updates tie the outage to a security compromise of the environment, and that customer instances are being rebuilt on new AWS infrastructure instead of cleaned in place. Some tenants have basic logins back but report intermittent performance, delayed database imports, and broken integrations and reports. No JAMIS statement was found in the sources reviewed, so the cause, scope, and number of customers affected are unconfirmed. For contractors the open questions are DCAA timekeeping and billing records kept by hand during the outage, whether the rebuilt environment keeps the FedRAMP Moderate equivalency the post says JAMIS Prime holds, and whether CUI held in an instance triggered 72-hour DFARS 252.204-7012 reporting to DC3.</p></li>
-    </ul>
-  </section>
+  </main>
 
-  <section aria-labelledby="breaches">
-    <h2 id="breaches">Data breaches</h2>
-    <div class="tbl"><table>
-      <thead><tr><th>Organization</th><th>People / records</th><th>Cause and data</th></tr></thead>
-      <tbody>
-        <tr><td>Oracle Health (Cerner)</td><td>~20M patients</td><td>Customer credentials stolen and used on an unmigrated legacy server. The intrusion ran from January to April 2025; the near-20M tally surfaced from a Texas attorney general filing posted 2 Oct. Oracle has not published an official figure.</td></tr>
-        <tr><td>Burger King Japan</td><td>~11.18M app members</td><td>Names, birth dates, gender, emails, phone numbers, and order history taken 2–7 Oct and announced 15 Oct. The server held no card numbers.</td></tr>
-        <tr><td>Denmark CPR register</td><td>~8.8M (≈80% of population)</td><td>Third-party breach combined with brute-forced CPR numbers</td></tr>
-        <tr><td>Daiichikosho (karaoke)</td><td>~8.72M customers</td><td>Breached through a contractor's system</td></tr>
-        <tr><td>iRhythm Technologies</td><td>8.2M (revised up from 370K)</td><td>Zio cardiac monitor maker. Insurance and patient data taken during a June intrusion, followed by a ransom demand.</td></tr>
-        <tr><td>Times Mobility (Japan)</td><td>~6.6M accounts</td><td>Driver's licence images exposed</td></tr>
-        <tr><td>ETS</td><td>~7M California students</td><td>Files copied between 22 May and 18 Sep using one compromised login. Discovered 25 Sep, districts told 2 Oct. Includes disability status and program eligibility; no SSNs.</td></tr>
-        <tr><td>Zeabur (hosting)</td><td>3.2M env-var records / 321K accounts</td><td>A leaked non-expiring admin token. The platform will shut down by 31 Dec.</td></tr>
-        <tr><td>Pentagon DMDC</td><td>~3.05M people</td><td>Unencrypted SSNs and military personnel data accessed Oct 2025–Jul 2026. Disclosed 1 Oct.</td></tr>
-        <tr><td>Nikkei</td><td>~1.83M records</td><td>Stolen credentials to a cloud development service. Its third incident in about a month.</td></tr>
-        <tr><td>Railway (hosting)</td><td>Limited</td><td>Customer environment variables, some decrypted. Part of a wider campaign against hosting and AI-inference providers.</td></tr>
-        <tr><td>IDC Frontier (SoftBank)</td><td>495 companies and local governments disrupted</td><td>Ransomware attack on 7 Oct. Separately, Japan's cybersecurity strategy head described a "state of emergency in cyberspace" on 15 Oct after attacks on more than 20 major companies.</td></tr>
-        <tr><td>GMO Onamae Desktop Cloud</td><td>Up to ~26.7K servers</td><td>Confirmed 20 Oct. An outside party installed malware and GMO shut down customer servers. How they got in has not been disclosed, and no data leak is confirmed.</td></tr>
-      </tbody>
-    </table></div>
-    <p class="label">Unverified claims: PwC (Everest claims ~590 GB, posted 22 Oct; PwC confirms only an incident at a third-party platform that hosts employee learning records), JAMIS Prime outage (cause, timeline, and scope rest on one post by Corporate Results, Inc., a firm that sells recovery and ERP migration services, plus unnamed community updates; no JAMIS statement or other coverage was found)</p>
-  </section>
-
-  <section aria-labelledby="other">
-    <h2 id="other">Law enforcement and research</h2>
-    <ul class="list">
-      <li><span class="label">KillSec takedown</span><p>An international operation seized the ransomware group's leak site and five core servers holding at least 110 TB of stolen data. Suspects were arrested.</p></li>
-      <li><span class="label">Pwn2Own Ireland</span><p>98 zero-days and $1.262M paid out. The Galaxy S26 was compromised seven times and the Pixel 10 three times. Nobody registered to attack the iPhone 17.</p></li>
-    </ul>
-  </section>
-
-  <section aria-labelledby="do">
-    <h2 id="do">What to do this week</h2>
-    <ol class="todo">
-      <li>Patch PHP everywhere and hunt for web shells on internet-facing PHP hosts, checking vendor changelogs for the two CVEs.</li>
-      <li>Replace any certificate chaining to eMudhra.</li>
-      <li>Patch Ivanti, Cisco SD-WAN, FortiMail, NetScaler, VeloCloud, BeyondTrust, and PAN-OS, then check those devices for signs of prior compromise. Patching does not remove an attacker who is already in.</li>
-      <li>Apply October Patch Tuesday, starting with the exploited Windows Shell Mark of the Web bypass (CVE-2026-96951).</li>
-      <li>Audit third-party app identities in Microsoft 365 (backup, MSP, and RMM tools) and rotate their secrets.</li>
-      <li>Check Python environments for LiteLLM 1.107.0, move to 1.106.2, and rotate secrets on any host that installed it.</li>
-      <li>Replace long-lived admin tokens and plaintext environment variables at hosting providers with short-lived, scoped credentials.</li>
-      <li>If you run hosted JAMIS Prime, document when the system went down and how manual timecards were collected, signed, and approved, ask JAMIS in writing whether the rebuilt environment keeps your FedRAMP equivalency and security boundary, and decide whether DFARS 252.204-7012 reporting applies to CUI held in the instance.</li>
-    </ol>
-  </section>
-
-  <section aria-labelledby="src">
-    <h2 id="src">Sources</h2>
-    <ul class="sources">
-      <li><a href="https://thehackernews.com/2026/10/php-issues-emergency-patches-for-two.html">The Hacker News: PHP2Shell patches</a></li>
-      <li><a href="https://thehackernews.com/2026/10/someone-tried-to-exploit-php2shell-4.html">The Hacker News: pre-disclosure exploitation</a></li>
-      <li><a href="https://techcrunch.com/2026/10/24/php-ocalypse-how-two-critical-web-bugs-almost-broke-the-internet/">TechCrunch: PHP-ocalypse</a></li>
-      <li><a href="https://watchtowr.com/intelligence/php-cve-2026-109618-faq/">watchTowr: CVE-2026-109618 FAQ</a></li>
-      <li><a href="https://www.helpnetsecurity.com/2026/10/21/emudhra-certificates-private-keys-compromised/">Help Net Security: eMudhra keys</a></li>
-      <li><a href="https://blog.cloudflare.com/emudhra-certificate-compromise/">Cloudflare: eMudhra certificate compromise</a></li>
-      <li><a href="https://thehackernews.com/2026/10/emudhra-to-exit-global-ssltls-business.html">The Hacker News: eMudhra exits TLS</a></li>
-      <li><a href="https://www.helpnetsecurity.com/2026/10/01/pentagon-dmdc-data-breach-3-million-people/">Help Net Security: Pentagon DMDC</a></li>
-      <li><a href="https://playciso.com/blog/october-2026-cybersecurity-breaches-roundup">PlayCISO: October 2026 roundup</a></li>
-      <li><a href="https://www.sherlockforensics.com/blog/2026-10-14-weekly-security-roundup.html">Sherlock Forensics: 7–14 Oct roundup</a></li>
-      <li><a href="https://threataft.com/articles/global-cybersecurity-week-zero-days-ai-attacks-breaches-30-sept-7-oct-2026">ThreatAft: 30 Sep–7 Oct roundup</a></li>
-      <li><a href="https://www.duocircle.com/blog/cybersecurity-news-update-week-41-of-2026">DuoCircle: week 41</a></li>
-      <li><a href="https://www.cri4results.com/post/when-the-erp-goes-dark-navigating-the-jamis-outage-dcaa-compliance-and-your-options">Corporate Results, Inc.: When the ERP goes dark (JAMIS outage)</a></li>
-    </ul>
-  </section>
-
-  <footer>Compiled from public reporting as of 27 Oct 2026. Figures are as first reported and may be revised. · <a href="/about.html">About Infinity Shield</a></footer>
-</div>
+  <footer>
+    <span>&copy; 2025 Infinity Shield L.L.C.</span>
+    <span>
+      <a href="mailto:chris@infinityshield.co">chris@infinityshield.co</a>
+      &nbsp;&middot;&nbsp;
+      Cheyenne, WY
+    </span>
+  </footer>
 
 </body>
 </html>

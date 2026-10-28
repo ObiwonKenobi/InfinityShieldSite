@@ -1,295 +1,546 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" type="image/png" href="/favicon.png" />
   <title>Infinity Shield L.L.C. — Cybersecurity &amp; Cloud Resilience</title>
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700;900&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─── Tokens ─────────────────────────────────────────── */
     :root {
-      --navy:   #0d2137;
-      --blue:   #1558a0;
-      --text:   #1a1a2e;
-      --muted:  #5a6a7a;
-      --border: #dde3ea;
-      --bg:     #ffffff;
-      --bg-alt: #f4f7fa;
+      --bg:         #f6f8fb;
+      --bg-alt:     #edf1f7;
+      --bg-dark:    #0d1f30;
+      --surface:    #ffffff;
+      --text:       #18253a;
+      --muted:      #56697c;
+      --subtle:     #8499ae;
+      --accent:     #1654a0;
+      --accent-lt:  #dce9f8;
+      --border:     #cdd8e3;
+      --border-lt:  #e4ecf3;
     }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg:         #111d29;
+        --bg-alt:     #162131;
+        --bg-dark:    #080f17;
+        --surface:    #172233;
+        --text:       #dce8f2;
+        --muted:      #839db2;
+        --subtle:     #5a7590;
+        --accent:     #5b9fd4;
+        --accent-lt:  #162840;
+        --border:     #243546;
+        --border-lt:  #1c2e40;
+        color-scheme: dark;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg:         #111d29;
+      --bg-alt:     #162131;
+      --bg-dark:    #080f17;
+      --surface:    #172233;
+      --text:       #dce8f2;
+      --muted:      #839db2;
+      --subtle:     #5a7590;
+      --accent:     #5b9fd4;
+      --accent-lt:  #162840;
+      --border:     #243546;
+      --border-lt:  #1c2e40;
+      color-scheme: dark;
+    }
+
+    /* ─── Reset ──────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     html { scroll-behavior: smooth; }
 
     body {
-      font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+      font-family: "Source Sans 3", system-ui, -apple-system, sans-serif;
       font-size: 1rem;
-      line-height: 1.65;
+      line-height: 1.7;
       color: var(--text);
       background: var(--bg);
     }
 
-    /* ── Header ── */
+    /* ─── Header / Nav ───────────────────────────────────── */
     header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .header-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: .9rem 2rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 1.1rem 2rem;
-      border-bottom: 1px solid var(--border);
-      background: var(--bg);
-      position: sticky;
-      top: 0;
-      z-index: 100;
+      gap: 1.5rem;
     }
 
-    header img {
-      height: 52px;
+    .logo {
+      flex-shrink: 0;
+    }
+    .logo img {
+      height: 46px;
       width: auto;
+      display: block;
     }
 
-    header a.research-link {
-      font-size: .82rem;
-      font-weight: 500;
-      color: var(--blue);
+    nav {
+      display: flex;
+      align-items: center;
+      gap: .2rem;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      font-size: .83rem;
+      font-weight: 600;
+      color: var(--muted);
       text-decoration: none;
-      border: 1px solid var(--blue);
-      padding: .4rem .9rem;
+      padding: .35rem .7rem;
       border-radius: 4px;
+      transition: color .15s, background .15s;
       white-space: nowrap;
-      transition: background .15s, color .15s;
     }
-    header a.research-link:hover {
-      background: var(--blue);
-      color: #fff;
-    }
+    nav a:hover { color: var(--text); background: var(--bg-alt); }
 
-    /* ── Hero ── */
+    nav a.nav-cta {
+      color: var(--accent);
+      border: 1.5px solid var(--accent);
+      margin-left: .4rem;
+    }
+    nav a.nav-cta:hover { background: var(--accent); color: #fff; }
+
+    /* ─── Hero ───────────────────────────────────────────── */
     .hero {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
       padding: 5rem 2rem 4.5rem;
-      max-width: 800px;
-      margin: 0 auto;
     }
 
-    .hero .eyebrow {
-      font-size: .78rem;
+    .hero-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: .45rem;
+      font-size: .72rem;
       font-weight: 600;
       letter-spacing: .1em;
       text-transform: uppercase;
-      color: var(--blue);
-      margin-bottom: 1rem;
+      color: var(--accent);
+      margin-bottom: 1.1rem;
+    }
+    .hero-badge::before {
+      content: "";
+      display: inline-block;
+      width: 18px;
+      height: 2px;
+      background: var(--accent);
+      border-radius: 2px;
     }
 
     .hero h1 {
-      font-size: clamp(2rem, 5vw, 3rem);
-      font-weight: 700;
-      line-height: 1.2;
-      color: var(--navy);
+      font-family: "Merriweather", Georgia, serif;
+      font-size: clamp(2rem, 4.5vw, 3rem);
+      font-weight: 900;
+      line-height: 1.15;
+      color: var(--text);
+      text-wrap: balance;
       margin-bottom: 1.25rem;
     }
 
-    .hero p {
+    .hero-sub {
       font-size: 1.1rem;
       color: var(--muted);
-      max-width: 580px;
-      margin-bottom: 2rem;
+      max-width: 520px;
+      margin-bottom: 2.25rem;
     }
 
-    .hero .contact-btn {
+    .hero-actions {
+      display: flex;
+      gap: .75rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .btn {
       display: inline-block;
-      background: var(--navy);
-      color: #fff;
-      font-size: .9rem;
+      font-size: .88rem;
       font-weight: 600;
-      padding: .7rem 1.6rem;
-      border-radius: 4px;
+      padding: .65rem 1.4rem;
+      border-radius: 5px;
       text-decoration: none;
-      letter-spacing: .02em;
-      transition: background .15s;
+      transition: background .15s, color .15s, border-color .15s;
+      white-space: nowrap;
     }
-    .hero .contact-btn:hover { background: var(--blue); }
-
-    /* ── Divider ── */
-    hr.section-rule {
-      border: none;
-      border-top: 1px solid var(--border);
-      max-width: 1100px;
-      margin: 0 auto;
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      border: 1.5px solid var(--accent);
     }
+    .btn-primary:hover { filter: brightness(1.12); }
 
-    /* ── About ── */
-    .about {
+    .btn-ghost {
+      background: transparent;
+      color: var(--muted);
+      border: 1.5px solid var(--border);
+    }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* Credential strip on the right side of hero */
+    .hero-creds {
+      display: flex;
+      flex-direction: column;
+      gap: .6rem;
+      padding: 1.5rem 1.75rem;
       background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      min-width: 190px;
+    }
+    .cred-item {
+      font-size: .78rem;
+      font-weight: 600;
+      color: var(--muted);
+      line-height: 1.3;
+    }
+    .cred-item strong {
+      display: block;
+      font-size: .82rem;
+      color: var(--text);
+      margin-bottom: .1rem;
+    }
+
+    /* ─── About ──────────────────────────────────────────── */
+    .about {
       padding: 4rem 2rem;
     }
 
     .about-inner {
-      max-width: 720px;
+      max-width: 1100px;
       margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 3.5rem;
+      align-items: start;
+    }
+
+    .section-label {
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: .6rem;
     }
 
     .about-inner h2 {
-      font-size: 1.35rem;
+      font-family: "Merriweather", Georgia, serif;
+      font-size: 1.4rem;
       font-weight: 700;
-      color: var(--navy);
-      margin-bottom: 1rem;
+      color: var(--text);
+      line-height: 1.3;
     }
 
-    .about-inner p {
+    .about-body p {
       color: var(--muted);
       margin-bottom: .75rem;
+      max-width: 620px;
     }
 
-    .about-inner .meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: .5rem 1.5rem;
-      margin-top: 1.5rem;
-      font-size: .85rem;
-      color: var(--muted);
-    }
-
-    .about-inner .meta span::before {
-      content: "— ";
-      color: var(--blue);
-    }
-
-    /* ── Services ── */
+    /* ─── Services ───────────────────────────────────────── */
     .services {
+      background: var(--bg-alt);
+      border-top: 1px solid var(--border-lt);
+      border-bottom: 1px solid var(--border-lt);
       padding: 4rem 2rem;
+    }
+
+    .services-inner {
       max-width: 1100px;
       margin: 0 auto;
     }
 
-    .services h2 {
-      font-size: 1.35rem;
-      font-weight: 700;
-      color: var(--navy);
+    .services-header {
       margin-bottom: 2rem;
     }
 
     .service-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      grid-template-columns: repeat(3, 1fr);
       gap: 1.25rem;
     }
 
     .service-card {
-      padding: 1.5rem;
+      background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 6px;
-      background: var(--bg);
+      padding: 1.6rem 1.5rem;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .service-card:hover {
+      border-color: var(--accent);
+      box-shadow: 0 2px 12px rgba(21, 84, 160, .08);
+    }
+
+    .service-icon {
+      width: 32px;
+      height: 32px;
+      margin-bottom: 1rem;
+      color: var(--accent);
     }
 
     .service-card h3 {
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--navy);
+      font-family: "Merriweather", Georgia, serif;
+      font-size: .97rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    /* ─── Briefs callout ─────────────────────────────────── */
+    .briefs-band {
+      padding: 3rem 2rem;
+      border-bottom: 1px solid var(--border-lt);
+    }
+
+    .briefs-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .briefs-inner p {
+      font-size: .95rem;
+      color: var(--muted);
+      max-width: 480px;
+    }
+
+    .briefs-inner h3 {
+      font-family: "Merriweather", Georgia, serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text);
       margin-bottom: .4rem;
     }
 
-    .service-card .indicator {
-      display: block;
-      width: 28px;
-      height: 3px;
-      background: var(--blue);
-      border-radius: 2px;
-      margin-bottom: .9rem;
+    /* ─── Footer ─────────────────────────────────────────── */
+    footer {
+      background: var(--bg-dark);
+      color: #8ca5bb;
+      padding: 2.5rem 2rem;
     }
 
-    /* ── Footer ── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 1.5rem 2rem;
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
       display: flex;
-      flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
-      gap: .5rem;
-      font-size: .82rem;
-      color: var(--muted);
-      background: var(--bg);
+      gap: 1.5rem;
+      flex-wrap: wrap;
     }
 
-    footer a {
-      color: var(--blue);
+    .footer-brand {
+      font-family: "Merriweather", Georgia, serif;
+      font-size: .88rem;
+      font-weight: 700;
+      color: #c8d9e8;
+    }
+    .footer-brand span {
+      display: block;
+      font-family: "Source Sans 3", sans-serif;
+      font-weight: 400;
+      font-size: .74rem;
+      color: #607a8e;
+      margin-top: .15rem;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      font-size: .8rem;
+    }
+    .footer-links a {
+      color: #7a96ab;
       text-decoration: none;
+      transition: color .15s;
     }
-    footer a:hover { text-decoration: underline; }
+    .footer-links a:hover { color: #c8d9e8; }
 
-    /* ── Responsive ── */
-    @media (max-width: 600px) {
-      header { padding: 1rem; }
-      .hero  { padding: 3rem 1.25rem; }
-      .about, .services { padding: 3rem 1.25rem; }
-      footer { flex-direction: column; align-items: flex-start; }
+    .footer-copy {
+      font-size: .74rem;
+      color: #4e6575;
+      width: 100%;
+      border-top: 1px solid #1e3348;
+      padding-top: 1.25rem;
+      margin-top: .5rem;
+    }
+
+    /* ─── Responsive ─────────────────────────────────────── */
+    @media (max-width: 800px) {
+      .hero-inner    { grid-template-columns: 1fr; }
+      .hero-creds    { flex-direction: row; flex-wrap: wrap; min-width: 0; gap: 1rem; }
+      .about-inner   { grid-template-columns: 1fr; gap: 1.5rem; }
+      .service-grid  { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 520px) {
+      .header-inner { padding: .8rem 1rem; }
+      .hero         { padding: 3rem 1rem 2.5rem; }
+      .about, .services, .briefs-band { padding: 2.5rem 1rem; }
+      nav a:not(.nav-cta) { display: none; }
     }
   </style>
 </head>
 <body>
 
   <header>
-    <img src="/logo-transparent.png" alt="Infinity Shield L.L.C." />
-    <a class="research-link" href="/OppCapstoneFinal.pdf" target="_blank" rel="noopener noreferrer">
-      NIST 800-171 Research ↗
-    </a>
+    <div class="header-inner">
+      <a class="logo" href="/">
+        <img src="/logo-transparent.png" alt="Infinity Shield L.L.C." />
+      </a>
+      <nav>
+        <a href="/about.html">About</a>
+        <a href="/archive/index.html">Threat Briefs</a>
+        <a href="/OppCapstoneFinal.pdf" target="_blank" rel="noopener noreferrer" class="nav-cta">NIST Research ↗</a>
+      </nav>
+    </div>
   </header>
 
   <main>
 
     <section class="hero">
-      <p class="eyebrow">Infinity Shield L.L.C.</p>
-      <h1>Cybersecurity &amp;<br>Cloud Resilience</h1>
-      <p>Veteran-led. Compliance-Driven. Scalable Protection for Your Digital Future.</p>
-      <a class="contact-btn" href="mailto:chris@infinityshield.co">Get in Touch</a>
+      <div class="hero-inner">
+        <div class="hero-text">
+          <p class="hero-badge">Cybersecurity &amp; IT Consulting</p>
+          <h1>Cybersecurity &amp;<br>Cloud Resilience</h1>
+          <p class="hero-sub">Veteran-led. Compliance-Driven. Scalable Protection for Your Digital Future.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="mailto:chris@infinityshield.co">Get in Touch</a>
+            <a class="btn btn-ghost" href="/about.html">About Us</a>
+          </div>
+        </div>
+        <div class="hero-creds">
+          <div class="cred-item">
+            <strong>SDVOSB</strong>
+            Service-Disabled<br>Veteran-Owned
+          </div>
+          <div class="cred-item">
+            <strong>AIAN-Owned</strong>
+            American Indian &amp;<br>Alaska Native
+          </div>
+          <div class="cred-item">
+            <strong>28+ Years</strong>
+            Federal &amp; Leadership<br>Experience
+          </div>
+        </div>
+      </div>
     </section>
-
-    <hr class="section-rule" />
 
     <section class="about">
       <div class="about-inner">
-        <h2>About Infinity Shield</h2>
-        <p>
-          Founded by Dr. Chris Opp, Infinity Shield is an American Indian and
-          Service-Disabled Veteran-Owned cybersecurity and information technology
-          consultancy headquartered in Cheyenne, Wyoming. Backed by over 28 years
-          of federal and leadership experience, we specialize in delivering agile,
-          scalable, and secure IT solutions for small and mid-sized businesses,
-          managed service providers, and federal organizations and contractors.
-        </p>
-        <div class="meta">
-          <span>American Indian &amp; SDVOSB</span>
-          <span>28+ Years Experience</span>
-          <span>Cheyenne, WY</span>
+        <div>
+          <p class="section-label">About</p>
+          <h2>Infinity Shield L.L.C.</h2>
+        </div>
+        <div class="about-body">
+          <p>
+            Founded by Dr. Chris Opp, Infinity Shield is an American Indian and
+            Service-Disabled Veteran-Owned cybersecurity and information technology
+            consultancy headquartered in Cheyenne, Wyoming.
+          </p>
+          <p>
+            Backed by over 28 years of federal and leadership experience, we specialize
+            in delivering agile, scalable, and secure IT solutions for small and mid-sized
+            businesses, managed service providers, and federal organizations and contractors.
+          </p>
         </div>
       </div>
     </section>
 
     <section class="services">
-      <h2>Our Services</h2>
-      <div class="service-grid">
-        <div class="service-card">
-          <span class="indicator"></span>
-          <h3>Cloud Services</h3>
+      <div class="services-inner">
+        <div class="services-header">
+          <p class="section-label">Services</p>
         </div>
-        <div class="service-card">
-          <span class="indicator"></span>
-          <h3>Network Security</h3>
+        <div class="service-grid">
+
+          <div class="service-card">
+            <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+            </svg>
+            <h3>Cloud Services</h3>
+          </div>
+
+          <div class="service-card">
+            <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
+            </svg>
+            <h3>Network Security</h3>
+          </div>
+
+          <div class="service-card">
+            <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+            <h3>Zero Trust</h3>
+          </div>
+
         </div>
-        <div class="service-card">
-          <span class="indicator"></span>
-          <h3>Zero Trust</h3>
+      </div>
+    </section>
+
+    <section class="briefs-band">
+      <div class="briefs-inner">
+        <div>
+          <h3>Threat Intelligence Briefs</h3>
+          <p>Monthly threat briefs covering cybersecurity developments relevant to federal contractors, SMBs, and managed service providers.</p>
         </div>
+        <a class="btn btn-ghost" href="/archive/index.html">View Archive →</a>
       </div>
     </section>
 
   </main>
 
   <footer>
-    <span>&copy; 2025 Infinity Shield L.L.C.</span>
-    <span>
-      <a href="mailto:chris@infinityshield.co">chris@infinityshield.co</a>
-      &nbsp;&middot;&nbsp;
-      Cheyenne, WY
-    </span>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        Infinity Shield L.L.C.
+        <span>Cheyenne, Wyoming</span>
+      </div>
+      <div class="footer-links">
+        <a href="/about.html">About</a>
+        <a href="/archive/index.html">Threat Briefs</a>
+        <a href="/OppCapstoneFinal.pdf" target="_blank" rel="noopener noreferrer">NIST Research</a>
+        <a href="mailto:chris@infinityshield.co">chris@infinityshield.co</a>
+      </div>
+      <p class="footer-copy">&copy; 2025 Infinity Shield L.L.C. All rights reserved.</p>
+    </div>
   </footer>
 
 </body>

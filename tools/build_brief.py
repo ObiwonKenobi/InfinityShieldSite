@@ -84,7 +84,7 @@ def build_page(d):
         render_list("supply", "Supply chain", d["supply"]),
         render_breaches(d["breaches"], d.get("unverified", "")),
         render_list("other", "Law enforcement and research", d["other"]),
-        render_todo(d["todo"], "What to do"),
+        render_todo(d["todo"], "What to do this week"),
         render_sources(d["sources"]),
     ):
         parts += ['', block]

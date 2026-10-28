@@ -240,7 +240,7 @@ body {
 /* ─── Services ─────────────────────────────────────────── */
 .svc-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 1px;
   background: var(--border);
   margin-top: 3.5rem;
@@ -405,9 +405,9 @@ footer {
 <main>
 
   <section class="hero" aria-label="Introduction">
-    <p class="hero-eyebrow">Cybersecurity &amp; IT Consulting</p>
-    <h1>Cyber&shy;security<br>without<br><em>compromise.</em></h1>
-    <p class="hero-sub">Veteran-led. Compliance-driven. Scalable protection for federal contractors, SMBs, and managed service providers.</p>
+    <p class="hero-eyebrow">Network Engineering &amp; Cybersecurity</p>
+    <h1>Networks built<br>to last.<br><em>Security built in.</em></h1>
+    <p class="hero-sub">Veteran-led consulting in network architecture, cloud design, and cybersecurity — for federal contractors, SMBs, and managed service providers.</p>
     <div class="hero-actions">
       <a href="mailto:chris@infinityshield.co" class="btn btn-primary">Get in Touch</a>
       <a href="#about" class="btn btn-outline">About Us</a>
@@ -425,11 +425,11 @@ footer {
       <h2 class="section-h2">Founded on service.<br>Built for results.</h2>
       <div class="about-grid">
         <div>
-          <p class="section-lead">Infinity Shield L.L.C. is a Service-Disabled Veteran and American Indian &amp; Alaska Native-Owned cybersecurity and IT consultancy.</p>
+          <p class="section-lead">Infinity Shield L.L.C. is a Service-Disabled Veteran and American Indian &amp; Alaska Native-Owned network engineering and cybersecurity consultancy.</p>
         </div>
         <div>
-          <p>Founded by Dr. Chris Opp (DIT, CISSP), Infinity Shield brings over 28 years of federal, DoD, and enterprise technology leadership to every engagement. We specialize in delivering agile, secure, and scalable solutions for organizations navigating today's complex compliance and threat landscape.</p>
-          <p>Our work spans cloud architecture, Zero Trust implementations, NIST and CMMC compliance programs, and network security for federal contractors, small businesses, and managed service providers headquartered across the country.</p>
+          <p>Founded by Dr. Chris Opp (DIT, CISSP), Infinity Shield brings over 28 years of federal, DoD, and enterprise technology leadership to every engagement. Dr. Opp's background is rooted in network architecture — enterprise SD-WAN, data center design, routing and switching at federal scale — with a cybersecurity and compliance layer built on top of that foundation.</p>
+          <p>We design and engineer networks that are built to perform from day one and hardened against today's threat environment. Our work spans enterprise network design, cloud architecture, Zero Trust implementations, and NIST/CMMC compliance programs for federal contractors, small businesses, and managed service providers.</p>
         </div>
       </div>
     </div>
@@ -442,6 +442,12 @@ footer {
       <div class="svc-grid" role="list">
 
         <div class="svc-card" role="listitem">
+          <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="6" height="6" rx="1"/><rect x="16" y="2" width="6" height="6" rx="1"/><rect x="9" y="16" width="6" height="6" rx="1"/><path d="M5 8v3a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8"/><path d="M12 12v4"/></svg>
+          <h3>Network Architecture &amp; Design</h3>
+          <p>Enterprise network design from the ground up — SD-WAN at federal scale, BGP routing, MTIPS planning, DNS/IPAM, and data center architecture with a track record across thousands of sites.</p>
+        </div>
+
+        <div class="svc-card" role="listitem">
           <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
           <h3>Cloud Architecture</h3>
           <p>Cloud design and migration across AWS GovCloud, Azure IL4, GCC-High, and commercial hyperscalers. From FedRAMP boundary planning to 20+ production migrations.</p>
@@ -449,14 +455,14 @@ footer {
 
         <div class="svc-card" role="listitem">
           <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          <h3>Zero Trust &amp; Compliance</h3>
-          <p>CMMC 2.0 readiness, NIST 800-53/171 remediation, RMF A&amp;A, and Zero Trust architecture. Built for the Defense Industrial Base and federal contractor ecosystem.</p>
+          <h3>Cybersecurity &amp; Zero Trust</h3>
+          <p>Zero Trust architecture, next-generation firewall platforms, endpoint security, and network observability — securing infrastructure that was engineered to carry mission-critical traffic.</p>
         </div>
 
         <div class="svc-card" role="listitem">
-          <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-          <h3>Network Security</h3>
-          <p>Enterprise SD-WAN, next-generation firewall platforms, network observability, and identity &amp; access management — built for scale and mission continuity.</p>
+          <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          <h3>Compliance &amp; Risk Management</h3>
+          <p>CMMC 2.0 readiness, NIST 800-53/171 remediation, RMF A&amp;A, and SSP authorship. Built for the Defense Industrial Base, federal contractors, and organizations facing audit pressure.</p>
         </div>
 
       </div>

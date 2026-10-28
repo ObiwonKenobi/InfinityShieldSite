@@ -1,588 +1,511 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" type="image/png" href="/favicon.png" />
-  <title>Infinity Shield L.L.C. — Cybersecurity &amp; Cloud Resilience</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Infinity Shield L.L.C. — Cybersecurity &amp; IT Consulting</title>
+<meta name="description" content="Veteran-led cybersecurity and IT consulting. SDVOSB. CMMC, FedRAMP, Zero Trust — Cheyenne, Wyoming.">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; scroll-behavior: smooth; }
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700;900&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+:root {
+  --bg:      #060b10;
+  --bg1:     #0b1422;
+  --bg2:     #0f1d2e;
+  --text:    #e8f0f8;
+  --muted:   #6a8ba5;
+  --faint:   #3d5a72;
+  --accent:  #4d9fd4;
+  --rule:    rgba(77, 159, 212, 0.15);
+  --border:  rgba(255,255,255,0.07);
+}
 
-  <style>
-    /* ─── Tokens ─────────────────────────────────────────── */
-    :root {
-      --bg:         #f6f8fb;
-      --bg-alt:     #edf1f7;
-      --bg-dark:    #0d1f30;
-      --surface:    #ffffff;
-      --text:       #18253a;
-      --muted:      #56697c;
-      --subtle:     #8499ae;
-      --accent:     #1654a0;
-      --accent-lt:  #dce9f8;
-      --border:     #cdd8e3;
-      --border-lt:  #e4ecf3;
-    }
-    @media (prefers-color-scheme: dark) {
-      :root:not([data-theme="light"]) {
-        --bg:         #111d29;
-        --bg-alt:     #162131;
-        --bg-dark:    #080f17;
-        --surface:    #172233;
-        --text:       #dce8f2;
-        --muted:      #839db2;
-        --subtle:     #5a7590;
-        --accent:     #5b9fd4;
-        --accent-lt:  #162840;
-        --border:     #243546;
-        --border-lt:  #1c2e40;
-        color-scheme: dark;
-      }
-    }
-    :root[data-theme="dark"] {
-      --bg:         #111d29;
-      --bg-alt:     #162131;
-      --bg-dark:    #080f17;
-      --surface:    #172233;
-      --text:       #dce8f2;
-      --muted:      #839db2;
-      --subtle:     #5a7590;
-      --accent:     #5b9fd4;
-      --accent-lt:  #162840;
-      --border:     #243546;
-      --border-lt:  #1c2e40;
-      color-scheme: dark;
-    }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Inter", system-ui, sans-serif;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
 
-    /* ─── Reset ──────────────────────────────────────────── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+/* ─── Nav ──────────────────────────────────────────────── */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 1.25rem 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  transition: background .3s, border-color .3s;
+  border-bottom: 1px solid transparent;
+}
+.nav.scrolled {
+  background: rgba(6, 11, 16, 0.92);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-color: var(--border);
+}
+.nav-brand {
+  font-size: .82rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--text);
+  text-decoration: none;
+}
+.nav-links {
+  display: flex;
+  gap: 2.25rem;
+  list-style: none;
+}
+.nav-links a {
+  font-size: .78rem;
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color .2s;
+}
+.nav-links a:hover { color: var(--text); }
+.nav-links a.cta {
+  color: var(--accent);
+  border: 1px solid rgba(77,159,212,.4);
+  padding: .3rem .9rem;
+  border-radius: 2px;
+}
+.nav-links a.cta:hover { background: rgba(77,159,212,.1); }
 
-    html { scroll-behavior: smooth; }
+/* ─── Hero ─────────────────────────────────────────────── */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0 2.5rem 7rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.hero-eyebrow {
+  font-size: .72rem;
+  font-weight: 600;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+}
+.hero-eyebrow::before {
+  content: '';
+  display: block;
+  width: 2rem;
+  height: 1px;
+  background: var(--accent);
+}
+.hero h1 {
+  font-size: clamp(3.2rem, 8vw, 7rem);
+  font-weight: 800;
+  letter-spacing: -.03em;
+  line-height: .96;
+  margin-bottom: 2rem;
+  text-wrap: balance;
+}
+.hero h1 em {
+  font-style: normal;
+  color: var(--accent);
+}
+.hero-sub {
+  font-size: clamp(.95rem, 1.5vw, 1.15rem);
+  font-weight: 400;
+  color: var(--muted);
+  max-width: 440px;
+  line-height: 1.7;
+  margin-bottom: 2.5rem;
+}
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.btn {
+  font-size: .8rem;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: .75rem 1.75rem;
+  border-radius: 2px;
+  transition: background .2s, color .2s, border-color .2s, filter .2s;
+}
+.btn-primary { background: var(--accent); color: #000; }
+.btn-primary:hover { filter: brightness(1.1); }
+.btn-outline { border: 1px solid var(--border); color: var(--muted); }
+.btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+.cred-strip {
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: 2.5rem;
+  flex-wrap: wrap;
+}
+.cred-item {
+  font-size: .72rem;
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+.cred-item strong {
+  display: block;
+  font-size: .78rem;
+  color: var(--muted);
+  margin-bottom: .15rem;
+}
 
-    body {
-      font-family: "Source Sans 3", system-ui, -apple-system, sans-serif;
-      font-size: 1rem;
-      line-height: 1.7;
-      color: var(--text);
-      background: var(--bg);
-    }
+/* ─── Section commons ──────────────────────────────────── */
+.section {
+  padding: 8rem 2.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.section-full {
+  padding: 7rem 2.5rem;
+  border-top: 1px solid var(--border);
+}
+.section-full .inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.eyebrow {
+  font-size: .7rem;
+  font-weight: 600;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: .75rem;
+}
+.section-h2 {
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -.025em;
+  line-height: 1.1;
+  margin-bottom: 1.25rem;
+}
+.section-lead {
+  font-size: 1rem;
+  color: var(--muted);
+  max-width: 520px;
+  line-height: 1.75;
+}
 
-    /* ─── Header / Nav ───────────────────────────────────── */
-    header {
-      background: var(--surface);
-      border-bottom: 1px solid var(--border);
-      position: sticky;
-      top: 0;
-      z-index: 50;
-    }
+/* ─── About ────────────────────────────────────────────── */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 5rem;
+  align-items: start;
+  margin-top: 5rem;
+}
+.about-grid p {
+  color: var(--muted);
+  line-height: 1.8;
+  font-size: .97rem;
+}
+.about-grid p + p { margin-top: 1rem; }
 
-    .header-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: .9rem 2rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1.5rem;
-    }
+/* ─── Services ─────────────────────────────────────────── */
+.services-bg {
+  background: var(--bg1);
+}
+.svc-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  margin-top: 4rem;
+  border: 1px solid var(--border);
+}
+.svc-card {
+  background: var(--bg);
+  padding: 2.75rem 2.25rem;
+  transition: background .2s;
+}
+.svc-card:hover { background: var(--bg2); }
+.svc-icon {
+  width: 24px;
+  height: 24px;
+  color: var(--accent);
+  margin-bottom: 1.25rem;
+}
+.svc-card h3 {
+  font-size: .92rem;
+  font-weight: 700;
+  letter-spacing: -.01em;
+  margin-bottom: .6rem;
+}
+.svc-card p {
+  font-size: .85rem;
+  color: var(--muted);
+  line-height: 1.65;
+}
 
-    .logo {
-      flex-shrink: 0;
-    }
-    .logo img {
-      height: 46px;
-      width: auto;
-      display: block;
-    }
+/* ─── Current Brief ────────────────────────────────────── */
+.brief-band {
+  background: var(--bg1);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.brief-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 5rem 2.5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+.brief-meta {
+  font-size: .7rem;
+  font-weight: 600;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: .75rem;
+}
+.brief-inner h2 {
+  font-size: clamp(1.4rem, 2.5vw, 2.2rem);
+  font-weight: 700;
+  letter-spacing: -.025em;
+  line-height: 1.2;
+  margin-bottom: 1.25rem;
+}
+.brief-inner p {
+  font-size: .92rem;
+  color: var(--muted);
+  line-height: 1.75;
+}
+.brief-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: center;
+}
+.brief-link {
+  font-size: .8rem;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: .85rem 1.75rem;
+  border-radius: 2px;
+  transition: background .2s, border-color .2s, color .2s, filter .2s;
+  text-align: center;
+}
+.brief-link.primary { background: var(--accent); color: #000; }
+.brief-link.primary:hover { filter: brightness(1.1); }
+.brief-link.ghost { border: 1px solid var(--border); color: var(--muted); }
+.brief-link.ghost:hover { border-color: var(--accent); color: var(--accent); }
 
-    nav {
-      display: flex;
-      align-items: center;
-      gap: .2rem;
-      flex-wrap: wrap;
-    }
+/* ─── Footer ────────────────────────────────────────────── */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 3.5rem 2.5rem;
+}
+.footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+.footer-brand {
+  font-size: .82rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.footer-brand span {
+  display: block;
+  font-weight: 400;
+  font-size: .72rem;
+  color: var(--faint);
+  letter-spacing: .08em;
+  margin-top: .25rem;
+}
+.footer-links {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  list-style: none;
+}
+.footer-links a {
+  font-size: .75rem;
+  font-weight: 500;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--faint);
+  text-decoration: none;
+  transition: color .2s;
+}
+.footer-links a:hover { color: var(--text); }
+.footer-copy {
+  width: 100%;
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+  font-size: .72rem;
+  color: var(--faint);
+  letter-spacing: .04em;
+}
 
-    nav a {
-      font-size: .83rem;
-      font-weight: 600;
-      color: var(--muted);
-      text-decoration: none;
-      padding: .35rem .7rem;
-      border-radius: 4px;
-      transition: color .15s, background .15s;
-      white-space: nowrap;
-    }
-    nav a:hover { color: var(--text); background: var(--bg-alt); }
-
-    nav a.nav-cta {
-      color: var(--accent);
-      border: 1.5px solid var(--accent);
-      margin-left: .4rem;
-    }
-    nav a.nav-cta:hover { background: var(--accent); color: #fff; }
-
-    /* ─── Hero ───────────────────────────────────────────── */
-    .hero {
-      background: var(--surface);
-      border-bottom: 1px solid var(--border);
-      padding: 5rem 2rem 4.5rem;
-    }
-
-    .hero-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 3rem;
-      align-items: center;
-    }
-
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: .45rem;
-      font-size: .72rem;
-      font-weight: 600;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 1.1rem;
-    }
-    .hero-badge::before {
-      content: "";
-      display: inline-block;
-      width: 18px;
-      height: 2px;
-      background: var(--accent);
-      border-radius: 2px;
-    }
-
-    .hero h1 {
-      font-family: "Merriweather", Georgia, serif;
-      font-size: clamp(2rem, 4.5vw, 3rem);
-      font-weight: 900;
-      line-height: 1.15;
-      color: var(--text);
-      text-wrap: balance;
-      margin-bottom: 1.25rem;
-    }
-
-    .hero-sub {
-      font-size: 1.1rem;
-      color: var(--muted);
-      max-width: 520px;
-      margin-bottom: 2.25rem;
-    }
-
-    .hero-actions {
-      display: flex;
-      gap: .75rem;
-      flex-wrap: wrap;
-      align-items: center;
-    }
-
-    .btn {
-      display: inline-block;
-      font-size: .88rem;
-      font-weight: 600;
-      padding: .65rem 1.4rem;
-      border-radius: 5px;
-      text-decoration: none;
-      transition: background .15s, color .15s, border-color .15s;
-      white-space: nowrap;
-    }
-    .btn-primary {
-      background: var(--accent);
-      color: #fff;
-      border: 1.5px solid var(--accent);
-    }
-    .btn-primary:hover { filter: brightness(1.12); }
-
-    .btn-ghost {
-      background: transparent;
-      color: var(--muted);
-      border: 1.5px solid var(--border);
-    }
-    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
-
-    /* Credential strip on the right side of hero */
-    .hero-creds {
-      display: flex;
-      flex-direction: column;
-      gap: .6rem;
-      padding: 1.5rem 1.75rem;
-      background: var(--bg-alt);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      min-width: 190px;
-    }
-    .cred-item {
-      font-size: .78rem;
-      font-weight: 600;
-      color: var(--muted);
-      line-height: 1.3;
-    }
-    .cred-item strong {
-      display: block;
-      font-size: .82rem;
-      color: var(--text);
-      margin-bottom: .1rem;
-    }
-
-    /* ─── About ──────────────────────────────────────────── */
-    .about {
-      padding: 4rem 2rem;
-    }
-
-    .about-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr 2fr;
-      gap: 3.5rem;
-      align-items: start;
-    }
-
-    .section-label {
-      font-size: .72rem;
-      font-weight: 700;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: .6rem;
-    }
-
-    .about-inner h2 {
-      font-family: "Merriweather", Georgia, serif;
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: var(--text);
-      line-height: 1.3;
-    }
-
-    .about-body p {
-      color: var(--muted);
-      margin-bottom: .75rem;
-      max-width: 620px;
-    }
-
-    /* ─── Services ───────────────────────────────────────── */
-    .services {
-      background: var(--bg-alt);
-      border-top: 1px solid var(--border-lt);
-      border-bottom: 1px solid var(--border-lt);
-      padding: 4rem 2rem;
-    }
-
-    .services-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .services-header {
-      margin-bottom: 2rem;
-    }
-
-    .service-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.25rem;
-    }
-
-    .service-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 1.6rem 1.5rem;
-      transition: border-color .2s, box-shadow .2s;
-    }
-    .service-card:hover {
-      border-color: var(--accent);
-      box-shadow: 0 2px 12px rgba(21, 84, 160, .08);
-    }
-
-    .service-icon {
-      width: 32px;
-      height: 32px;
-      margin-bottom: 1rem;
-      color: var(--accent);
-    }
-
-    .service-card h3 {
-      font-family: "Merriweather", Georgia, serif;
-      font-size: .97rem;
-      font-weight: 700;
-      color: var(--text);
-    }
-
-    /* ─── Current brief ─────────────────────────────────── */
-    .current-brief {
-      background: var(--bg-alt);
-      border-top: 1px solid var(--border-lt);
-      border-bottom: 1px solid var(--border-lt);
-      padding: 3.5rem 2rem;
-    }
-
-    .current-brief-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 3rem;
-      align-items: start;
-    }
-
-    .brief-meta {
-      min-width: 160px;
-    }
-
-    .brief-meta .brief-tag {
-      display: inline-block;
-      font-size: .68rem;
-      font-weight: 700;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      background: var(--accent);
-      color: #fff;
-      padding: .22rem .6rem;
-      border-radius: 3px;
-      margin-bottom: .75rem;
-    }
-
-    .brief-meta h3 {
-      font-family: "Merriweather", Georgia, serif;
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--text);
-      line-height: 1.3;
-      margin-bottom: .3rem;
-    }
-
-    .brief-meta .brief-period {
-      font-size: .76rem;
-      color: var(--subtle);
-    }
-
-    .brief-body p {
-      font-size: .97rem;
-      color: var(--muted);
-      max-width: 620px;
-      margin-bottom: 1.5rem;
-      line-height: 1.7;
-    }
-
-    .brief-actions {
-      display: flex;
-      gap: .75rem;
-      flex-wrap: wrap;
-      align-items: center;
-    }
-
-    /* ─── Footer ─────────────────────────────────────────── */
-    footer {
-      background: var(--bg-dark);
-      color: #8ca5bb;
-      padding: 2.5rem 2rem;
-    }
-
-    .footer-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1.5rem;
-      flex-wrap: wrap;
-    }
-
-    .footer-brand {
-      font-family: "Merriweather", Georgia, serif;
-      font-size: .88rem;
-      font-weight: 700;
-      color: #c8d9e8;
-    }
-    .footer-brand span {
-      display: block;
-      font-family: "Source Sans 3", sans-serif;
-      font-weight: 400;
-      font-size: .74rem;
-      color: #607a8e;
-      margin-top: .15rem;
-    }
-
-    .footer-links {
-      display: flex;
-      gap: 1.5rem;
-      flex-wrap: wrap;
-      font-size: .8rem;
-    }
-    .footer-links a {
-      color: #7a96ab;
-      text-decoration: none;
-      transition: color .15s;
-    }
-    .footer-links a:hover { color: #c8d9e8; }
-
-    .footer-copy {
-      font-size: .74rem;
-      color: #4e6575;
-      width: 100%;
-      border-top: 1px solid #1e3348;
-      padding-top: 1.25rem;
-      margin-top: .5rem;
-    }
-
-    /* ─── Responsive ─────────────────────────────────────── */
-    @media (max-width: 800px) {
-      .hero-inner           { grid-template-columns: 1fr; }
-      .hero-creds           { flex-direction: row; flex-wrap: wrap; min-width: 0; gap: 1rem; }
-      .about-inner          { grid-template-columns: 1fr; gap: 1.5rem; }
-      .service-grid         { grid-template-columns: 1fr; }
-      .current-brief-inner  { grid-template-columns: 1fr; gap: 1.25rem; }
-    }
-
-    @media (max-width: 520px) {
-      .header-inner { padding: .8rem 1rem; }
-      .hero         { padding: 3rem 1rem 2.5rem; }
-      .about, .services, .current-brief { padding: 2.5rem 1rem; }
-      nav a:not(.nav-cta) { display: none; }
-    }
-  </style>
+/* ─── Responsive ────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .nav { padding: 1rem 1.25rem; }
+  .hero { padding: 0 1.25rem 5rem; }
+  .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .svc-grid { grid-template-columns: 1fr; }
+  .brief-inner { grid-template-columns: 1fr; gap: 2.5rem; padding: 3.5rem 1.25rem; }
+  .section { padding: 5rem 1.25rem; }
+  .section-full { padding: 5rem 1.25rem; }
+  .footer-inner { padding: 0; }
+}
+@media (max-width: 600px) {
+  .nav-links { gap: 1.25rem; }
+  .nav-links a:not(.cta) { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { *, html { transition: none !important; scroll-behavior: auto !important; } }
+</style>
 </head>
 <body>
 
-  <header>
-    <div class="header-inner">
-      <a class="logo" href="/">
-        <img src="/logo-transparent.png" alt="Infinity Shield L.L.C." />
-      </a>
-      <nav>
-        <a href="/about.html">About</a>
-        <a href="/archive/index.html">Threat Briefs</a>
-        <a href="/OppCapstoneFinal.pdf" target="_blank" rel="noopener noreferrer" class="nav-cta">NIST Research ↗</a>
-      </nav>
+<nav class="nav" id="nav" aria-label="Main navigation">
+  <a href="/" class="nav-brand">Infinity Shield</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="/archive/index.html">Threat Briefs</a></li>
+    <li><a href="/about.html">Dr. Opp</a></li>
+    <li><a href="/OppCapstoneFinal.pdf" target="_blank" rel="noopener noreferrer" class="cta">NIST Research ↗</a></li>
+  </ul>
+</nav>
+
+<main>
+
+  <section class="hero" aria-label="Introduction">
+    <p class="hero-eyebrow">Cybersecurity &amp; IT Consulting</p>
+    <h1>Cyber&shy;security<br>without<br><em>compromise.</em></h1>
+    <p class="hero-sub">Veteran-led. Compliance-driven. Scalable protection for federal contractors, SMBs, and managed service providers.</p>
+    <div class="hero-actions">
+      <a href="mailto:chris@infinityshield.co" class="btn btn-primary">Get in Touch</a>
+      <a href="#about" class="btn btn-outline">About Us</a>
     </div>
-  </header>
+    <div class="cred-strip" aria-label="Credentials">
+      <div class="cred-item"><strong>SDVOSB</strong>Service-Disabled<br>Veteran-Owned</div>
+      <div class="cred-item"><strong>28+ Years</strong>Federal &amp; DoD<br>Experience</div>
+      <div class="cred-item"><strong>Cheyenne, WY</strong>Wyoming-Based<br>Consultancy</div>
+    </div>
+  </section>
 
-  <main>
-
-    <section class="hero">
-      <div class="hero-inner">
-        <div class="hero-text">
-          <p class="hero-badge">Cybersecurity &amp; IT Consulting</p>
-          <h1>Cybersecurity &amp;<br>Cloud Resilience</h1>
-          <p class="hero-sub">Veteran-led. Compliance-Driven. Scalable Protection for Your Digital Future.</p>
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="mailto:chris@infinityshield.co">Get in Touch</a>
-            <a class="btn btn-ghost" href="/about.html">About Us</a>
+  <div class="section-full" id="about">
+    <div class="inner">
+      <div class="section" style="padding-top:0;padding-bottom:0;">
+        <p class="eyebrow">About</p>
+        <h2 class="section-h2">Founded on service.<br>Built for results.</h2>
+        <div class="about-grid">
+          <div>
+            <p class="section-lead">Infinity Shield L.L.C. is a Service-Disabled Veteran and American Indian &amp; Alaska Native-Owned cybersecurity and IT consultancy.</p>
           </div>
-        </div>
-        <div class="hero-creds">
-          <div class="cred-item">
-            <strong>SDVOSB</strong>
-            Service-Disabled<br>Veteran-Owned
-          </div>
-          <div class="cred-item">
-            <strong>28+ Years</strong>
-            Federal &amp; Leadership<br>Experience
-          </div>
-          <div class="cred-item">
-            <strong>Cheyenne, WY</strong>
-            Headquartered in<br>Wyoming
+          <div>
+            <p>Founded by Dr. Chris Opp (DIT, CISSP), Infinity Shield brings over 28 years of federal, DoD, and enterprise technology leadership to every engagement. We specialize in delivering agile, secure, and scalable solutions for organizations navigating today's complex compliance and threat landscape.</p>
+            <p>Our work spans cloud architecture, Zero Trust implementations, NIST and CMMC compliance programs, and network security for federal contractors, small businesses, and managed service providers headquartered across the country.</p>
           </div>
         </div>
       </div>
-    </section>
+    </div>
+  </div>
 
-    <section class="about">
-      <div class="about-inner">
-        <div>
-          <p class="section-label">About</p>
-          <h2>Infinity Shield L.L.C.</h2>
-        </div>
-        <div class="about-body">
-          <p>
-            Founded by Dr. Chris Opp, Infinity Shield is an American Indian and
-            Service-Disabled Veteran-Owned cybersecurity and information technology
-            consultancy headquartered in Cheyenne, Wyoming.
-          </p>
-          <p>
-            Backed by over 28 years of federal and leadership experience, we specialize
-            in delivering agile, scalable, and secure IT solutions for small and mid-sized
-            businesses, managed service providers, and federal organizations and contractors.
-          </p>
-        </div>
-      </div>
-    </section>
+  <div class="section-full services-bg">
+    <div class="inner">
+      <div class="section" style="padding-top:0;padding-bottom:0;">
+        <p class="eyebrow">Services</p>
+        <h2 class="section-h2">What we do.</h2>
+        <div class="svc-grid" role="list">
 
-    <section class="services">
-      <div class="services-inner">
-        <div class="services-header">
-          <p class="section-label">Services</p>
-        </div>
-        <div class="service-grid">
-
-          <div class="service-card">
-            <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
-            </svg>
-            <h3>Cloud Services</h3>
+          <div class="svc-card" role="listitem">
+            <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+            <h3>Cloud Architecture</h3>
+            <p>Cloud design and migration across AWS GovCloud, Azure IL4, GCC-High, and commercial hyperscalers. From FedRAMP boundary planning to 20+ production migrations.</p>
           </div>
 
-          <div class="service-card">
-            <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
-            </svg>
+          <div class="svc-card" role="listitem">
+            <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <h3>Zero Trust &amp; Compliance</h3>
+            <p>CMMC 2.0 readiness, NIST 800-53/171 remediation, RMF A&amp;A, and Zero Trust architecture. Built for the Defense Industrial Base and federal contractor ecosystem.</p>
+          </div>
+
+          <div class="svc-card" role="listitem">
+            <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
             <h3>Network Security</h3>
-          </div>
-
-          <div class="service-card">
-            <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-            </svg>
-            <h3>Zero Trust</h3>
+            <p>Enterprise SD-WAN, next-generation firewall platforms, network observability, and identity &amp; access management — built for scale and mission continuity.</p>
           </div>
 
         </div>
       </div>
-    </section>
-
-    <section class="current-brief">
-      <div class="current-brief-inner">
-        <div class="brief-meta">
-          <span class="brief-tag">Current Brief</span>
-          <h3>October 2026<br>Threat Brief</h3>
-          <p class="brief-period">1 – 27 Oct 2026</p>
-        </div>
-        <div class="brief-body">
-          <p>Two internet-wide trust failures, critical PHP flaws, and a certificate authority with recoverable keys defined the month, alongside a run of exploited edge-device zero-days and credential-driven breaches at hosting, SaaS, and consumer-service providers.</p>
-          <div class="brief-actions">
-            <a class="btn btn-primary" href="/archive/2026-10.html">Read Brief →</a>
-            <a class="btn btn-ghost" href="/archive/index.html">Full Archive</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <footer>
-    <div class="footer-inner">
-      <div class="footer-brand">
-        Infinity Shield L.L.C.
-        <span>Cheyenne, Wyoming</span>
-      </div>
-      <div class="footer-links">
-        <a href="/about.html">About</a>
-        <a href="/archive/index.html">Threat Briefs</a>
-        <a href="/OppCapstoneFinal.pdf" target="_blank" rel="noopener noreferrer">NIST Research</a>
-        <a href="mailto:chris@infinityshield.co">chris@infinityshield.co</a>
-      </div>
-      <p class="footer-copy">&copy; 2025 Infinity Shield L.L.C. All rights reserved.</p>
     </div>
-  </footer>
+  </div>
+
+  <div class="brief-band" aria-label="Current threat brief">
+    <div class="brief-inner">
+      <div>
+        <p class="brief-meta">October 2026 · Month to Date</p>
+        <h2>Current Threat Brief</h2>
+        <p>Two internet-wide trust failures, critical PHP flaws, and a certificate authority with recoverable keys — alongside exploited edge-device zero-days and credential-driven breaches at hosting, SaaS, and consumer-service providers.</p>
+      </div>
+      <div class="brief-actions">
+        <a href="/archive/2026-10.html" class="brief-link primary">Read Brief →</a>
+        <a href="/archive/index.html" class="brief-link ghost">Full Archive</a>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      Infinity Shield L.L.C.
+      <span>Cheyenne, Wyoming</span>
+    </div>
+    <ul class="footer-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="/about.html">Dr. Opp</a></li>
+      <li><a href="/archive/index.html">Threat Briefs</a></li>
+      <li><a href="/OppCapstoneFinal.pdf" target="_blank" rel="noopener noreferrer">NIST Research ↗</a></li>
+      <li><a href="mailto:chris@infinityshield.co">chris@infinityshield.co</a></li>
+    </ul>
+    <p class="footer-copy">&copy; 2026 Infinity Shield L.L.C. All rights reserved. &nbsp;·&nbsp; SDVOSB &nbsp;·&nbsp; AIAN-Owned</p>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 60);
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+</script>
 
 </body>
 </html>

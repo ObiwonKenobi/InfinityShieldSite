@@ -49,6 +49,7 @@ def nav(current):
         '    <a href="/" class="site-brand"><img src="/logo-transparent.png" alt="">Infinity Shield</a>',
         '    <ul class="site-links">',
         link("/", "Home", "home"),
+        link("/brief/", "Current Brief", "brief"),
         link("/archive/", "Archive", "archive"),
         link("/about.html", "About", "about"),
         '    </ul>',
@@ -192,7 +193,7 @@ def build_month(data):
     parts.append(
         f'  <footer>Compiled from public reporting as of {esc(data["issued"])}. '
         'Figures are as first reported and may be revised. · '
-        '<a href="/archive/">All months</a> · <a href="/">Home</a> · '
+        '<a href="/archive/">All months</a> · <a href="/brief/">Current 30 day brief</a> · <a href="/">Home</a> · '
         '<a href="/about.html">About Infinity Shield</a></footer>'
     )
     parts.append('</div>')
@@ -207,14 +208,14 @@ def build_index(months):
     parts = [
         head(
             "Archive | Infinity Shield",
-            "Monthly cybersecurity threat briefs, one per calendar month. The current month is posted month to date and finalized when it closes.",
+            "Monthly cybersecurity threat briefs, one per calendar month. The rolling 30 day brief is refreshed every Monday.",
         ),
         nav("archive"),
         '<div class="wrap">',
         '  <header>',
         '    <div class="marking"><span class="tlp">TLP:CLEAR</span><span>Calendar month briefs</span></div>',
         '    <h1>Threat Brief <span>Archive</span></h1>',
-        '    <p class="lede">One brief for each calendar month. The current month is posted month to date, linked from the <a href="/">home page</a>, and finalized when it closes.</p>',
+        '    <p class="lede">One brief for each calendar month, finalized after the month closes. For the latest picture, read the rolling <a href="/brief/">30 day brief</a>, which is refreshed every Monday.</p>',
         '  </header>',
         '',
         '  <section aria-labelledby="months">',
@@ -231,7 +232,7 @@ def build_index(months):
         '  </section>',
         '',
         '  <footer>Compiled from public reporting. Figures are as first reported and may be revised. · '
-        '<a href="/">Home</a> · <a href="/about.html">About Infinity Shield</a></footer>',
+        '<a href="/brief/">Current 30 day brief</a> · <a href="/">Home</a> · <a href="/about.html">About Infinity Shield</a></footer>',
         '</div>',
         '',
         '</body>',

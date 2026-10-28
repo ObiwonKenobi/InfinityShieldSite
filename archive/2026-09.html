@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Cybersecurity brief for 1 – 30 Sep 2026. A month driven by exploited edge and management devices, led by two Citrix NetScaler flaws and a CVSS 10 Magento remote-code-execution bug, alongside the largest Microsoft Patch Tuesday on record. Breaches came mostly from unpatched web applications and third-party integrations, and police took over the KillSec ransomware leak site on 30 Sep.">
+<style>*,*::before,*::after{box-sizing:border-box}body{margin:0}img{max-width:100%}</style><title>September 2026 Threat Brief | Infinity Shield</title>
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Public+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/brief.css">
+</head>
+<body>
+<div class="circuit-bg" aria-hidden="true"></div>
+
+<nav class="site-nav" aria-label="Main navigation">
+  <div class="site-nav-inner">
+    <a href="/" class="site-brand"><img src="/logo-transparent.png" alt="">Infinity Shield</a>
+    <ul class="site-links">
+      <li><a href="/">Threat Brief</a></li>
+      <li><a href="/archive/" aria-current="page">Archive</a></li>
+      <li><a href="/about.html">About</a></li>
+    </ul>
+  </div>
+</nav>
+<div class="wrap">
+  <header>
+    <div class="marking"><span class="tlp">TLP:CLEAR</span><span>Period 1 – 30 Sep 2026</span><span>Issued 27 Oct 2026</span></div>
+    <h1>September 2026 <span>Threat Brief</span></h1>
+    <p class="lede">A month driven by exploited edge and management devices, led by two Citrix NetScaler flaws and a CVSS 10 Magento remote-code-execution bug, alongside the largest Microsoft Patch Tuesday on record. Breaches came mostly from unpatched web applications and third-party integrations, and police took over the KillSec ransomware leak site on 30 Sep.</p>
+  </header>
+
+  <section class="lead" aria-labelledby="top">
+    <h2 id="top">Top items</h2>
+
+    <article class="item">
+      <div class="item-head"><h3>Citrix NetScaler: two critical flaws, one with unauthenticated root command execution</h3><span class="sev crit">Critical · exploited</span></div>
+      <p>Citrix disclosed CVE-2026-88771 and CVE-2026-88772 on Sunday 27 Sep. CISA added both to the KEV catalog the same day. The first lets an unauthenticated attacker run commands on any NetScaler ADC or Gateway. The second is a memory overflow reachable when DTLS is enabled, which is the default on VPN virtual servers. Mandiant says attacks began in at least early September, in North America and Europe, and that the observed campaign is tied to CVE-2026-88772. It deployed a PHP web shell (WHIPSHOT) and a Python tunnelling tool (SLAPSHOT) and set the setuid bit on /bin/sh to keep root. GreyNoise saw a failed attempt on 24 Sep, three days before disclosure. Citrix says 88771 is also exploited. Sources differ on which flaw the early attacks used.</p>
+      <dl class="facts">
+        <div><dt>CVE</dt><dd class="mono">CVE-2026-88771<br>CVE-2026-88772</dd></div>
+        <div><dt>CVSS</dt><dd class="mono">9.5 (both)</dd></div>
+        <div><dt>CISA KEV</dt><dd class="mono">27 Sep, federal deadline 30 Sep</dd></div>
+        <div><dt>Citrix advisory</dt><dd class="mono">CTX697096</dd></div>
+      </dl>
+      <p class="action"><b>Action:</b> Install the latest NetScaler security updates now. Disabling DTLS or blocking inbound UDP/443 helps only against 88772 and does not protect against 88771. Because attacks predate disclosure, check appliances for web shells and a setuid /bin/sh going back to early September.</p>
+    </article>
+
+    <article class="item">
+      <div class="item-head"><h3>StyleSmuggler: unauthenticated RCE in Magento and Adobe Commerce</h3><span class="sev crit">Critical · exploited</span></div>
+      <p>Attackers inject PHP into Magento's template system and trigger it through a failed-payment email. Sansec recorded unsuccessful probes on 23 Aug and the first confirmed exploitation on 4 Sep. Adobe shipped a hotfix on 7 Sep. All versions from 2.4.4 through 2.4.9 are affected. Adobe tested the fix only on the August 2026 releases of those branches and publishes no fix for 2.2, 2.3 or 2.4.0 to 2.4.3. A successful attack starts a small Rust backdoor that connects to a command server and hides under process names such as chronyd. Sansec has no sign yet that the backdoor has been used. Other operators left web shells and a RAT on some stores.</p>
+      <dl class="facts">
+        <div><dt>CVE</dt><dd class="mono">CVE-2026-75650</dd></div>
+        <div><dt>CVSS</dt><dd class="mono">10.0</dd></div>
+        <div><dt>Adobe bulletin</dt><dd class="mono">APSB26-146, hotfix VULN-39341</dd></div>
+        <div><dt>First exploitation</dt><dd class="mono">4 Sep</dd></div>
+      </dl>
+      <p class="action"><b>Action:</b> Apply the Adobe hotfix and confirm it covers your exact release. Review templates and email logs for injected PHP, and look for processes named kworker/u:8:0, fc-cache, or chronyd running from unexpected paths. Stores older than 2.4.4 have no vendor fix and need an upgrade or isolation.</p>
+    </article>
+
+    <article class="item">
+      <div class="item-head"><h3>Microsoft Patch Tuesday: record volume, two exploited zero-days, a wormable DNS flaw</h3><span class="sev high">High · exploited</span></div>
+      <p>The 8 Sep release was the largest on record. Microsoft's notes list 974 CVEs, of which 964 need customer action (104 Critical, 860 Important). Third-party trackers report totals from 966 to 973 depending on how they count. Two local privilege escalation bugs, both CVSS 7.8, were exploited before the patch: one in the Windows Update stack and one in Windows ALPC that allows escape from an AppContainer sandbox. Trend Micro ZDI calls the DNS flaw CVE-2026-69730 the spiritual successor to SigRed. It is one of 20 wormable bugs that allow unauthenticated remote code execution on most supported Windows versions.</p>
+      <dl class="facts">
+        <div><dt>Exploited</dt><dd class="mono">CVE-2026-81963 (Windows Update stack)<br>CVE-2026-85880 (Windows ALPC)</dd></div>
+        <div><dt>Wormable DNS</dt><dd class="mono">CVE-2026-69730</dd></div>
+        <div><dt>Other notable</dt><dd class="mono">CVE-2026-69676 (Kerberos, domain controller RCE)<br>CVE-2026-55007 (Exchange, malicious Visio attachment)</dd></div>
+      </dl>
+      <p class="action"><b>Action:</b> Patch Windows DNS servers and domain controllers first, then the two exploited bugs, Exchange, and endpoints. A public proof of concept reportedly bypasses the patch for the Defender flaw CVE-2026-69414, so verify Defender versions after updating.</p>
+    </article>
+  </section>
+
+  <section aria-labelledby="vulns">
+    <h2 id="vulns">Exploited vulnerabilities and zero-days</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>Product</th><th>CVE</th><th>What it allows</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td>Citrix NetScaler ADC / Gateway</td><td class="mono">CVE-2026-88771, CVE-2026-88772</td><td>Unauthenticated command execution (88771). Memory overflow leading to RCE or denial of service when DTLS is on (88772).</td><td><span class="sev crit">Exploited</span><br>CISA KEV 27 Sep. Exploited since early Sep per Mandiant.</td></tr>
+        <tr><td>Cisco Secure Firewall Management Center</td><td class="mono">CVE-2026-20079</td><td>Unauthenticated authentication bypass, script execution, and possible root access. Talos tracks three clusters, including Qilin ransomware operators (UAT-11988) and a group with tooling that overlaps Sandworm (UAT-11823).</td><td><span class="sev crit">Exploited</span><br>CISA KEV, federal deadline 12 Sep. The Sandworm link is tooling overlap only, not confirmed attribution.</td></tr>
+        <tr><td>Magento / Adobe Commerce 2.4.4 to 2.4.9</td><td class="mono">CVE-2026-75650</td><td>Unauthenticated RCE through template injection (CVSS 10.0)</td><td><span class="sev crit">Exploited</span><br>Hotfix 7 Sep. No fix for versions older than 2.4.4.</td></tr>
+        <tr><td>Check Point Security Gateway / Spark</td><td class="mono">CVE-2026-85102</td><td>Pre-authentication bypass and remote code execution</td><td><span class="sev crit">Exploited</span><br>Patched 9 Sep. Exploitation attempts from 12 Sep. CISA KEV 22 Sep.</td></tr>
+        <tr><td>Check Point Management Server</td><td class="mono">CVE-2026-93616</td><td>Pre-authentication path traversal, upload and execution of scripts on the management server</td><td><span class="sev crit">Exploited</span><br>Attacks since at least 23 Jul against a handful of customers. Hotfix SK1000171. CISA KEV 22 Sep.</td></tr>
+        <tr><td>F5 BIG-IP APM</td><td class="mono">CVE-2026-94127</td><td>Unauthenticated heap overflow leading to RCE (CVSS 9.8 v3.1, 9.3 v4.0)</td><td><span class="sev crit">Exploited</span><br>Advisory 22 Sep. F5 later limited the condition to APM acting as an OAuth authorization server. CISA KEV wording is broader.</td></tr>
+        <tr><td>Arista VeloCloud Orchestrator</td><td class="mono">CVE-2026-93952</td><td>Improper input validation in the SD-WAN management platform. Details withheld.</td><td><span class="sev high">Exploited</span><br>CISA KEV 22 Sep. Arista published indicators of compromise.</td></tr>
+        <tr><td>Cisco Secure Email Gateway</td><td class="mono">CVE-2026-76461</td><td>Unauthenticated root command execution through a crafted email carrying SQL statements (CVSS 9.8)</td><td><span class="sev crit">Exploited</span><br>Fixed in 15.5.5-0141, 16.0.4-302, 16.5.0-780. No workaround. CISA KEV 14 Sep.</td></tr>
+        <tr><td>WordPress core</td><td class="mono">CVE-2026-87902</td><td>Unauthenticated RCE when a theme directory begins with "page-" and a readable local PHP file such as pearcmd.php exists (CVSS 9.2)</td><td><span class="sev high">Exploited</span><br>Fixed in 7.1.2, 7.0.6, 6.9.9, 6.8.10. First attempt 22 Sep, same day as the patch. CISA KEV 25 Sep.</td></tr>
+        <tr><td>Windows Update stack · Windows ALPC</td><td class="mono">CVE-2026-81963 · CVE-2026-85880</td><td>Local privilege escalation to SYSTEM (CVSS 7.8 each)</td><td><span class="sev high">Exploited</span><br>Zero-days fixed in the 8 Sep Patch Tuesday.</td></tr>
+        <tr><td>Cisco Catalyst SD-WAN Manager</td><td class="mono">CVE-2026-76504</td><td>Unauthenticated admin access</td><td><span class="sev crit">Exploited</span><br>Advisory and CISA KEV 30 Sep.</td></tr>
+        <tr><td>Zammad helpdesk 6.3.0 to 6.5.4</td><td class="mono">CVE-2026-102489 / 102490</td><td>Privilege escalation chain used to breach DIVD, the Dutch vulnerability-disclosure institute. Investigators describe the intrusion as agentic-AI-driven.</td><td><span class="sev high">Exploited</span><br>Reported 30 Sep. CISA KEV.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section aria-labelledby="supply">
+    <h2 id="supply">Supply chain</h2>
+    <ul class="list">
+      <li><span class="label">Brevo (email platform)</span><p>A flaw in Brevo's SAML single sign-on was used against 138 customer accounts. Trezor warned about 347,000 newsletter addresses after phishing emails went out from its own sending address, and BitBox and CoinTracking were also affected. Reported 9 Sep.</p></li>
+      <li><span class="label">Dropbox via Lenovo ID</span><p>About 5,000 Dropbox accounts were taken over through a flaw in Lenovo's email verification for Lenovo ID, a legacy integration. Reported 2 Sep. Only an email address was needed to register a Lenovo ID that could sign in to the linked Dropbox account.</p></li>
+      <li><span class="label">BigCommerce / Ribon apps</span><p>A compromised application key for the Ribon apps, tied to a Fastr system breach, was used to inject malicious scripts into a small number of storefronts. BigCommerce says its own platform was not breached. Merchants were notified from 17 to 18 Sep and the number of affected stores and shoppers has not been published.</p></li>
+      <li><span class="label">npm</span><p>On 7 Sep Aikido Security reported four npm packages published by one account within an hour, carrying a Shai-Hulud payload with the same hash as one used in the 19 May @antv compromise. The payload runs from a preinstall script. The sources do not say how the publishing account was accessed or whether other packages were affected.</p></li>
+      <li><span class="label">AI coding agents</span><p>More than 13,000 sensitive screenshots taken during agent-driven development workflows were found committed to public GitHub repositories, reported 29 Sep to 1 Oct.</p></li>
+      <li><span class="label">Scope of this section</span><p>No September npm, PyPI, or GitHub Actions compromise on the scale of earlier 2026 incidents turned up in the sources reviewed.</p></li>
+    </ul>
+  </section>
+
+  <section aria-labelledby="breaches">
+    <h2 id="breaches">Data breaches</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>Organization</th><th>People / records</th><th>Cause and data</th></tr></thead>
+      <tbody>
+        <tr><td>Gyazo (Helpfeel)</td><td>~23.62M user records, ~490M image metadata records</td><td>Vulnerability in the image upload server exploited 11 Sep. Names or nicknames, emails, password hashes, device and session IDs, X integration tokens. Metadata includes upload IPs and EXIF location. No payment data.</td></tr>
+        <tr><td>Times Car (Park24 / Times Mobility)</td><td>Up to ~6.6M accounts; ~1.6M confirmed with ID documents</td><td>Unauthorized access to web systems detected 25 Sep. Names, addresses, dates of birth, driver's license details, passwords stored unrecoverably. 6.6M is a stated maximum and the final count is under investigation. One tracker lists ~1.6M as the confirmed figure.</td></tr>
+        <tr><td>US Defense Manpower Data Center</td><td>~3.05M (2.76M living, 294K deceased)</td><td>Flaw in a file-sharing system, patched 16 Jul. Unencrypted SSNs and personnel data accessed from Oct 2025. Reporting dates differ: one tracker lists 24 Sep, Help Net Security is dated 1 Oct.</td></tr>
+        <tr><td>Mathspace</td><td>1,079,819 people</td><td>Unpatched self-hosted Metabase instance</td></tr>
+        <tr><td>Seicomart (Secoma)</td><td>572,022 accounts</td><td>Cause not disclosed. Reported 29 Sep.</td></tr>
+        <tr><td>Ludwig Maximilian University of Munich</td><td>~600,000 data sets</td><td>Cause not disclosed. Reported 19 Sep.</td></tr>
+        <tr><td>Weverse (HYBE)</td><td>422,584 accounts</td><td>Vulnerability exploitation. Reported 6 Sep.</td></tr>
+        <tr><td>Brevo customers (Trezor, BitBox, CoinTracking)</td><td>347,000 Trezor email addresses</td><td>SAML single sign-on flaw reached 138 Brevo accounts. Used to send phishing.</td></tr>
+        <tr><td>Japan Digital Agency (Government Solution Service)</td><td>~246,000 records</td><td>VPN flaw exploited. Reported 11 Sep.</td></tr>
+        <tr><td>Veradigm</td><td>Not disclosed. Gentlemen group claims 3.5M patient records.</td><td>Vendor credentials for a Veradigm API used to copy patient data. 8-K filed 8 Sep. Veradigm says clinical data was not involved and some records may include SSNs.</td></tr>
+        <tr><td>DriveWealth (Revolut, Stake, Hatch customers)</td><td>No total. Notices list 62,000+ Rhode Island residents.</td><td>Social engineering on 4 to 5 Sep. Names, contact details, citizenship, partial account numbers. No passwords or card data.</td></tr>
+        <tr><td>Dropbox (via Lenovo ID)</td><td>~5,000 accounts</td><td>Lenovo email verification flaw, described under Supply chain</td></tr>
+      </tbody>
+    </table></div>
+    <p class="label">Unverified claims: IDScan.net (company confirmed unauthorized access to its VeriScan cloud environment; a seller's claim of 153M+ licenses has not been confirmed and no victim count is published). CenterPoint Energy (8-K filed 14 Sep confirms access affecting a portion of customers; the attacker's 7.49M records and unauthenticated API cause are unconfirmed). FBI jobs portal (ShinyHunters claims a PeopleSoft zero-day and 2 to 3 TB; the FBI is investigating and has not confirmed a breach). Florida DMV DAVID database (200,000+ claimed; the agency attributes access to a police user's credentials stored on a personal device, and reports differ on data types). Services Australia Medicare statistics portal (a tracker lists an OpenAI research agent reaching non-public files, with no evidence of data theft; a vendor blog dates the access to 18 Jun and the public announcement to 24 Sep; the mechanism is disputed). Bitget (the CEO says she suspects a North Korean group; the exchange has not made a formal attribution).</p>
+  </section>
+
+  <section aria-labelledby="other">
+    <h2 id="other">Law enforcement and research</h2>
+    <ul class="list">
+      <li><span class="label">KillSec takedown</span><p>On 30 Sep, in an operation called KillSwitch led by Hamburg police and prosecutors, authorities took control of the ransomware group's leak site and secured at least 110 TB of data. Three people were provisionally arrested and eight searches were carried out in Greece, Romania, Spain, and the United Kingdom. A 16-year-old is named as the suspected main operator. The group is linked to about 1,000 suspected attacks, about 500 of them identified as successful, and the figures may change as evidence is analysed. Ten countries, Europol, and Eurojust took part, with support from Bitdefender and Group-IB. Police announced it on 1 Oct.</p></li>
+      <li><span class="label">Liquid Network (Blockstream)</span><p>On 6 Sep roughly 4,000 of the 4,200 BTC in the federation wallet was drained after a bug in the Elements code let unbacked L-BTC be redeemed through SideSwap's peg-out. The attackers returned about 3,400 BTC (~$262.6M) and kept about 598 BTC (~$47M). One report says no keys or credentials were stolen.</p></li>
+      <li><span class="label">Bitget</span><p>On 24 Sep the exchange reported unauthorized transfers from a limited number of hot wallets and suspended withdrawals. The loss was first put at about $351.6M and revised to about $387.5M on 25 Sep. The attack method has not been described in the sources reviewed.</p></li>
+      <li><span class="label">Research and disclosure</span><p>A public proof of concept called ShieldCrash reportedly bypasses the patch for the Microsoft Defender privilege escalation flaw CVE-2026-69414 (ShieldBreak), which was fixed on 8 Sep. No Pwn2Own event or major conference disclosure dated September was found in the sources reviewed.</p></li>
+      <li><span class="label">Certificate and trust failures</span><p>No certificate authority or root store incident dated September was found in the sources reviewed.</p></li>
+    </ul>
+  </section>
+
+  <section aria-labelledby="do">
+    <h2 id="do">What to do</h2>
+    <ol class="todo">
+      <li>Update every NetScaler ADC and Gateway, then hunt for WHIPSHOT, SLAPSHOT, and a setuid /bin/sh dating back to early September.</li>
+      <li>Apply the Adobe hotfix to Magento and Adobe Commerce, and move any store older than 2.4.4 to a supported release.</li>
+      <li>Patch Check Point gateways and management servers, F5 BIG-IP APM, Arista VeloCloud, and Cisco Secure Email Gateway, then check for prior compromise, since patching does not evict an attacker already inside.</li>
+      <li>Restrict management interfaces for Check Point, Cisco FMC, and VeloCloud to trusted internal addresses.</li>
+      <li>Apply the September Patch Tuesday updates, starting with DNS servers, domain controllers, and the two exploited privilege escalation bugs.</li>
+      <li>Update WordPress to 7.1.2, 7.0.6, 6.9.9 or 6.8.10 and check themes for directories beginning with page-.</li>
+      <li>Enforce multifactor authentication on SaaS and consumer-linked accounts, and remove legacy sign-in integrations such as Lenovo ID where they are not needed.</li>
+      <li>Rotate API keys and application credentials held by third-party apps and email or e-commerce platforms, and review which vendors hold long-lived keys to your systems.</li>
+    </ol>
+  </section>
+
+  <section aria-labelledby="src">
+    <h2 id="src">Sources</h2>
+    <ul class="sources">
+      <li><a href="https://www.helpnetsecurity.com/2026/09/09/september-2026-patch-tuesday-zero-days-sigred-successor/">Help Net Security: September 2026 Patch Tuesday</a></li>
+      <li><a href="https://www.malwarebytes.com/blog/news/2026/09/microsoft-fixes-record-964-flaws-including-2-exploited-zero-days">Malwarebytes: Microsoft fixes record 964 flaws</a></li>
+      <li><a href="https://www.bleepingcomputer.com/news/security/hackers-exploit-citrix-netscaler-zero-day-to-deploy-web-shells/">BleepingComputer: Citrix NetScaler zero-day and web shells</a></li>
+      <li><a href="https://thehackernews.com/2026/09/cisa-says-attackers-are-exploiting-two.html">The Hacker News: CISA on exploited Citrix flaws</a></li>
+      <li><a href="https://securityaffairs.com/198884/cyber-crime/attackers-exploit-critical-cisco-fmc-flaw-to-deploy-qilin-ransomware.html">Security Affairs: Cisco FMC flaw and Qilin ransomware</a></li>
+      <li><a href="https://sansec.io/research/stylesmuggler">Sansec: StyleSmuggler</a></li>
+      <li><a href="https://www.helpnetsecurity.com/?p=385473">Help Net Security: Check Point, Arista, and F5 attacks</a></li>
+      <li><a href="https://thehackernews.com/2026/09/cisco-secure-email-gateway-flaw.html">The Hacker News: Cisco Secure Email Gateway flaw</a></li>
+      <li><a href="https://thehackernews.com/2026/09/attackers-exploit-wordpress-cve-2026.html">The Hacker News: WordPress CVE-2026-87902 exploited</a></li>
+      <li><a href="https://strobes.co/blog/biggest-data-breaches-september-2026">Strobes: Biggest data breaches of September 2026</a></li>
+      <li><a href="https://grcsolutions.io/global-data-breaches-and-cyber-attacks-in-september-2026/">GRC Solutions: Global data breaches, September 2026</a></li>
+      <li><a href="https://www.helpnetsecurity.com/2026/10/01/pentagon-dmdc-data-breach-3-million-people/">Help Net Security: Pentagon DMDC breach</a></li>
+      <li><a href="https://www.lovguiden.dk/en/det-offentlige/europol/2026-10-01-killsec-ransomwaregruppe-16-aarig-mistaenkt-servere-og-leak-site-beslaglagt">Lovguiden: KillSec operation</a></li>
+      <li><a href="https://securityaffairs.com/?p=198697">Security Affairs: Liquid Network drain</a></li>
+      <li><a href="https://safeguard.sh/resources/blog/shai-hulud-payload-resurfaces-after-111-days">Safeguard: Shai-Hulud payload resurfaces on npm</a></li>
+    </ul>
+  </section>
+
+  <footer>Compiled from public reporting as of 27 Oct 2026. Figures are as first reported and may be revised. · <a href="/archive/">All months</a> · <a href="/">Current 30 day brief</a> · <a href="/about.html">About Infinity Shield</a></footer>
+</div>
+
+</body>
+</html>

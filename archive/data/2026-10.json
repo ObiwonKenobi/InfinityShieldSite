@@ -1,0 +1,407 @@
+{
+  "month": "2026-10",
+  "label": "October 2026",
+  "period": "1 – 27 Oct 2026 (month to date)",
+  "issued": "27 Oct 2026",
+  "lede": "This is the month-to-date brief for 1 to 27 October 2026. The month so far is defined by two internet-wide trust failures, critical PHP flaws, and a certificate authority with recoverable keys, plus a run of exploited edge-device zero-days and credential-driven breaches at hosting, SaaS, and consumer-service providers.",
+  "top": [
+    {
+      "title": "PHP2Shell: critical flaws in PHP core",
+      "sev": "crit",
+      "status": "Critical · exploitation attempts",
+      "body": "Two critical flaws affect nearly every PHP version back to 5.4, across PHP-FPM, Apache mod_php, php-cgi, FrankenPHP, and LiteSpeed, with mod_php at highest risk. Wiz Research, Calif, and OpenAI's Codex Security team reported them, and the researchers say AI tools helped turn them into working exploits. Details leaked online on 20 Oct, and PHP moved its release up to 21 Oct. Amazon logged exploitation attempts from 17 Oct, four days before the patches, and Cloudflare and watchTowr also reported attempts. Sources disagree on impact: Amazon's CISO says the flaws are being broadly exploited, while Dataminr reports only scanning and non-working exploits with no known compromises.",
+      "facts": [
+        [
+          "CVE",
+          "CVE-2026-109618\nCVE-2026-109619"
+        ],
+        [
+          "CVSS v4",
+          "9.2 (PHP rating)"
+        ],
+        [
+          "Fixed in",
+          "8.5.12 · 8.4.27 · 8.3.36 · 8.2.35"
+        ]
+      ],
+      "action": "Patch every PHP install now, including vendor appliances and hosted CMSs. Hunt for web shells on anything exposed since 17 Oct. Source backports exist for 7.4, 8.0 and 8.1, which PHP no longer supports, and distributions may backport fixes under older version numbers, so check changelogs for the CVEs. Disabling session upload progress and setting memory limits reduce exposure but do not make servers safe."
+    },
+    {
+      "title": "eMudhra CA: intermediate certificate keys trivially recoverable",
+      "sev": "crit",
+      "status": "Critical · contained",
+      "body": "Eight intermediate CA certificates from the Indian certificate authority eMudhra, six for TLS and two for code signing, were generated with far too little randomness. Each private key was smaller than 256, so anyone holding the public certificate could test every possible value; recovered keys included 4, 56, and 115. A researcher found it with a CCADB check on 17 Oct. eMudhra revoked the certificates on 18 Oct, Apple blocked them on 19 Oct, and Microsoft followed on 20 Oct, the day Mozilla made the incident public. eMudhra says only one of the eight was deployed in production, none issued end-entity certificates and its infrastructure was not breached. On 22 Oct it said it would exit the global SSL/TLS business.",
+      "facts": [
+        [
+          "Certs affected",
+          "8 intermediates"
+        ],
+        [
+          "Keys reported",
+          "4, 56, 115"
+        ],
+        [
+          "Discovered / revoked",
+          "17 Oct / 18 Oct"
+        ],
+        [
+          "Browser blocks",
+          "19–20 Oct"
+        ]
+      ],
+      "action": "Inventory any certificates chaining to eMudhra and replace them with another CA. Make sure browsers and OS trust stores are current. Check Certificate Transparency logs for certificates issued for your domains under these intermediates."
+    },
+    {
+      "title": "ConnectWise Cloud Backup (formerly SkyKick) used to reach Microsoft 365 tenants",
+      "sev": "crit",
+      "status": "Critical · supply chain",
+      "body": "Starting 15 Oct, attackers abused the backup platform's application identities to sign into customer Microsoft 365 tenants, so MFA never applied. Huntress confirmed unauthorized sign-ins in 162 tenants by 16 Oct and later found nearly 1,000 tenants with sign-in activity from the attacker's address, with more than 300 successful. On 21 Oct Microsoft attributed the campaign to Storm-0940, a China-aligned group, and said it used ARTEX, an open-source agentic AI penetration-testing framework, and tried to sign in to more than 2,250 tenants. In some cases the attackers reached privileged cloud access in under three hours and added credentials and role changes that can persist after the app itself is fixed. ConnectWise says it has no indication that backup data was compromised and began restoring the service in stages on 21 Oct.",
+      "facts": [
+        [
+          "Confirmed (Huntress)",
+          "162 tenants"
+        ],
+        [
+          "Targeted (Microsoft)",
+          "2,250+ tenants"
+        ],
+        [
+          "Activity window",
+          "From 15 Oct"
+        ]
+      ],
+      "action": "If you or your MSP use this product, review Entra sign-in logs for its service principals back to at least 15 Oct, audit application secrets, certificates, OAuth grants, and Graph activity added since 13 Oct, and review role changes. Keep ConnectWise integrations disabled until ConnectWise confirms restoration is safe, and do not delete the enterprise applications as a first step."
+    }
+  ],
+  "vulns": [
+    {
+      "product": "Ivanti Connect Secure VPN",
+      "cve": "CVE-2026-104935 + 2 chained",
+      "allows": "Chained authentication bypass, remote code execution, and privilege escalation giving root on fully patched appliances. Actor UTA0576 harvested Active Directory credentials, BitLocker recovery keys, and LAPS data with custom Python LDAP and Kerberos tools, and deleted evidence from debug and audit logs. Exploited since 1–3 Oct; added to CISA KEV on 13 Oct. Ivanti's Integrity Checker may not detect compromise because commands run in memory.",
+      "sev": "crit",
+      "status": "Exploited",
+      "note": "Partial fix"
+    },
+    {
+      "product": "Microsoft Patch Tuesday (13 Oct)",
+      "cve": "CVE-2026-96951 (MotW bypass)",
+      "allows": "Record ~1,411 CVEs by BleepingComputer's count (some outlets say 1,413), 70 rated Critical. Three zero-days: the exploited Windows Shell Mark of the Web bypass, a publicly disclosed .NET Framework bypass of Windows Defender Application Control (CVE-2026-108398), and a publicly disclosed MessagePack-CSharp denial of service (CVE-2026-92707).",
+      "sev": "high",
+      "status": "Exploited",
+      "note": "Patched"
+    },
+    {
+      "product": "Fortinet FortiMail",
+      "cve": "CVE-2026-104286",
+      "allows": "Unauthenticated arbitrary file write through crafted HTTP/HTTPS requests, CVSS 9.8. Added to CISA KEV on 1 Oct. Fixes were listed as upcoming for 8.0.2+, 7.6.7+ and 7.4.9+; until then Fortinet advises disabling IBE support and restricting management access.",
+      "sev": "crit",
+      "status": "Exploited",
+      "note": "CISA KEV"
+    },
+    {
+      "product": "Citrix NetScaler ADC / Gateway",
+      "cve": "CVE-2026-88779 · CVE-2026-107406",
+      "allows": "CVE-2026-88779 (disclosed 4 Oct, CVSS 8.7) is a memory overflow under SAML configurations that causes denial of service and is being exploited; CISA KEV deadline 7 Oct. CVE-2026-107406 (disclosed 8 Oct, CVSS 9.5) is a separate SAML memory overflow that can give remote code execution or denial of service; Citrix reports no known exploitation. Earlier September fixes may not cover them, so a second upgrade may be needed.",
+      "sev": "high",
+      "status": "Exploited",
+      "note": "Fixes: 14.1-73.46+ / 13.1-64.29+"
+    },
+    {
+      "product": "AhsayCBS backup (MSP platform)",
+      "cve": "CVE-2026-105133 / 105134",
+      "allows": "Authentication bypass plus remote code execution as SYSTEM. Huntress saw exploitation from 7 Oct, with attackers deploying JSP web shells and XMRig miners. Added to CISA KEV on 14 Oct. The August fixes were incomplete.",
+      "sev": "high",
+      "status": "Exploited",
+      "note": "Hotfix 10.3.4.45 / 9.15.2.70"
+    },
+    {
+      "product": "BeyondTrust Remote Support",
+      "cve": "CVE-2026-102764",
+      "allows": "Authentication bypass in RS 26.2.3 and earlier. Exploited since late August; Mandiant and Google attribute it to Armory Castle (formerly UNC5221), a suspected China-nexus espionage actor. Patched 15 Oct (BT26-05); reported added to CISA KEV on 16 Oct.",
+      "sev": "high",
+      "status": "Exploited"
+    },
+    {
+      "product": "Palo Alto PAN-OS · Cisco Secure Email Gateway",
+      "cve": "CVE-2026-0322 · CVE-2026-76519",
+      "allows": "PAN-OS management interface code injection (authenticated, root, CVSS 8.6) and a Cisco AMP path traversal that lets a crafted attachment write files and run commands as root (CVSS 9.8; needs File Reputation enabled and Content Scanner Tools older than 25.3.0.5525). Both added to CISA KEV on 14 Oct. Cisco's fixes shipped on 14 Sep.",
+      "sev": "high",
+      "status": "Exploited"
+    },
+    {
+      "product": "Atlassian Jira / Confluence / Bitbucket and other Data Center products",
+      "cve": "CVE-2026-21589",
+      "allows": "Unauthenticated file access, CVSS 9.3, across eight products including Bamboo, Crowd, Crucible, and Fisheye. Disclosed 5 Oct. Previdian reported exploitation attempts on its honeypots within two hours of watchTowr publishing a proof of concept; no confirmed compromises were reported.",
+      "sev": "med",
+      "status": "Exploit attempts"
+    },
+    {
+      "product": "ProFTPD · ONLYOFFICE Docs · Apache Struts · ISC BIND · Strapi",
+      "cve": "CVE-2015-3306 · 2021-3199 · 2016-3081 · 2015-5477 · 2023-22894",
+      "allows": "Five older flaws added to CISA KEV on 8 Oct after abuse by the China-linked actor Flax Typhoon, with a federal deadline of 11 Oct.",
+      "sev": "med",
+      "status": "Exploited"
+    }
+  ],
+  "supply": [
+    {
+      "label": "LiteLLM 1.107.0",
+      "text": "A poisoned release went out on PyPI and the official Docker images on 21 Oct. The PyPI wheels were live for under two hours and the Docker tags stayed pointed at the bad image for a few hours more. The release pipeline was altered using stolen GitHub credentials from three developer accounts. It ran a credential stealer at every Python startup, even if LiteLLM was never imported, and installed a loader that fetches and runs code from attacker infrastructure every hour. Anyone who installed it should treat every secret on that host as exposed; the clean version is 1.106.2."
+    },
+    {
+      "label": "npm",
+      "text": "Eight malicious packages in a long-running data-theft campaign reached 40,767 downloads as of 1 Oct, 37,419 of them for function-flag. Three packages (function-flag, function-color, cdn-img-fetch) were still installable when checked, and the campaign delivers the Overlord RAT and an infostealer. Download counts measure registry activity, not confirmed infections."
+    },
+    {
+      "label": "JAMIS Prime (hosted ERP)",
+      "text": "Hosted JAMIS Prime environments used by government contractors have been disrupted for about a week, with access returning unevenly since late October. A post from the accounting firm Corporate Results, Inc. says reports and community updates tie the outage to a security compromise of the environment, and that customer instances are being rebuilt on new AWS infrastructure instead of cleaned in place. Some tenants have basic logins back but report intermittent performance, delayed database imports, and broken integrations and reports. No JAMIS statement was found in the sources reviewed, so the cause, scope, and number of customers affected are unconfirmed. For contractors the open questions are DCAA timekeeping and billing records kept by hand during the outage, whether the rebuilt environment keeps the FedRAMP Moderate equivalency the post says JAMIS Prime holds, and whether CUI held in an instance triggered 72-hour DFARS 252.204-7012 reporting to DC3."
+    }
+  ],
+  "breaches": [
+    {
+      "org": "Oracle Health (Cerner)",
+      "scale": "~20M patients",
+      "cause": "Customer credentials stolen and used on an unmigrated legacy server. The intrusion ran from January to April 2025; the near-20M tally surfaced from a Texas attorney general filing posted 2 Oct. Oracle has not published an official figure."
+    },
+    {
+      "org": "Burger King Japan",
+      "scale": "~11.18M app members",
+      "cause": "Names, birth dates, gender, emails, phone numbers, and order history taken 2–7 Oct and announced 15 Oct. The server held no card numbers."
+    },
+    {
+      "org": "Denmark CPR register",
+      "scale": "~8.8M (≈80% of the register)",
+      "cause": "Attackers misused a private Danish company's legitimate registry access and brute-forced CPR numbers. Names, addresses, and CPR numbers taken. Found 2 Oct, disclosed 5 Oct."
+    },
+    {
+      "org": "Daiichikosho (karaoke)",
+      "scale": "~8.72M customers",
+      "cause": "Malware on an employee PC at contractor Nippon Columbia Group. Names, genders, birth dates, emails, and phone numbers. Announced 8 Oct."
+    },
+    {
+      "org": "iRhythm Technologies",
+      "scale": "~8.18M (Oregon AG listing)",
+      "cause": "Zio cardiac monitor maker. Social engineering gave access to third-party-hosted business applications in June, followed by an extortion demand. The full count surfaced in state filings and notification letters began 9 Oct."
+    },
+    {
+      "org": "ETS",
+      "scale": "~7M California students",
+      "cause": "Files copied between 22 May and 18 Sep using one compromised login. Discovered 25 Sep, districts told 2 Oct. Includes disability status and program eligibility; no SSNs."
+    },
+    {
+      "org": "Yamato Transport (Kuroneko deferred payment)",
+      "scale": "~5.3M records",
+      "cause": "Unauthorized access detected 28 Sep and reported 19 Oct. Names, addresses, phone numbers, and purchase details; no card details or passwords. Entry point not stated."
+    },
+    {
+      "org": "Zeabur (hosting)",
+      "scale": "3.2M env-var records / 321,810 accounts",
+      "cause": "Attack on 14–15 Oct using leaked internal credentials including admin tokens not rotated since January 2024. Second breach in two months. Services end by 31 Dec."
+    },
+    {
+      "org": "Nikkei",
+      "scale": "~1.83M records",
+      "cause": "Stolen credentials used on a cloud development system on 7 Oct; about 150K records held an identifier. Its third incident in about a month."
+    },
+    {
+      "org": "Railway (hosting)",
+      "scale": "Limited (not quantified)",
+      "cause": "Detected 21 Oct. Encrypted customer environment variables accessed, some reportedly decrypted. Railway says it may be part of a wider series of attacks on platform companies aimed at AI inference providers."
+    },
+    {
+      "org": "IDC Frontier (SoftBank)",
+      "scale": "495 companies and local governments disrupted",
+      "cause": "Ransomware attack on 7 Oct. Separately, Japan's cybersecurity strategy head described a \"state of emergency in cyberspace\" on 15 Oct after attacks on more than 20 major companies."
+    },
+    {
+      "org": "Ahold Delhaize",
+      "scale": "Multiple brands (not quantified)",
+      "cause": "Systems taken offline from about 12 Oct. Albert Heijn, Delhaize, Stop & Shop, Hannaford, and Giant Food sites and apps were down while stores stayed open. No evidence of customer data theft so far and no ransomware group claim reported."
+    },
+    {
+      "org": "GMO Onamae Desktop Cloud",
+      "scale": "Up to ~26.7K servers",
+      "cause": "Confirmed 20 Oct. An outside party installed malware and GMO shut down customer servers. How they got in has not been disclosed, and no data leak is confirmed."
+    }
+  ],
+  "unverified": "PwC (Everest claims ~590 GB, posted 22 Oct; PwC confirms only an incident at a third-party platform that hosts employee learning records), JAMIS Prime outage (cause, timeline, and scope rest on one post by Corporate Results, Inc., a firm that sells recovery and ERP migration services, plus unnamed community updates; no JAMIS statement or other coverage was found)",
+  "other": [
+    {
+      "label": "Pwn2Own Ireland",
+      "text": "98 zero-days and $1.262M paid out. The Galaxy S26 was compromised seven times and the Pixel 10 three times. Nobody registered to attack the iPhone 17."
+    },
+    {
+      "label": "Flax Typhoon advisory",
+      "text": "A joint advisory from the US, UK, Australia, Canada, Japan, New Zealand, and Spain ties Flax Typhoon operations to China-based Integrity Technology Group. It covers eight exploited vulnerabilities used for initial access, email and credential theft, and VPN persistence, and warns of positioning in critical infrastructure networks."
+    },
+    {
+      "label": "GlobalProtect ransomware",
+      "text": "ReliaQuest reported on 9 Oct that the Qilin and Settra ransomware groups are exploiting CVE-2026-0257, a PAN-OS GlobalProtect and Prisma Access authentication bypass that was patched in May. Patching alone may not remove access gained earlier."
+    }
+  ],
+  "todo": [
+    "Patch PHP everywhere and hunt for web shells on internet-facing PHP hosts, checking vendor changelogs for the two CVEs.",
+    "Replace any certificate chaining to eMudhra.",
+    "Patch Ivanti, FortiMail, NetScaler, Cisco Secure Email Gateway, PAN-OS, BeyondTrust, AhsayCBS, and Atlassian Data Center, then check those devices for signs of prior compromise. Patching does not remove an attacker who is already in.",
+    "Apply October Patch Tuesday, starting with the exploited Windows Shell Mark of the Web bypass (CVE-2026-96951).",
+    "Audit third-party app identities in Microsoft 365 (backup, MSP, and RMM tools), rotate their secrets, and keep ConnectWise integrations disabled until restoration is confirmed.",
+    "Check Python environments for LiteLLM 1.107.0, move to 1.106.2, and rotate secrets on any host that installed it.",
+    "Replace long-lived admin tokens and plaintext environment variables at hosting providers with short-lived, scoped credentials, and rotate anything stored at Railway or Zeabur.",
+    "After patching GlobalProtect, terminate active sessions and disable authentication override cookies where they are not needed.",
+    "If you run hosted JAMIS Prime, document when the system went down and how manual timecards were collected, signed, and approved, ask JAMIS in writing whether the rebuilt environment keeps your FedRAMP equivalency and security boundary, and decide whether DFARS 252.204-7012 reporting applies to CUI held in the instance."
+  ],
+  "sources": [
+    {
+      "title": "The Hacker News: PHP2Shell patches",
+      "url": "https://thehackernews.com/2026/10/php-issues-emergency-patches-for-two.html"
+    },
+    {
+      "title": "BleepingComputer: Amazon on PHP2Shell exploitation",
+      "url": "https://www.bleepingcomputer.com/news/security/amazon-says-php2shell-exploitation-began-4-days-before-patches/amp/"
+    },
+    {
+      "title": "Help Net Security: eMudhra keys",
+      "url": "https://www.helpnetsecurity.com/?p=388647"
+    },
+    {
+      "title": "Inc42: eMudhra exits TLS business",
+      "url": "https://inc42.com/features/emudhra-to-exit-certificate-business-as-security-flaw-triggers-distrust/"
+    },
+    {
+      "title": "BleepingComputer: ConnectWise Cloud Backup attack",
+      "url": "https://www.bleepingcomputer.com/news/security/hackers-breach-microsoft-365-tenants-via-connectwise-supply-chain-attack/"
+    },
+    {
+      "title": "The Next Web: Microsoft ties ConnectWise attack to Storm-0940",
+      "url": "https://thenextweb.com/news/microsoft-storm-0940-ai-agents-connectwise-attack"
+    },
+    {
+      "title": "BleepingComputer: LiteLLM release pipeline hacked",
+      "url": "https://bleepingcomputer.com/news/security/litellm-release-pipeline-hacked-to-distribute-info-stealer-malware"
+    },
+    {
+      "title": "GBHackers: npm supply chain campaign",
+      "url": "https://gbhackers.com/npm-supply-chain-campaign/amp/"
+    },
+    {
+      "title": "Cybersecurity Dive: Ivanti Connect Secure chained exploitation",
+      "url": "https://www.cybersecuritydive.com/news/hacker-ivanti-connect-secure-chained-exploitation/832983/"
+    },
+    {
+      "title": "BleepingComputer: October 2026 Patch Tuesday",
+      "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-october-2026-patch-tuesday-fixes-1-411-flaws-3-zero-days/"
+    },
+    {
+      "title": "The Hacker News: FortiMail zero-day",
+      "url": "https://thehackernews.com/2026/10/critical-fortimail-zero-day-flaw.html"
+    },
+    {
+      "title": "CSO Online: Citrix NetScaler CVE-2026-88779",
+      "url": "https://www.csoonline.com/article/4230642/citrix-warns-of-actively-exploited-netscaler-flaw-days-after-zero-day-patch-rush.html"
+    },
+    {
+      "title": "H-ISAC: Citrix CVE-2026-107406",
+      "url": "https://www.aha.org/h-isac-green-reports/2026-10-09-vulnerability-bulletinstlp-white-citrix-patches-critical-netscaler-adc-and-netscaler-gateway"
+    },
+    {
+      "title": "Huntress: AhsayCBS exploitation",
+      "url": "https://www.huntress.com/blog/ahsaycbs-flaws-exploit"
+    },
+    {
+      "title": "BleepingComputer: BeyondTrust zero-day",
+      "url": "https://www.bleepingcomputer.com/news/security/beyondtrust-patches-zero-day-exploited-in-attacks-since-august/amp/"
+    },
+    {
+      "title": "Help Net Security: CISA KEV additions, 14 Oct",
+      "url": "https://www.helpnetsecurity.com/?p=388051"
+    },
+    {
+      "title": "SecurityWeek: Cisco Secure Email Gateway",
+      "url": "https://www.securityweek.com/cisco-warns-of-exploited-secure-email-gateway-vulnerability/amp/"
+    },
+    {
+      "title": "eSecurity Planet: Atlassian CVE-2026-21589",
+      "url": "https://www.esecurityplanet.com/news/news-atlassian-cve-2026-21589-file-read-flaw/"
+    },
+    {
+      "title": "The Hacker News: Flax Typhoon and CISA KEV",
+      "url": "https://thehackernews.com/2026/10/flax-typhoon-exploits-five-flaws-as.html"
+    },
+    {
+      "title": "Infosecurity Magazine: GlobalProtect targeted by ransomware",
+      "url": "https://infosecurity-magazine.com/news/palo-alto-vpn-vulnerability-target"
+    },
+    {
+      "title": "BleepingComputer: Denmark CPR register",
+      "url": "https://www.bleepingcomputer.com/news/security/denmark-population-registry-data-breach-affects-88-million-people/amp/"
+    },
+    {
+      "title": "Infosecurity Magazine: Daiichikosho",
+      "url": "https://www.infosecurity-magazine.com/news/karaoke-giant-data-breach-eight/"
+    },
+    {
+      "title": "HIPAA Journal: iRhythm",
+      "url": "https://hipaajournal.com/irhythm-data-breach"
+    },
+    {
+      "title": "EdSource: ETS breach",
+      "url": "https://edsource.org/updates/personal-information-for-7-million-california-students-has-been-stolen-following-hack"
+    },
+    {
+      "title": "GovTech: ETS breach",
+      "url": "https://govtech.com/education/k-12/testing-company-data-breach-affects-millions-of-calif-students"
+    },
+    {
+      "title": "SecurityWeek: Oracle Health breach tally",
+      "url": "https://www.securityweek.com/oracle-health-data-breach-tally-climbs-to-nearly-20-million/"
+    },
+    {
+      "title": "BleepingComputer: Burger King Japan",
+      "url": "https://www.bleepingcomputer.com/news/security/burger-king-japan-data-breach-exposes-11-million-customer-records/amp/"
+    },
+    {
+      "title": "CyberInsider: Yamato Transport",
+      "url": "https://cyberinsider.com/yamato-says-5-3-million-records-stolen-in-payment-service-breach/"
+    },
+    {
+      "title": "BleepingComputer: Zeabur shutting down",
+      "url": "https://www.bleepingcomputer.com/news/security/zeabur-shutting-down-after-second-security-breach-in-two-months/"
+    },
+    {
+      "title": "BleepingComputer: Nikkei third breach",
+      "url": "https://www.bleepingcomputer.com/news/security/nikkei-discloses-third-data-breach-in-a-month-18m-records-exposed/amp/"
+    },
+    {
+      "title": "Railway: security disclosure, 21 Oct",
+      "url": "https://blog.railway.com/p/security-disclosure-wednesday-october-21st"
+    },
+    {
+      "title": "BleepingComputer: IDC Frontier ransomware",
+      "url": "https://www.bleepingcomputer.com/news/security/ransomware-attack-disrupts-japans-idcf-cloud-used-by-govt-clients/amp/"
+    },
+    {
+      "title": "ProPakistani: Japan cyberspace emergency",
+      "url": "https://propakistani.pk/2026/10/15/japan-declares-state-of-emergency-amid-surge-of-ai-cyber-attacks/"
+    },
+    {
+      "title": "BleepingComputer: Ahold Delhaize",
+      "url": "https://bleepingcomputer.com/news/security/ahold-delhaize-cyberattack-affects-services-across-us-and-europe"
+    },
+    {
+      "title": "BleepingComputer: GMO Onamae Desktop Cloud",
+      "url": "https://bleepingcomputer.com/news/security/japans-onamae-desktop-cloud-hacked-up-to-27-000-servers-affected"
+    },
+    {
+      "title": "Analytics Insight: PwC incident",
+      "url": "https://www.analyticsinsight.net/news/pwc-confirms-cyber-incident-says-client-data-was-not-affected"
+    },
+    {
+      "title": "Privacy Guides: Pwn2Own Ireland",
+      "url": "https://www.privacyguides.org/news/2026/10/13/hackers-at-pwn2own-ireland-exploit-zero-days-in-the-google-pixel-10-samsung-galaxy-s26-and-openai-codex/"
+    },
+    {
+      "title": "Corporate Results, Inc.: When the ERP goes dark (JAMIS outage)",
+      "url": "https://www.cri4results.com/post/when-the-erp-goes-dark-navigating-the-jamis-outage-dcaa-compliance-and-your-options"
+    }
+  ]
+}

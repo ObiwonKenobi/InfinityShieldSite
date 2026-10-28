@@ -111,10 +111,8 @@ def update_home(d):
         '          <!-- rolling-brief:end -->'
     )
     s, n1 = re.subn(r'<!-- rolling-brief:start -->.*?<!-- rolling-brief:end -->', lambda m: band, s, flags=re.S)
-    chip = f'<!-- rolling-period --><span>{esc(d["period"])}</span><!-- /rolling-period -->'
-    s, n2 = re.subn(r'<!-- rolling-period -->.*?<!-- /rolling-period -->', lambda m: chip, s, flags=re.S)
-    if n1 != 1 or n2 != 1:
-        sys.exit("index.html: rolling-brief or rolling-period markers not found exactly once")
+    if n1 != 1:
+        sys.exit("index.html: rolling-brief markers not found exactly once")
     HOME.write_text(s, encoding="utf-8")
 
 

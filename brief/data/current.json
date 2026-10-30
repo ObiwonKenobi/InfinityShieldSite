@@ -199,77 +199,92 @@
     {
       "org": "Capcom (CAPCOM ID)",
       "scale": "11,774,247 records",
-      "cause": "Account records holding email addresses and per-account system data were taken worldwide; disclosed about 23 Oct. No payment card data. Entry point not yet stated and the investigation is ongoing."
+      "cause": "Account records holding email addresses and per-account system data were taken worldwide; disclosed about 23 Oct. No payment card data. Entry point not yet stated and the investigation is ongoing.",
+      "records": 11774247
     },
     {
       "org": "Oracle Health (Cerner)",
       "scale": "~20M patients",
-      "cause": "Customer credentials stolen and used on an unmigrated legacy server. The intrusion ran from January to April 2025; the near-20M tally surfaced from a Texas attorney general filing posted 2 Oct. Oracle has not published an official figure."
+      "cause": "Customer credentials stolen and used on an unmigrated legacy server. The intrusion ran from January to April 2025; the near-20M tally surfaced from a Texas attorney general filing posted 2 Oct. Oracle has not published an official figure.",
+      "records": 20000000
     },
     {
       "org": "Burger King Japan",
       "scale": "~11.18M app members",
-      "cause": "Names, birth dates, gender, emails, phone numbers, and order history taken 2–7 Oct and announced 15 Oct. The server held no card numbers."
+      "cause": "Names, birth dates, gender, emails, phone numbers, and order history taken 2–7 Oct and announced 15 Oct. The server held no card numbers.",
+      "records": 11180000
     },
     {
       "org": "Denmark CPR register",
       "scale": "~8.8M (≈80% of population)",
-      "cause": "Third-party breach combined with brute-forced CPR numbers"
+      "cause": "Third-party breach combined with brute-forced CPR numbers",
+      "records": 8800000
     },
     {
       "org": "Daiichikosho (karaoke)",
       "scale": "~8.72M customers",
-      "cause": "Breached through a contractor's system"
+      "cause": "Breached through a contractor's system",
+      "records": 8720000
     },
     {
       "org": "Sony Network Communications (So-net, plala)",
       "scale": "~2.58M customer records",
-      "cause": "Intrusion on 19 Oct at Sony's Japanese ISP subsidiary, found four days later and disclosed 27 to 28 Oct. 2,141,986 So-net and 443,495 plala records: names, phone numbers, email addresses, dates of birth; no card data. Sources conflict on passwords: Help Net Security reports 54,401 email passwords taken, while Sony's statement says no passwords were leaked."
+      "cause": "Intrusion on 19 Oct at Sony's Japanese ISP subsidiary, found four days later and disclosed 27 to 28 Oct. 2,141,986 So-net and 443,495 plala records: names, phone numbers, email addresses, dates of birth; no card data. Sources conflict on passwords: Help Net Security reports 54,401 email passwords taken, while Sony's statement says no passwords were leaked.",
+      "records": 2580000
     },
     {
       "org": "iRhythm Technologies",
       "scale": "8.2M (revised up from 370K)",
-      "cause": "Zio cardiac monitor maker. Insurance and patient data taken during a June intrusion, followed by a ransom demand."
+      "cause": "Zio cardiac monitor maker. Insurance and patient data taken during a June intrusion, followed by a ransom demand.",
+      "records": 8200000
     },
     {
       "org": "Times Mobility (Japan)",
       "scale": "~6.6M accounts",
-      "cause": "Driver's licence images exposed"
+      "cause": "Driver's licence images exposed",
+      "records": 6600000
     },
     {
       "org": "ETS",
       "scale": "~7M California students",
-      "cause": "Files copied between 22 May and 18 Sep using one compromised login. Discovered 25 Sep, districts told 2 Oct. Includes disability status and program eligibility; no SSNs."
+      "cause": "Files copied between 22 May and 18 Sep using one compromised login. Discovered 25 Sep, districts told 2 Oct. Includes disability status and program eligibility; no SSNs.",
+      "records": 7000000
     },
     {
       "org": "Zeabur (hosting)",
       "scale": "3.2M env-var records / 321K accounts",
-      "cause": "A leaked non-expiring admin token. The platform will shut down by 31 Dec."
+      "cause": "A leaked non-expiring admin token. The platform will shut down by 31 Dec.",
+      "records": 321000
     },
     {
       "org": "Pentagon DMDC",
       "scale": "~3.05M people",
-      "cause": "Unencrypted SSNs and military personnel data accessed Oct 2025–Jul 2026. Disclosed 1 Oct."
+      "cause": "Unencrypted SSNs and military personnel data accessed Oct 2025–Jul 2026. Disclosed 1 Oct.",
+      "records": 3050000
     },
     {
       "org": "Nikkei",
       "scale": "~1.83M records",
-      "cause": "Stolen credentials to a cloud development service. Its third incident in about a month."
+      "cause": "Stolen credentials to a cloud development service. Its third incident in about a month.",
+      "records": 1830000
     },
     {
       "org": "Railway (hosting)",
       "scale": "Limited",
-      "cause": "Customer environment variables, some decrypted. Part of a wider campaign against hosting and AI-inference providers."
+      "cause": "Customer environment variables, some decrypted. Part of a wider campaign against hosting and AI-inference providers.",
+      "records": null
     },
     {
       "org": "IDC Frontier (SoftBank)",
       "scale": "495 companies and local governments disrupted",
-      "cause": "Ransomware attack on 7 Oct. Separately, Japan's cybersecurity strategy head described a \"state of emergency in cyberspace\" on 15 Oct after attacks on more than 20 major companies."
+      "cause": "Ransomware attack on 7 Oct. Separately, Japan's cybersecurity strategy head described a \"state of emergency in cyberspace\" on 15 Oct after attacks on more than 20 major companies.",
+      "records": null
     },
     {
       "org": "GMO Onamae Desktop Cloud",
       "scale": "Up to ~26.7K servers",
-      "cause": "Confirmed 20 Oct. An outside party installed malware and GMO shut down customer servers. How they got in has not been disclosed, and no data leak is confirmed."
+      "cause": "Confirmed 20 Oct. An outside party installed malware and GMO shut down customer servers. How they got in has not been disclosed, and no data leak is confirmed.",
+      "records": null
     }
   ],
   "unverified": "PwC (Everest claims ~590 GB, posted 22 Oct; PwC confirms only an incident at a third-party platform that hosts employee learning records); JAMIS Prime outage (cause, timeline, and scope still rest on one post by Corporate Results, Inc., a firm that sells recovery and ERP migration services, plus unnamed community updates; a further search on 30 Oct found no JAMIS statement or press coverage); a reported 28 Oct CISA KEV listing of the Linux kernel flaw Fragnesia, CVE-2026-46300, said to be chained with PHP2Shell, which comes from a single vendor post while Tenable's FAQ says the flaw is not in KEV; a reported 29 Oct KEV listing of VMware ESX CVE-2026-41709, seen only as a headline.",

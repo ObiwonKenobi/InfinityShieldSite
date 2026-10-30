@@ -102,7 +102,7 @@ once at the end, or on both dates when the window spans a year boundary:
     {"product": "Vendor Product", "cve": "CVE-2026-00000", "allows": "What an attacker gets", "sev": "crit", "status": "Exploited", "note": "KEV 20 Oct. Fixed in 1.2.3."}
   ],
   "supply":   [{"label": "Package or service, date", "text": "One paragraph."}],
-  "breaches": [{"org": "Organization", "scale": "4.2M records", "cause": "How, when, what data."}],
+  "breaches": [{"org": "Organization", "scale": "4.2M records", "records": 4200000, "cause": "How, when, what data."}],
   "unverified": "Claims only weak sources report, or an empty string.",
   "other":    [{"label": "Event, date", "text": "One paragraph."}],
   "todo":     ["Imperative sentence.", "Another."],
@@ -114,3 +114,22 @@ Limits enforced by `build_brief.py --check`: `top` exactly 3; `vulns` 6 to 14;
 `supply` 1 to 6; `breaches` 6 to 15; `other` 1 to 6; `todo` 5 to 10; `sources`
 10 to 40. `facts` and `note` are optional. `sev` must be `crit`, `high`, or
 `med`.
+
+`records` is required on every breach: the number of people or records
+affected as a plain integer (`20000000` for "~20M patients"), or `null` when no
+count was disclosed or the figure counts something else (servers, companies).
+When a source gives a range or two figures, use the number of people if there is
+one, otherwise the larger confirmed figure, and keep the nuance in `scale`. The
+build sums these for the "people or records exposed" figure and charts them, so
+a wrong order of magnitude is very visible.
+
+## CISA KEV data
+
+The build refreshes `brief/data/kev.json` from the public CISA KEV feed and
+draws the "CISA Known Exploited Vulnerabilities" section from it: additions in
+the window, those linked to ransomware, federal due dates in the next 14 days,
+and which of this brief's CVEs are in the catalog. If the feed is unreachable
+(the environment's network policy must allow `www.cisa.gov`), the build keeps
+the previous snapshot and prints a notice; the page then shows the snapshot's
+date. Mention a stale snapshot in the pull request body. Never edit
+`kev.json` by hand.

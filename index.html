@@ -297,6 +297,17 @@ body {
   color: var(--muted);
   line-height: 1.75;
 }
+.band-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  margin-top: 1.5rem;
+}
+.stat { background: var(--bg); padding: .85rem 1rem .75rem; min-width: 0; }
+.stat-v { font-size: 1.55rem; font-weight: 600; letter-spacing: -.025em; line-height: 1.05; color: var(--text); }
+.stat-l { margin-top: .3rem; font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; color: var(--faint); line-height: 1.3; }
 .brief-actions {
   display: flex;
   flex-direction: column;
@@ -477,6 +488,7 @@ footer {
           <p class="brief-meta">Rolling 30 days · 30 Sep – 29 Oct 2026 · Refreshed weekly</p>
           <h2>Current Threat Brief</h2>
           <p>Thirty days defined by two internet-wide trust failures: the PHP2Shell flaws, now confirmed exploited and on the CISA KEV list, and a certificate authority whose keys could be recovered by hand, which cost it a root in Chrome on 27 Oct. Around them ran exploited edge-device zero-days, a supply-chain intrusion into Microsoft 365 tenants through a backup vendor, a GitHub Actions credential-theft campaign, and large breaches at Capcom and Sony.</p>
+          <div class="band-stats" aria-label="This brief in numbers"><div class="stat"><div class="stat-v">21</div><div class="stat-l">CVEs tracked</div></div><div class="stat"><div class="stat-v">11 of 12</div><div class="stat-l">Confirmed exploited</div></div><div class="stat"><div class="stat-v">15</div><div class="stat-l">Breaches</div></div><div class="stat"><div class="stat-v">90.1M</div><div class="stat-l">Records exposed</div></div></div>
           <!-- rolling-brief:end -->
         </div>
         <div class="brief-actions">

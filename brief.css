@@ -81,9 +81,10 @@ footer { font-size: .8rem; color: var(--faint); }
 .site-brand { display: flex; align-items: center; gap: .75rem; text-decoration: none; color: var(--text); font-family: "Inter", sans-serif; font-weight: 700; font-size: .82rem; letter-spacing: .14em; text-transform: uppercase; }
 .site-brand img { height: 32px; width: auto; }
 .site-links { display: flex; gap: 2rem; list-style: none; margin: 0; padding: 0; font-size: .78rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; }
-.site-links a { color: var(--muted); text-decoration: none; transition: color .2s; }
+.site-links a { color: var(--muted); text-decoration: none; transition: color .2s; white-space: nowrap; }
 .site-links a:hover, .site-links a[aria-current="page"] { color: var(--text); }
 @media (max-width: 768px) { .site-nav { padding: .9rem 1.25rem; } .site-links { gap: 1.25rem; font-size: .75rem; } }
+@media (max-width: 420px) { .site-links { gap: .9rem; font-size: .7rem; letter-spacing: .06em; } .site-brand { font-size: .74rem; letter-spacing: .1em; } .site-brand img { height: 26px; } }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 
 /* Data: figures and charts built by tools/build_brief.py (plain HTML, no scripts) */

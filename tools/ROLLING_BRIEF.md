@@ -50,6 +50,13 @@ once at the end, or on both dates when the window spans a year boundary:
    failures. Prefer primary sources: the vendor advisory, CISA, the regulator or
    court filing, the victim's own notice. Reputable security press is fine as a
    second source.
+   Standing checks every week, in addition to the general searches:
+   - Federal agencies and the Defense Industrial Base: DHS, DoD, USDA, GSA,
+     and FedRAMP-authorized providers, including DDoS claims against federal
+     sites (hacktivist claims alone go in `unverified`).
+   - JAMIS Prime ERP outage: it sits in `unverified` on one secondary source.
+     Move it into the brief only if JAMIS or reputable press confirms cause and
+     scope; drop it once it is older than the window with no confirmation.
 5. Write the new `brief/data/current.json`. Schema and limits are below.
 6. Run `python3 tools/build_brief.py --check` and fix every problem it lists.
    Then run `python3 tools/build_brief.py` with no flag. It writes

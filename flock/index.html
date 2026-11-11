@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self'; base-uri 'none'; form-action 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="description" content="Flock Safety license plate reader cameras mapped in Cheyenne and Laramie County, Wyoming, from OpenStreetMap, tracked over time.">
+<style>*,*::before,*::after{box-sizing:border-box}body{margin:0}img{max-width:100%}</style><title>Flock Camera Tracker, Cheyenne and Laramie County | Infinity Shield</title>
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/brief.css">
+<style>
+.flock-fig { margin: 0; min-width: 0; }
+.flock-fig figcaption { font-size: .8rem; color: var(--muted); margin-bottom: 10px; }
+.flock-svg { width: 100%; height: auto; display: block; background: var(--bg1); border: 1px solid var(--border); }
+.flock-svg text { fill: var(--muted); font-family: var(--mono); font-size: 11px; }
+.flock-svg .grid { stroke: var(--rule); stroke-width: 1; }
+.flock-svg .axis { stroke: var(--faint); stroke-width: 1; }
+.flock-svg .ln-county { fill: none; stroke: var(--accent); stroke-width: 2.5; }
+.flock-svg .ln-city { fill: none; stroke: var(--high); stroke-width: 2.5; stroke-dasharray: 6 4; }
+.flock-svg .dot-county { fill: var(--accent); }
+.flock-svg .dot-city { fill: var(--high); }
+.flock-svg .add { fill: var(--accent); }
+.flock-legend { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 10px; font-size: .78rem; color: var(--muted); }
+.flock-legend i { display: inline-block; width: 18px; height: 0; border-top: 2.5px solid var(--accent); vertical-align: middle; margin-right: 6px; }
+.flock-legend i.d { border-top: 2.5px dashed var(--high); }
+.flock-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
+.flock-table th, .flock-table td { text-align: left; padding: 6px 10px; border-bottom: 1px solid var(--border); }
+.flock-table th { font-family: var(--mono); font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; color: var(--faint); font-weight: 500; }
+.flock-table td.n { text-align: right; font-variant-numeric: tabular-nums; }
+.flock-note { font-size: .82rem; color: var(--muted); border-left: 2px solid var(--rule); padding-left: 14px; }
+.flock-empty { background: var(--bg1); border: 1px solid var(--border); padding: 18px; color: var(--muted); }
+details.flock-data { font-size: .82rem; }
+details.flock-data summary { cursor: pointer; color: var(--muted); margin-bottom: 10px; }
+.scroll-x { overflow-x: auto; }
+</style>
+</head>
+<body>
+
+<nav class="site-nav" aria-label="Main navigation">
+  <div class="site-nav-inner">
+    <a href="/" class="site-brand"><img src="/logo-transparent.png" alt="">Infinity Shield</a>
+    <ul class="site-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/brief/">Current Brief</a></li>
+      <li><a href="/archive/">Archive</a></li>
+      <li><a href="/about.html">About</a></li>
+    </ul>
+  </div>
+</nav>
+<div class="wrap">
+  <header>
+    <div class="marking"><span class="tlp">TLP:CLEAR</span><span>Cheyenne and Laramie County, WY</span><span>Updated no data yet</span><span>Source: OpenStreetMap</span></div>
+    <h1>Flock Camera <span>Tracker</span></h1>
+    <p class="lede">Flock Safety license plate reader cameras mapped in Cheyenne and the rest of Laramie County, counted from OpenStreetMap and tracked over time.</p>
+  </header>
+<div class="flock-empty">No snapshots collected yet. Run <span class="mono">tools/collect_flock.py</span> to add the first one.</div>
+<section><h2>How to read this</h2>
+<p class="flock-note">These are cameras volunteers have mapped, not an official inventory. A jump in the line usually means someone surveyed an area, so it tracks installation but does not measure it, and cameras that were never mapped are missing. Counts include only nodes tagged as Flock Safety by manufacturer or brand; the fourth tile counts every plate reader tagged in the box, whatever the maker.</p>
+<p class="flock-note" style="margin-top:12px">Both areas are rectangles (south, west, north, east), not legal boundaries, so the county box takes in a sliver of neighbouring counties on its north and west edges. . Earlier snapshots marked <span class="mono">attic</span> are rebuilt from OpenStreetMap edit history, so they show what was mapped by that date and nothing about the days before it was surveyed.</p></section>
+  <footer>Map data © <a href="https://www.openstreetmap.org/copyright" rel="noopener noreferrer">OpenStreetMap contributors</a>, available under the <a href="https://opendatacommons.org/licenses/odbl/" rel="noopener noreferrer">Open Database Licence</a>. Collected through the Overpass API. · <a href="/">Home</a> · <a href="/brief/">Current Brief</a></footer>
+</div>
+
+</body>
+</html>

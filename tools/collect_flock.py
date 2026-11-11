@@ -85,6 +85,10 @@ def snapshot(date):
     data = call_overpass(build_query(date))
     if "elements" not in data:
         raise RuntimeError("Overpass reply has no 'elements' key")
+    # An overloaded server can answer 200 with an empty list and a remark such as
+    # "runtime error: Query timed out". That is a failure, not a count of zero.
+    if data.get("remark") and "error" in data["remark"].lower():
+        raise RuntimeError(f"Overpass reported: {data['remark']}")
     alpr_total = 0
     flock = {}
     for el in data["elements"]:
@@ -158,6 +162,11 @@ def main():
             alpr_total, flock = snapshot(stamp)
         except RuntimeError as exc:
             print(f"{date}: FAILED, {exc}", file=sys.stderr)
+            continue
+        earlier = [s for s in hist["snapshots"] if s["date"] < date]
+        if alpr_total == 0 and earlier and earlier[-1].get("alpr_total"):
+            print(f"{date}: FAILED, 0 ALPR returned but the previous snapshot had {earlier[-1]['alpr_total']}; "
+                  "treating it as a bad reply, not a drop to zero", file=sys.stderr)
             continue
         c, k = add_snapshot(hist, date, alpr_total, flock, source)
         print(f"{date}: {c} Flock in county box, {k} in Cheyenne box, {alpr_total} ALPR of any make ({source})")

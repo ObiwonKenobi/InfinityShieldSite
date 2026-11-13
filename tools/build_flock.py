@@ -335,6 +335,7 @@ def data_section():
     eff = "https://www.eff.org/deeplinks/2025/11/how-cops-are-using-flock-safetys-alpr-network-surveil-protesters-and-activists"
     whro = "https://whro.org/business-growth/2026-02-11/a-federal-judge-ruled-norfolks-flock-surveillance-cameras-dont-invade-peoples-privacy-yet"
     lawsuit = "https://www.yahoo.com/news/articles/police-cameras-tracked-one-driver-090000185.html"
+    mobility = "https://pmc.ncbi.nlm.nih.gov/articles/PMC3607247"
     return (
         "<section><h2>Where the data goes</h2>"
         "<p>Each capture, meaning the plate read, the vehicle attributes, an image, the time and the camera\u2019s location, is uploaded to Flock\u2019s cloud "
@@ -349,6 +350,12 @@ def data_section():
         f"One lawsuit alleges {a(lawsuit, 'police cameras tracked one driver 526 times in four months')}; the headline does not say whose cameras. "
         "Privacy groups including the ACLU and EFF argue that a searchable history like this lets someone reconstruct a person\u2019s movements without a warrant. "
         f"Flock {a(flock_view, 'argues')} its cameras cannot track the whole of anyone\u2019s movements.</p>"
+
+        '<p style="margin-top:12px">Gaps between cameras do not hide the trail. Between two reads, the road network and the time stamps limit where a vehicle could have been, '
+        "and research on location traces shows how few points it takes to single someone out: four time-and-place points were enough to identify 95% of 1.5 million mobile phone users "
+        f"({a(mobility, 'de Montjoye et al., Scientific Reports, 2013')}). That study used phone data, not plate readers, and no study of route inference between plate-reader cameras was found for this page. "
+        "A plate also belongs to a registered owner, and most people commute alone, so a vehicle\u2019s trail usually describes one person\u2019s movements. "
+        "It describes the vehicle, not the driver, so a shared household car, a rental or a fleet vehicle can break that link.</p>"
 
         '<p style="margin-top:12px">The courts have not settled it. In January 2026 a federal judge in Virginia held that Norfolk\u2019s Flock system, as it is used there, '
         f"is not a Fourth Amendment search, and that the plaintiffs lacked standing; they are appealing ({a(whro, 'WHRO, Feb 2026')}). "

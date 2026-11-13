@@ -287,6 +287,10 @@ def map_section(hist):
 
 
 ARTICLES = [
+    ("23 Sep 2026", "Alaska Dispatch News", "Prosecutors charge 5 Indianapolis police officers accused of misusing access to Flock license plate reader cameras",
+     "https://adn.com/nation-world/2026/09/23/prosecutors-charge-5-indianapolis-police-officers-accused-of-misusing-access-to-flock-license-plate-reader-cameras"),
+    ("Aug 2026", "Stateline, via Route Fifty", "Flock Safety tightens safeguards as states, cities question surveillance network",
+     "https://www.route-fifty.com/digital-government/2026/08/flock-safety-tightens-safeguards-states-cities-question-surveillance-network/415455/"),
     ("12 Aug 2026", "Cowboy State Daily", "Supporters Say Cheyenne License Plate Readers Work; Opponents Say That\u2019s The Problem",
      "https://cowboystatedaily.com/2026/08/12/supporters-say-wyoming-license-plate-readers-work-opponents-say-thats-the-problem/"),
     ("12 Aug 2026", "Semafor", "Flock tightens guardrails aimed at stopping cops from abusing its license plate cameras",
@@ -295,6 +299,8 @@ ARTICLES = [
      "https://cowboystatedaily.com/2026/07/03/unlike-cheyenne-jackson-and-the-reservation-glenrocks-flock-cameras-bring-little-drama/"),
     ("19 Jun 2026", "Cowboy State Daily", "We Know Surveillance Cameras Are Being Used, But So Are Surveillance Microphones",
      "https://cowboystatedaily.com/2026/06/19/we-know-surveillance-cameras-are-being-used-but-so-are-surveillance-microphones/"),
+    ("28 Feb 2026", "Cowboy State Daily", "Privacy Advocates Trying To Get Flock License Plate Cams In Cheyenne Removed",
+     "https://cowboystatedaily.com/2026/02/28/petition-says-cheyennes-flock-license-plate-cams-invade-privacy/"),
     ("Dec 2025", "404 Media", "Flock Exposed Its AI-Powered Cameras to the Internet. We Tracked Ourselves",
      "https://www.404media.co/flock-exposed-its-ai-powered-cameras-to-the-internet-we-tracked-ourselves/"),
 ]
@@ -311,6 +317,29 @@ def capture_section():
         '<p style="margin-top:12px">Some Flock models are general video cameras, not plate readers. 404 Media reported in December 2025 that dozens of Flock\u2019s '
         "Condor pan-tilt-zoom cameras, which can be set to zoom in on people, had live video streams and admin panels reachable from the open internet. "
         "The product line and its capabilities change, so treat this as a description of what has been reported, not a spec sheet.</p></section>"
+    )
+
+
+def data_section():
+    stateline = "https://www.route-fifty.com/digital-government/2026/08/flock-safety-tightens-safeguards-states-cities-question-surveillance-network/415455/"
+    flock_view = "https://flocksafety.com/blog/does-flock-enable-mass-surveillance"
+    adn = "https://adn.com/nation-world/2026/09/23/prosecutors-charge-5-indianapolis-police-officers-accused-of-misusing-access-to-flock-license-plate-reader-cameras"
+    return (
+        "<section><h2>Where the data goes</h2>"
+        "<p>Each capture, meaning the plate read, the vehicle attributes, an image, the time and the camera\u2019s location, is uploaded to Flock\u2019s cloud "
+        "and searched through Flock\u2019s software. The public cannot search it. Access belongs to the agency or business that owns the camera and to whoever "
+        "that owner shares with. Flock describes sharing one-to-one between departments, within a radius or across a state, plus a national lookup for one full plate number "
+        f'(<a href="{stateline}" rel="noopener noreferrer">Stateline, Aug 2026</a>). Each owner sets its own sharing and retention. '
+        "Flock now recommends seven days of retention, down from a 30-day default, and the change does not automatically apply to existing customers.</p>"
+        '<p style="margin-top:12px">Every read carries a time and a place, so the reads for one plate form a trail. Each camera a vehicle passes adds a point, '
+        "and a search on that plate returns where it was and when. The more cameras along someone\u2019s routes, the denser the trail, and shared access carries it past one "
+        "department\u2019s cameras. Privacy groups including the ACLU and EFF argue that a searchable history like this lets someone reconstruct a person\u2019s movements without a warrant. "
+        f'Flock <a href="{flock_view}" rel="noopener noreferrer">argues</a> its cameras cannot track the whole of anyone\u2019s movements and treats misuse as isolated. '
+        "The trail follows the vehicle, not the person, and it has gaps wherever there is no camera, which the map above shows.</p>"
+        '<p style="margin-top:12px">The people with access are the exposure. Every search is logged with a stated reason, and Flock says it will require an audit tool by the end of the year. '
+        f'In September 2026, prosecutors <a href="{adn}" rel="noopener noreferrer">charged five Indianapolis police officers</a> with misusing access to Flock cameras. '
+        "Cheyenne\u2019s own retention and sharing settings were not in the coverage reviewed for this page. The city council\u2019s records, or a public records request "
+        "to the police department, would settle it.</p></section>"
     )
 
 
@@ -375,7 +404,7 @@ def build(hist):
         if recent:
             parts.append(recent)
 
-    parts += [capture_section(), coverage_section()]
+    parts += [capture_section(), data_section(), coverage_section()]
     areas = hist.get("areas") or {k: {"label": v["label"], "bbox": list(v["bbox"])} for k, v in DEFAULT_AREAS.items()}
     bb = "; ".join(f'{v["label"]}: {", ".join(str(x) for x in v["bbox"])}' for v in areas.values())
     parts += [

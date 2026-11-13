@@ -334,48 +334,47 @@ def data_section():
     adn = "https://adn.com/nation-world/2026/09/23/prosecutors-charge-5-indianapolis-police-officers-accused-of-misusing-access-to-flock-license-plate-reader-cameras"
     eff = "https://www.eff.org/deeplinks/2025/11/how-cops-are-using-flock-safetys-alpr-network-surveil-protesters-and-activists"
     whro = "https://whro.org/business-growth/2026-02-11/a-federal-judge-ruled-norfolks-flock-surveillance-cameras-dont-invade-peoples-privacy-yet"
-    lawsuit = "https://www.yahoo.com/news/articles/police-cameras-tracked-one-driver-090000185.html"
-    mobility = "https://pmc.ncbi.nlm.nih.gov/articles/PMC3607247"
     aclu_case = "https://www.aclu.org/cases/schmidt-v-norfolk"
+    mobility = "https://pmc.ncbi.nlm.nih.gov/articles/PMC3607247"
+    exposed = "https://www.404media.co/flock-exposed-its-ai-powered-cameras-to-the-internet-we-tracked-ourselves/"
+    leaked = "https://www.techlicious.com/blog/former-officers-kept-using-flock-cameras-after-leaving-police/"
     return (
         "<section><h2>Where the data goes</h2>"
-        "<p>Each capture, meaning the plate read, the vehicle attributes, an image, the time and the camera\u2019s location, is uploaded to Flock\u2019s cloud "
-        "and searched through Flock\u2019s software. The public cannot search it. Access belongs to the agency or business that owns the camera and to whoever "
-        "that owner shares with. Flock describes sharing one-to-one between departments, within a radius or across a state, plus a national lookup for one full plate number "
-        f"({a(stateline, 'Stateline, Aug 2026')}). Each owner sets its own sharing and retention. "
-        "Flock now recommends seven days of retention, down from a 30-day default, and the change does not automatically apply to existing customers.</p>"
+        "<p>Each capture, meaning the plate, the vehicle\u2019s attributes, an image, the time and the camera\u2019s location, goes to Flock\u2019s cloud. "
+        "Flock\u2019s design limits searching to authorized users: the police or business that owns the camera and whoever they share with. "
+        f"Access has not always stayed inside that line, though. Flock cameras have been {a(exposed, 'found streaming to the open internet')}, "
+        f"and a {a(leaked, 'report on a Washington Post investigation')} found officers still using their logins after leaving their jobs or while suspended.</p>"
+        '<p style="margin-top:12px">Every read carries a time and a place, so searching one plate returns a trail of where that vehicle went and when. '
+        "The people running those searches are the police who own the cameras. Critics, including the ACLU and EFF, argue that following people this way without a warrant is unconstitutional. "
+        "The federal court in Norfolk that ruled on Flock this year did not decide that for searches of the database.</p>"
+        '<p style="margin-top:12px">Cheyenne\u2019s own retention and sharing settings were not in the coverage reviewed for this page. '
+        "City council records, or a public records request to the police department, would settle it.</p>"
+        '<details class="flock-data" style="margin-top:14px"><summary>The evidence: law, misuse, inference, retention</summary>'
 
-        '<p style="margin-top:12px">Every read carries a time and a place, so the reads for one plate form a trail. Each camera a vehicle passes adds a point, '
-        "and a search on that plate returns where it was and when. The more cameras along someone\u2019s routes, the denser the trail, and shared access carries it past one "
-        "department\u2019s cameras. "
-        f"One lawsuit alleges {a(lawsuit, 'police cameras tracked one driver 526 times in four months')}; the headline does not say whose cameras. "
-        "Privacy groups including the ACLU and EFF argue that a searchable history like this lets someone reconstruct a person\u2019s movements without a warrant. "
-        f"Flock {a(flock_view, 'argues')} its cameras cannot track the whole of anyone\u2019s movements.</p>"
+        "<p><b>The law.</b> In January 2026 a federal judge in Virginia held that photographing passing vehicles in Norfolk is not a Fourth Amendment search. "
+        "On whether searching the stored database needs a warrant, the court did not reach the question: it found the plaintiffs could not challenge that part because the city had never searched for their vehicles. "
+        f"The plaintiffs are appealing, and the ACLU and EFF back them ({a(whro, 'WHRO')}; {a(aclu_case, 'ACLU')}). "
+        "It is one district court on one city\u2019s facts, not a rule for Wyoming. State laws differ: "
+        f"Flock says it disabled its national lookup in states such as California that bar sharing across state lines ({a(stateline, 'Stateline')}).</p>"
 
-        '<p style="margin-top:12px">Gaps between cameras do not hide the trail. Between two reads, the road network and the time stamps limit where a vehicle could have been, '
-        "and research on location traces shows how few points it takes to single someone out: four time-and-place points were enough to identify 95% of 1.5 million mobile phone users "
-        f"({a(mobility, 'de Montjoye et al., Scientific Reports, 2013')}). That study used phone data, not plate readers, and no study of route inference between plate-reader cameras was found for this page. "
-        "A plate also belongs to a registered owner, and most people commute alone, so a vehicle\u2019s trail usually describes one person\u2019s movements. "
-        "It describes the vehicle, not the driver, so a shared household car, a rental or a fleet vehicle can break that link.</p>"
-
-        '<p style="margin-top:12px">The legal status is contested, not settled. In January 2026 a federal judge in Virginia held that photographing passing vehicles in Norfolk '
-        "is not a Fourth Amendment search. On whether searching the stored database needs a warrant, the court did not reach the question: it found the plaintiffs could not "
-        "challenge that part because the city had never searched for their vehicles. "
-        f"The plaintiffs are appealing, and the ACLU and EFF have filed in support of them ({a(whro, 'WHRO, Feb 2026')}; {a(aclu_case, 'ACLU case page')}). "
-        "That is one district court on one city\u2019s facts, not a rule for Wyoming. State laws differ, and a ruling that a practice is not a federal \u201csearch\u201d does not make it lawful "
-        f"everywhere: Flock says it has disabled its national lookup in states such as California that bar sharing across state lines ({a(stateline, 'Stateline')}).</p>"
-
-        '<p style="margin-top:12px">How the access is used is a separate question from what the cameras can do. '
+        '<p style="margin-top:10px"><b>Misuse.</b> '
         f"A Washington Post analysis, {a(wapo_adn, 'reprinted by the Alaska Dispatch News')}, found at least 50 officers charged or accused of misusing license plate readers, "
         "and 26 of them used Flock\u2019s cameras to spy on current or former partners or people they hoped to meet. "
         f"In September 2026 prosecutors {a(adn, 'charged five Indianapolis police officers')} with misusing access to Flock cameras. "
-        f"EFF\u2019s analysis of audit logs covering more than 12 million searches by over 3,900 agencies, December 2024 to October 2025, "
-        f"{a(eff, 'found more than 50 agencies')} that ran hundreds of searches connected to protest activity, often with only \u201cprotest\u201d typed in the reason field. "
-        "Flock\u2019s own post reads the same review as 19 of about 3,900 agencies, so the count depends on what is measured. "
-        "Flock calls misuse unacceptable. It says it will require an audit tool and case codes on searches by the end of the year.</p>"
+        f"EFF\u2019s audit-log analysis, covering more than 12 million searches by over 3,900 agencies, {a(eff, 'found more than 50 agencies')} with searches tied to protest activity, "
+        "often with only \u201cprotest\u201d typed as the reason. Flock\u2019s own post reads the same review as 19 of about 3,900 agencies, so the count depends on what is measured. "
+        "Flock calls misuse unacceptable and says it will require an audit tool and case codes on searches by year end.</p>"
 
-        '<p style="margin-top:12px">Cheyenne\u2019s own retention and sharing settings were not in the coverage reviewed for this page. '
-        "The city council\u2019s records, or a public records request to the police department, would settle it.</p></section>"
+        '<p style="margin-top:10px"><b>Gaps between cameras.</b> '
+        "The road network and the time stamps limit where a vehicle could have been between two reads, and four time-and-place points were enough to identify 95% of 1.5 million mobile phone users "
+        f"({a(mobility, 'de Montjoye et al., 2013')}). That study used phone data, not plate readers, and no study of route inference between plate-reader cameras was found. "
+        f"Flock {a(flock_view, 'argues')} its cameras cannot track the whole of anyone\u2019s movements. "
+        "A plate belongs to a registered owner, and most people commute alone, so a trail usually describes one person, though shared household cars, rentals and fleet vehicles can break that link.</p>"
+
+        '<p style="margin-top:10px"><b>Sharing and retention.</b> '
+        "Flock describes sharing one-to-one, within a radius or across a state, plus a national lookup for one full plate number. "
+        "It now recommends seven days of retention, down from a 30-day default, and the change does not automatically apply to existing customers.</p>"
+        "</details></section>"
     )
 
 

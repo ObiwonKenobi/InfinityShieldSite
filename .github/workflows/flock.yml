@@ -1,0 +1,54 @@
+name: Flock tracker snapshot
+
+# Weekly snapshot of Flock cameras mapped in Cheyenne and Laramie County
+# (OpenStreetMap via Overpass), then a rebuild of /flock/.
+# Run it by hand once with a backfill month to build the history.
+on:
+  schedule:
+    - cron: "17 14 * * 1"   # Mondays 14:17 UTC
+  workflow_dispatch:
+    inputs:
+      backfill_from:
+        description: "Backfill monthly history from YYYY-MM (leave empty for a normal snapshot)"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+
+concurrency:
+  group: flock-tracker
+  cancel-in-progress: false
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Collect
+        env:
+          BACKFILL_FROM: ${{ github.event.inputs.backfill_from }}
+        run: |
+          if [ -n "$BACKFILL_FROM" ]; then
+            python3 tools/collect_flock.py --backfill "$BACKFILL_FROM"
+          else
+            python3 tools/collect_flock.py
+          fi
+      - name: Build page
+        run: python3 tools/build_flock.py
+      - name: Commit if changed
+        run: |
+          git add flock/data/history.json flock/index.html
+          if git diff --cached --quiet; then
+            echo "no change"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Flock tracker: snapshot $(date -u +%F)"
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"

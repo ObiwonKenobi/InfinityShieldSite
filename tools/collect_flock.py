@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Collect Flock Safety camera counts for Cheyenne and Laramie County, Wyoming,
+Collect Flock Safety camera counts for Wyoming, Laramie County and Cheyenne,
 from OpenStreetMap through the Overpass API, and append them to
 flock/data/history.json.
 
@@ -39,6 +39,7 @@ HISTORY = ROOT / "flock" / "data" / "history.json"
 # is not a rectangle, so the county box takes in a sliver of neighbouring
 # counties on its north and west edges.
 AREAS = {
+    "state": {"label": "Wyoming", "bbox": (41.0, -111.0568, 45.0, -104.0522)},  # Wyoming is a rectangle by statute
     "county": {"label": "Laramie County (bounding box)", "bbox": (40.99, -105.28, 41.60, -104.05)},
     "city": {"label": "Cheyenne area (bounding box)", "bbox": (41.07, -104.95, 41.24, -104.65)},
 }
@@ -52,10 +53,10 @@ PAUSE = 6  # seconds between calls, to stay inside Overpass fair use
 
 
 def build_query(date):
-    s, w, n, e = AREAS["county"]["bbox"]
+    s, w, n, e = AREAS["state"]["bbox"]
     stamp = f'[date:"{date}T00:00:00Z"]' if date else ""
     return (
-        f"[out:json][timeout:90]{stamp};"
+        f"[out:json][timeout:180]{stamp};"
         f'node["man_made"="surveillance"]["surveillance:type"="ALPR"]({s},{w},{n},{e});'
         "out body;"
     )
@@ -86,7 +87,8 @@ def is_flock(tags):
 
 
 def snapshot(date):
-    """Return (alpr_total, {node_id: {lat, lon}}) for Flock nodes in the county box at date (None = now)."""
+    """Return (alpr_state, alpr_county, {node_id: {lat, lon}}): ALPR of any make in Wyoming, ALPR of any make
+    in the county box, and the Flock nodes in Wyoming, at date (None = now)."""
     data = call_overpass(build_query(date))
     if "elements" not in data:
         raise RuntimeError("Overpass reply has no 'elements' key")
@@ -94,17 +96,19 @@ def snapshot(date):
     # "runtime error: Query timed out". That is a failure, not a count of zero.
     if data.get("remark") and "error" in data["remark"].lower():
         raise RuntimeError(f"Overpass reported: {data['remark']}")
-    alpr_total = 0
+    alpr_state = alpr_county = 0
     flock = {}
     for el in data["elements"]:
         if el.get("type") != "node":
             continue
         if "lat" not in el or "lon" not in el:
             raise RuntimeError(f"node {el.get('id')} came back without coordinates; the query must use 'out body'")
-        alpr_total += 1
+        alpr_state += 1
+        if inside(AREAS["county"]["bbox"], el["lat"], el["lon"]):
+            alpr_county += 1
         if is_flock(el.get("tags", {})):
             flock[str(el["id"])] = {"lat": round(el["lat"], 5), "lon": round(el["lon"], 5)}
-    return alpr_total, flock
+    return alpr_state, alpr_county, flock
 
 
 def load():
@@ -113,21 +117,24 @@ def load():
     return {"schema": 1, "snapshots": [], "nodes": {}}
 
 
-def add_snapshot(hist, date, alpr_total, flock, source):
-    ids_county = sorted(flock, key=int)
+def add_snapshot(hist, date, alpr_state, alpr_county, flock, source):
+    ids_state = sorted(flock, key=int)
+    ids_county = [i for i in ids_state if inside(AREAS["county"]["bbox"], flock[i]["lat"], flock[i]["lon"])]
     ids_city = [i for i in ids_county if inside(AREAS["city"]["bbox"], flock[i]["lat"], flock[i]["lon"])]
     hist["snapshots"] = [s for s in hist["snapshots"] if s["date"] != date]
     hist["snapshots"].append({
         "date": date,
         "source": source,
-        "alpr_total": alpr_total,
+        "alpr_total": alpr_county,   # ALPR of any make in the county box
+        "alpr_state": alpr_state,    # ALPR of any make in Wyoming
+        "state": ids_state,
         "county": ids_county,
         "city": ids_city,
     })
     hist["snapshots"].sort(key=lambda s: s["date"])
     for i, pos in flock.items():
         hist["nodes"].setdefault(i, pos)
-    return len(ids_county), len(ids_city)
+    return len(ids_state), len(ids_county), len(ids_city)
 
 
 def months(start, end):
@@ -156,7 +163,7 @@ def main():
 
     hist = load()
     today = dt.date.today()
-    have = {s["date"] for s in hist["snapshots"]}
+    have = {s["date"] for s in hist["snapshots"] if "state" in s}  # older county-only snapshots are redone
     jobs = [(today.isoformat(), "overpass-live")]  # the live count always comes first
     if args.backfill:
         y, m = (int(x) for x in args.backfill.split("-"))
@@ -174,7 +181,7 @@ def main():
             time.sleep(PAUSE)
         stamp = None if source == "overpass-live" else date
         try:
-            alpr_total, flock = snapshot(stamp)
+            alpr_state, alpr_total, flock = snapshot(stamp)
         except RuntimeError as exc:
             print(f"{date}: FAILED, {exc}", file=sys.stderr, flush=True)
             continue
@@ -187,8 +194,8 @@ def main():
             print(f"{date}: FAILED, 0 ALPR returned but the previous snapshot had {earlier[-1]['alpr_total']}; "
                   "treating it as a bad reply, not a drop to zero", file=sys.stderr, flush=True)
             continue
-        c, k = add_snapshot(hist, date, alpr_total, flock, source)
-        print(f"{date}: {c} Flock in county box, {k} in Cheyenne box, {alpr_total} ALPR of any make ({source})", flush=True)
+        st, c, k = add_snapshot(hist, date, alpr_state, alpr_total, flock, source)
+        print(f"{date}: {st} Flock in Wyoming, {c} in county box, {k} in Cheyenne box, {alpr_state} ALPR of any make statewide ({source})", flush=True)
         done += 1
         if not args.dry_run:
             save(hist)  # keep progress even if a later query hangs

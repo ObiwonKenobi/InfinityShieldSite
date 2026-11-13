@@ -43,10 +43,20 @@ jobs:
           else
             python3 -u tools/collect_flock.py
           fi
-      - name: Basemap (county boundary, highways, places)
-        if: ${{ hashFiles('flock/data/basemap.json') == '' || github.event.inputs.refresh_basemap == 'true' }}
+      - name: Basemap (Wyoming county lines, highways, places)
+        if: ${{ hashFiles('flock/data/wy-basemap.json') == '' || github.event.inputs.refresh_basemap == 'true' }}
         continue-on-error: true
         run: python3 -u tools/collect_basemap.py
+      - name: Wyoming flag (once)
+        if: ${{ hashFiles('flock/assets/wyoming-flag.svg') == '' }}
+        continue-on-error: true
+        run: |
+          mkdir -p flock/assets
+          curl -fsSL -A "infinityshield-flock-tracker/1.0" "https://commons.wikimedia.org/wiki/Special:FilePath/Flag_of_Wyoming.svg" -o /tmp/flag.svg
+          head -c 3000 /tmp/flag.svg | grep -qi "<svg"
+          test "$(wc -c < /tmp/flag.svg)" -lt 500000
+          if grep -qiE "<script|onload=|onclick=|javascript:" /tmp/flag.svg; then echo "flag file contains script-like content; not using it"; exit 1; fi
+          mv /tmp/flag.svg flock/assets/wyoming-flag.svg
       - name: Build page
         if: always()
         run: python3 tools/build_flock.py
@@ -54,7 +64,7 @@ jobs:
         if: always()
         run: |
           git add flock/data/history.json flock/index.html
-          git add flock/data/basemap.json 2>/dev/null || true
+          git add flock/data/wy-basemap.json flock/data/map.json flock/assets/wyoming-flag.svg 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "no change"
             exit 0

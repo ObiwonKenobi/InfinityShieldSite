@@ -19,7 +19,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from build_archive import ROOT, esc, head, nav  # noqa: E402
-from charts import kpi_row  # noqa: E402
+from charts import kpi_row, ranked_bars  # noqa: E402
 from collect_flock import AREAS as DEFAULT_AREAS  # noqa: E402
 
 DATA = ROOT / "flock" / "data" / "history.json"
@@ -41,6 +41,32 @@ STYLE = """<style>
 .flock-svg .dot-county { fill: var(--accent); }
 .flock-svg .dot-city { fill: var(--high); }
 .flock-svg .add { fill: var(--accent); }
+.flock-svg .ln-state { fill: none; stroke: var(--med); stroke-width: 2.5; }
+.flock-svg .dot-state { fill: var(--med); }
+.flock-title { display: flex; align-items: center; gap: 18px; }
+.flock-title img { height: 56px; width: auto; border: 1px solid var(--border); flex: none; }
+.wymap { position: relative; border: 1px solid var(--border); background: var(--bg1); }
+.wymap-bar { display: flex; flex-wrap: wrap; gap: 6px 8px; align-items: center; padding: 8px 10px; border-bottom: 1px solid var(--border); }
+.wymap-bar button { font: inherit; font-size: .78rem; color: var(--muted); background: transparent; border: 1px solid var(--border); padding: 4px 10px; cursor: pointer; border-radius: 2px; }
+.wymap-bar button:hover, .wymap-bar button:focus-visible { color: var(--text); border-color: var(--accent); outline: none; }
+.wymap-count { margin-left: auto; font-family: var(--mono); font-size: .74rem; color: var(--text); }
+.wymap-svg { display: block; width: 100%; height: min(70vh, 620px); touch-action: none; cursor: grab; background: var(--bg1); }
+.wymap-svg:active { cursor: grabbing; }
+.wymap-svg:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.wymap-status { padding: 10px; font-size: .82rem; color: var(--muted); }
+.wymap-note { padding: 8px 10px; border-top: 1px solid var(--border); font-size: .72rem; color: var(--faint); }
+.wymap .wm-state { fill: #0d1a2a; stroke: #3d5a72; stroke-width: 1.5; vector-effect: non-scaling-stroke; }
+.wymap .wm-county { fill: none; stroke: #27415a; stroke-width: 1; vector-effect: non-scaling-stroke; }
+.wymap .wm-major { fill: none; stroke: #4b6b86; stroke-width: 1.8; vector-effect: non-scaling-stroke; }
+.wymap .wm-primary { fill: none; stroke: #355269; stroke-width: 1.2; vector-effect: non-scaling-stroke; }
+.wymap .wm-detail { fill: none; stroke: #2c4459; stroke-width: 1; vector-effect: non-scaling-stroke; }
+.wymap .wm-pdot { fill: var(--muted); }
+.wymap .wm-ptext { fill: var(--muted); font-size: calc(11px * var(--u, 1)); paint-order: stroke; stroke: #0d1a2a; stroke-width: calc(3px * var(--u, 1)); pointer-events: none; font-family: var(--sans, system-ui, sans-serif); }
+.wymap .wm-ptext.big { fill: var(--text); font-size: calc(13px * var(--u, 1)); }
+.wymap .wm-cam { fill: var(--accent); fill-opacity: .9; stroke: #060b10; stroke-width: .8; vector-effect: non-scaling-stroke; cursor: pointer; }
+.wymap .wm-cam.city { fill: var(--high); }
+.wymap .wm-cam:hover { fill: #fff; }
+.wymap .wm-new { fill: none; stroke: var(--text); stroke-width: 1.4; vector-effect: non-scaling-stroke; pointer-events: none; }
 .flock-svg .hit { outline: none; }
 .flock-svg .hitbox { fill: transparent; }
 .flock-svg .guide { opacity: 0; stroke: var(--faint); stroke-width: 1; stroke-dasharray: 3 3; }
@@ -91,14 +117,18 @@ def d(s):
 
 
 def series(hist):
-    """Per snapshot: date, county count, city count, new ids since the previous snapshot."""
+    """Per snapshot: date, state, county and city counts, new ids since the previous snapshot."""
+    snaps = hist["snapshots"]
+    use_state = bool(snaps) and all("state" in x for x in snaps)  # the added/removed series needs one basis throughout
     out, prev = [], set()
-    for s in hist["snapshots"]:
-        cur = set(s["county"])
+    for x in snaps:
+        cur = set(x["state"] if use_state else x["county"])
         out.append({
-            "date": s["date"], "county": len(s["county"]), "city": len(s["city"]),
-            "added": len(cur - prev), "removed": len(prev - cur), "source": s.get("source", ""),
-            "alpr_total": s.get("alpr_total"),
+            "date": x["date"], "state": len(x["state"]) if "state" in x else None,
+            "county": len(x["county"]), "city": len(x["city"]),
+            "added": len(cur - prev), "removed": len(prev - cur), "source": x.get("source", ""),
+            "alpr_total": x.get("alpr_total"), "alpr_state": x.get("alpr_state"),
+            "basis": "state" if use_state else "county",
         })
         prev = cur
     return out
@@ -107,7 +137,7 @@ def series(hist):
 def first_seen(hist):
     seen = {}
     for s in hist["snapshots"]:
-        for i in s["county"]:
+        for i in s.get("state", s["county"]):
             seen.setdefault(i, s["date"])
     return seen
 
@@ -162,45 +192,61 @@ def tip(cx, lines, top=None):
 
 def line_chart(rows):
     dates = [r["date"] for r in rows]
-    top = nice_max(max(r["county"] for r in rows))
+    top = nice_max(max(max(r["county"], r["state"] or 0) for r in rows))
     single = len(rows) == 1
     x = (lambda s_: PAD_L + (W - PAD_L - PAD_R) / 2) if single else x_scale(dates)
     y = y_scale(top)
-    pts = lambda key: " ".join(f"{x(r['date']):.1f},{y(r[key]):.1f}" for r in rows)
+    has_state = any(r["state"] is not None for r in rows)
+    pts = lambda key: " ".join(f"{x(r['date']):.1f},{y(r[key]):.1f}" for r in rows if r[key] is not None)
     lines = ""
     if not single:
-        lines = f'<polyline class="ln-county" points="{pts("county")}"/><polyline class="ln-city" points="{pts("city")}"/>'
+        if has_state:
+            lines += f'<polyline class="ln-state" points="{pts("state")}"/>'
+        lines += f'<polyline class="ln-county" points="{pts("county")}"/><polyline class="ln-city" points="{pts("city")}"/>'
     hitw = 60 if single else max((W - PAD_L - PAD_R) / (len(rows) - 1), 14)
     show_all = len(rows) <= 12
+    top_key = "state" if has_state else "county"
     dots, labels, hits = [], [], []
     for k, r in enumerate(rows):
         xi = x(r["date"])
-        dots.append(f'<circle class="dot-county" cx="{xi:.1f}" cy="{y(r["county"]):.1f}" r="3"/>')
+        if r["state"] is not None:
+            dots.append(f'<circle class="dot-state" cx="{xi:.1f}" cy="{y(r["state"]):.1f}" r="3"/>')
+        if r["county"] != r["state"]:
+            dots.append(f'<circle class="dot-county" cx="{xi:.1f}" cy="{y(r["county"]):.1f}" r="3"/>')
         if r["city"] != r["county"]:
             dots.append(f'<circle class="dot-city" cx="{xi:.1f}" cy="{y(r["city"]):.1f}" r="3"/>')
-        if show_all or k in (0, len(rows) - 1):
-            labels.append(f'<text class="val" x="{xi:.1f}" y="{y(r["county"]) - 9:.1f}">{r["county"]}</text>')
-            if r["city"] != r["county"]:
-                labels.append(f'<text class="val" x="{xi:.1f}" y="{y(r["city"]) + 17:.1f}">{r["city"]}</text>')
-        aria = f'{r["date"]}: {r["county"]} in Laramie County, {r["city"]} in the Cheyenne area'
+        if r[top_key] is not None and (show_all or k in (0, len(rows) - 1)):
+            labels.append(f'<text class="val" x="{xi:.1f}" y="{y(r[top_key]) - 9:.1f}">{r[top_key]}</text>')
+        tl = [r["date"]]
+        if r["state"] is not None:
+            tl.append(f'Wyoming  {r["state"]}')
+        tl += [f'Laramie County  {r["county"]}', f'Cheyenne area  {r["city"]}']
+        aria = f'{r["date"]}: ' + ", ".join(t.replace("  ", " ") for t in tl[1:])
         hits.append(
             f'<g class="hit" tabindex="0" role="img" aria-label="{esc(aria)}">'
             f'<rect class="hitbox" x="{xi - hitw / 2:.1f}" y="{PAD_T}" width="{hitw:.1f}" height="{H - PAD_T - PAD_B}"/>'
             f'<line class="guide" x1="{xi:.1f}" x2="{xi:.1f}" y1="{PAD_T}" y2="{H - PAD_B}"/>'
-            + tip(xi, [r["date"], f'Laramie County  {r["county"]}', f'Cheyenne area  {r["city"]}']) + "</g>"
+            + tip(xi, tl) + "</g>"
         )
-    label = f"Flock cameras mapped over time. Latest {rows[-1]['date']}: {rows[-1]['county']} in Laramie County, {rows[-1]['city']} in Cheyenne."
+    last = rows[-1]
+    label = (f"Flock cameras mapped over time. Latest {last['date']}: "
+             + (f"{last['state']} in Wyoming, " if last["state"] is not None else "")
+             + f"{last['county']} in Laramie County, {last['city']} in Cheyenne.")
+    legend = (
+        ('<span><i style="border-top-color:var(--med)"></i>' f'Wyoming <b>{last["state"]}</b></span>' if last["state"] is not None else "")
+        + f'<span><i></i>Laramie County (box) <b>{last["county"]}</b></span>'
+        + f'<span><i class="d"></i>Cheyenne area (box) <b>{last["city"]}</b></span>'
+    )
+    same = len(rows) > 1 and all(r["county"] == r["city"] for r in rows)
+    note = (
+        '<p class="flock-note" style="margin-top:10px">The county and Cheyenne lines are identical: every camera mapped in the county box is inside the Cheyenne box, so the dashed line sits under the solid one.</p>'
+        if same else ""
+    )
     return (
         '<figure class="flock-fig"><figcaption>Cameras mapped, by snapshot date. Hover or tap a point for the numbers.</figcaption>'
         f'<svg class="flock-svg" viewBox="0 0 {W} {H}" role="group" aria-label="{esc(label)}">'
         f'{axes(dates, top, y)}{lines}{"".join(dots)}{"".join(labels)}{"".join(hits)}</svg>'
-        '<div class="flock-legend"><span><i></i>Laramie County (bounding box)</span>'
-        '<span><i class="d"></i>Cheyenne area (bounding box)</span></div>'
-        + (
-            '<p class="flock-note" style="margin-top:10px">The two lines are identical: every camera mapped in the county box is inside the Cheyenne box, so the dashed line sits under the solid one.</p>'
-            if all(r["county"] == r["city"] for r in rows) and len(rows) > 1 else ""
-        )
-        + '</figure>'
+        f'<div class="flock-legend">{legend}</div>{note}</figure>'
     )
 
 
@@ -234,9 +280,9 @@ def add_chart(rows):
     for pos in sorted({0, n // 2, n - 1}):
         cx = PAD_L + slot * (pos + 0.5)
         gridl.append(f'<text x="{cx:.1f}" y="{H - PAD_B + 18}" text-anchor="middle">{esc(steps[pos]["date"])}</text>')
-    label = "Cameras newly mapped between snapshots in Laramie County. " + ", ".join(f'{r["date"]}: {r["added"]}' for r in steps[-6:])
+    label = f"Cameras newly mapped between snapshots in {'Wyoming' if rows[-1]['basis'] == 'state' else 'Laramie County'}. " + ", ".join(f'{r["date"]}: {r["added"]}' for r in steps[-6:])
     return (
-        '<figure class="flock-fig"><figcaption>Newly mapped since the previous snapshot (county box). Hover or tap a bar for the numbers.</figcaption>'
+        f'<figure class="flock-fig"><figcaption>Newly mapped since the previous snapshot ({"Wyoming" if rows[-1]["basis"] == "state" else "county box"}). Hover or tap a bar for the numbers.</figcaption>'
         f'<svg class="flock-svg" viewBox="0 0 {W} {H}" role="group" aria-label="{esc(label)}">{"".join(gridl)}{"".join(bars)}</svg></figure>'
     )
 
@@ -258,13 +304,14 @@ def table_recent(hist, rows):
     seen = first_seen(hist)
     first = hist["snapshots"][0]["date"]
     city_ids = set(hist["snapshots"][-1]["city"])
-    latest = set(hist["snapshots"][-1]["county"])
+    county_ids = set(hist["snapshots"][-1]["county"])
+    latest = set(hist["snapshots"][-1].get("state", hist["snapshots"][-1]["county"]))
     new = [(i, dte) for i, dte in seen.items() if dte != first and i in latest]
     new.sort(key=lambda t: (t[1], int(t[0])), reverse=True)
     if not new:
         return ""
     body = "".join(
-        f'<tr><td>{esc(dte)}</td><td>{"Cheyenne area" if i in city_ids else "Rest of county"}</td>'
+        f'<tr><td>{esc(dte)}</td><td>{"Cheyenne area" if i in city_ids else ("Rest of Laramie County" if i in county_ids else "Elsewhere in Wyoming")}</td>'
         f'<td><a href="https://www.openstreetmap.org/node/{esc(i)}" rel="noopener noreferrer">node {esc(i)}</a></td></tr>'
         for i, dte in new[:20]
     )
@@ -347,7 +394,30 @@ def dot_map(bbox, pts, new_ids, caption, width=520, r=3, base=None, big_only=Fal
     )
 
 
-def map_section(hist, base=None):
+def legacy_base(wy):
+    """Adapt flock/data/wy-basemap.json to the keys the static maps use."""
+    if not wy:
+        return None
+    return {"boundary": wy.get("boundary", []), "roads": wy.get("roads_major", []) + wy.get("roads_primary", []), "places": wy.get("places", [])}
+
+
+def map_payload(hist):
+    """Camera points and view boxes for the zoomable map (written to flock/data/map.json)."""
+    snaps = hist["snapshots"]
+    latest = snaps[-1]
+    ids = latest.get("state", latest["county"])
+    prev = set(snaps[-2].get("state", snaps[-2]["county"])) if len(snaps) > 1 else set()
+    city = set(latest["city"])
+    areas = hist.get("areas") or {k: {"bbox": list(v["bbox"])} for k, v in DEFAULT_AREAS.items()}
+    cams = []
+    for i in ids:
+        pos = hist["nodes"].get(i)
+        if pos:
+            cams.append([int(i), pos["lat"], pos["lon"], (1 if i in city else 0) | (2 if prev and i not in prev else 0)])
+    return {"date": latest["date"], "views": {k: list(areas[k]["bbox"]) for k in ("state", "county", "city") if k in areas}, "cameras": cams}
+
+
+def map_section(hist, base=None, wy=None):
     snaps = hist["snapshots"]
     latest = snaps[-1]
     prev = set(snaps[-2]["county"]) if len(snaps) > 1 else set()
@@ -359,32 +429,51 @@ def map_section(hist, base=None):
     global AREAS_CITY
     AREAS_CITY = city_bb
     n_county, n_city = len(latest["county"]), len(latest["city"])
-    maps = (
+    static = (
         dot_map(county_bb, pts, new_ids, f"Laramie County box, {latest['date']}: {n_county} cameras", r=3, base=base, big_only=True)
         + dot_map(city_bb, pts, new_ids, f"Cheyenne area box, zoomed: {n_city} cameras", r=4, base=base)
     )
     legend = (
         '<div class="flock-legend"><span><i style="border-top-color:var(--high)"></i>Cheyenne area</span>'
-        '<span><i></i>Rest of county</span>'
-        + ('<span>Ringed: newly mapped since the previous snapshot</span>' if new_ids else "")
-        + "</div>"
+        '<span><i></i>Elsewhere</span><span>Ringed: newly mapped since the previous snapshot</span></div>'
     )
     links = (
-        '<div class="flock-links"><span>Interactive maps:</span>'
+        '<div class="flock-links"><span>Other maps:</span>'
+        '<a href="https://maps.deflock.org/" rel="noopener noreferrer">DeFlock</a>'
         '<a href="https://flockcamera.app/locations/wyoming/cheyenne" rel="noopener noreferrer">flockcamera.app, Cheyenne</a>'
         '<a href="https://www.openstreetmap.org/#map=12/41.14/-104.80" rel="noopener noreferrer">OpenStreetMap, Cheyenne</a></div>'
     )
+    has_state = "state" in latest
+    bar = (
+        '<div class="wymap-bar">'
+        '<button type="button" data-view="state">Wyoming</button>'
+        '<button type="button" data-view="county">Laramie County</button>'
+        '<button type="button" data-view="city">Cheyenne</button>'
+        '<button type="button" data-zoom="0.6" aria-label="Zoom in">+</button>'
+        '<button type="button" data-zoom="1.6" aria-label="Zoom out">\u2212</button>'
+        '<span class="wymap-count" role="status">Loading map</span></div>'
+    )
+    interactive = (
+        '<div class="wymap" id="wymap" data-map="/flock/data/map.json" data-base="/flock/data/wy-basemap.json">'
+        f'{bar}<div class="wymap-status"></div>'
+        '<svg class="wymap-svg" tabindex="0" role="img" aria-label="Zoomable map of Flock cameras mapped in Wyoming. Drag to pan, scroll or pinch to zoom, arrow keys and plus and minus also work." '
+        'viewBox="0 0 512 400"></svg>'
+        '<div class="wymap-note">Drag to pan, scroll or pinch to zoom. Click a camera to open it in OpenStreetMap. '
+        'Roads, county lines and places are stored on this site from OpenStreetMap; there are no street tiles.</div></div>'
+        '<script src="/flock/map.js" defer></script>'
+        f'<noscript><p class="flock-note">The zoomable map needs JavaScript. These static maps show the same cameras for the county and for Cheyenne.</p><div class="viz-row">{static}</div></noscript>'
+    )
+    if not has_state:
+        interactive = f'<div class="viz-row">{static}</div>'
     if base:
-        note = ("Every mapped Flock camera in the latest snapshot, plotted by its OpenStreetMap coordinates over a simple basemap of the county boundary, "
-                "interstates and named places, also from OpenStreetMap. The site does not load outside map tiles, so there are no street tiles; use the links for those. "
-                "The dashed box on the county map is the Cheyenne area.")
+        note = ("The basemap is drawn from OpenStreetMap geometry: county lines, interstates and highways, and named places. "
+                "The site does not load outside map tiles, so there are no street tiles; use the other maps for those.")
     else:
-        note = ("Every mapped Flock camera in the latest snapshot, plotted by its OpenStreetMap coordinates. "
-                "There is no basemap yet, and the site does not load outside map tiles; use the links for one. The dashed box on the county map is the Cheyenne area.")
+        note = "There is no basemap yet, and the site does not load outside map tiles; use the other maps for one."
     return (
         "<section><h2>Map</h2>"
-        f'<div class="viz-row">{maps}</div>{legend}'
-        f'<p class="flock-note" style="margin-top:12px">{note}</p>'
+        f"{interactive}{legend}"
+        f'<p class="flock-note" style="margin-top:12px">Every mapped Flock camera in the latest snapshot, plotted by its OpenStreetMap coordinates. {note}</p>'
         f"{links}</section>"
     )
 
@@ -496,34 +585,79 @@ def coverage_section():
 
 def kpis(rows):
     last = rows[-1]
-    sub_c = f'as of {last["date"]}'
-    month = "n/a"
+    sub = f'as of {last["date"]}'
+    have_state = last["state"] is not None
+    key = "state" if have_state else "county"
+    month, since = "n/a", ""
     cutoff = d(last["date"]) - dt.timedelta(days=30)
-    base = [r for r in rows if d(r["date"]) <= cutoff]
+    base = [r for r in rows if d(r["date"]) <= cutoff and r[key] is not None]
     if base:
-        month = f'{last["county"] - base[-1]["county"]:+d}'
-    return kpi_row([
-        ("Flock cameras mapped, Laramie County", str(last["county"]), sub_c),
-        ("Of those, Cheyenne area", str(last["city"]), sub_c),
-        ("Change in county, last 30 days", month, "n/a until 30 days of history" if month == "n/a" else f'vs {base[-1]["date"]}'),
-        ("ALPR of any make, county box", str(rows[-1].get("alpr_total", "n/a")), "includes cameras with no maker tag"),
-    ])
+        month, since = f'{last[key] - base[-1][key]:+d}', f'vs {base[-1]["date"]}'
+    tiles = []
+    if have_state:
+        tiles.append(("Flock cameras mapped, Wyoming", str(last["state"]), sub))
+    tiles += [("Laramie County", str(last["county"]), sub), ("Cheyenne area", str(last["city"]), sub)]
+    tiles.append((f'Change in {"Wyoming" if have_state else "county"}, last 30 days', month, since or "n/a until 30 days of history"))
+    any_make = last.get("alpr_state") if have_state else last.get("alpr_total")
+    tiles.append((f'ALPR of any make, {"Wyoming" if have_state else "county box"}', str(any_make if any_make is not None else "n/a"), "includes cameras with no maker tag"))
+    return kpi_row(tiles)
 
 
-def build(hist, base=None):
+def town_stats(hist, base, top=12):
+    """Cameras in the latest snapshot grouped by nearest mapped town. Returns [(name, count)] or None."""
+    last = hist["snapshots"][-1]
+    if "state" not in last or not base or not base.get("places"):
+        return None
+    towns = [pl for pl in base["places"] if pl.get("type") in ("city", "town", "village")]
+    if not towns:
+        return None
+    counts = {}
+    for i in last["state"]:
+        pos = hist["nodes"].get(i)
+        if not pos:
+            continue
+        best, bd = None, 1e9
+        for t in towns:
+            dx = (pos["lon"] - t["lon"]) * math.cos(math.radians(pos["lat"])) * 111.32
+            dy = (pos["lat"] - t["lat"]) * 110.57
+            dist = (dx * dx + dy * dy) ** 0.5
+            if dist < bd:
+                best, bd = t["name"], dist
+        key = best if bd <= 30 else "Rural, no town within 30 km"
+        counts[key] = counts.get(key, 0) + 1
+    rows = sorted(counts.items(), key=lambda kv: -kv[1])
+    return rows[:top]
+
+
+def wyoming_section(hist, base):
+    rows = town_stats(hist, base)
+    if not rows:
+        return ""
+    bars = ranked_bars([(n, c, f"{n}: {c} cameras") for n, c in rows], "Cameras by nearest town, latest snapshot",
+                       "Each camera is assigned to the nearest city, town or village in OpenStreetMap within 30 km, so a count is the area around a town, not its city limits.")
+    return f"<section><h2>Across Wyoming</h2>{bars}</section>"
+
+
+def build(hist, base=None, wy=None, has_flag=False):
     rows = series(hist)
-    title = "Flock Camera Tracker, Cheyenne and Laramie County | Infinity Shield"
-    desc = "Flock Safety license plate reader cameras mapped in Cheyenne and Laramie County, Wyoming, from OpenStreetMap, tracked over time."
-    parts = [head(title, desc).replace("</head>", STYLE + "\n</head>", 1), nav(None), '<div class="wrap">', "  <header>"]
+    wide = bool(rows) and rows[-1]["state"] is not None   # statewide wording only once statewide data exists
+    title = ("Flock Camera Tracker, Wyoming" if wide else "Flock Camera Tracker, Cheyenne and Laramie County") + " | Infinity Shield"
+    desc = ("Flock Safety license plate reader cameras mapped across Wyoming, with Cheyenne and Laramie County broken out, from OpenStreetMap, tracked over time." if wide
+            else "Flock Safety license plate reader cameras mapped in Cheyenne and Laramie County, Wyoming, from OpenStreetMap, tracked over time.")
+    page_head = head(title, desc).replace("</head>", STYLE + "\n</head>", 1)
+    page_head = page_head.replace("default-src 'none';", "default-src 'none'; script-src 'self'; connect-src 'self';", 1)  # our own map script and data only
+    parts = [page_head, nav(None), '<div class="wrap">', "  <header>"]
     updated = hist.get("updated") or (rows[-1]["date"] if rows else "no data yet")
     parts.append(
-        '    <div class="marking"><span class="tlp">TLP:CLEAR</span><span>Cheyenne and Laramie County, WY</span>'
+        f'    <div class="marking"><span class="tlp">TLP:CLEAR</span><span>{"Wyoming, with Laramie County and Cheyenne" if wide else "Cheyenne and Laramie County, WY"}</span>'
         f'<span>Updated {esc(updated)}</span><span>Source: OpenStreetMap</span></div>'
     )
-    parts.append("    <h1>Flock Camera <span>Tracker</span></h1>")
+    flag = '<img src="/flock/assets/wyoming-flag.svg" alt="Flag of Wyoming" height="56">' if has_flag else ""
+    parts.append(f'    <div class="flock-title">{flag}<h1>Flock Camera <span>Tracker</span></h1></div>')
     parts.append(
-        '    <p class="lede">Flock Safety license plate reader cameras mapped in Cheyenne and the rest of Laramie County, '
-        "counted from OpenStreetMap and tracked over time.</p>"
+        '    <p class="lede">' + ("Flock Safety license plate reader cameras mapped across Wyoming, with Cheyenne and Laramie County broken out, " if wide
+        else "Flock Safety license plate reader cameras mapped in Cheyenne and the rest of Laramie County, ")
+        + "counted from OpenStreetMap and tracked over time.</p>"
     )
     parts.append("  </header>")
 
@@ -537,7 +671,10 @@ def build(hist, base=None):
         if extra:
             parts.append(extra)
         parts += [table_snapshots(rows), "</section>"]
-        parts.append(map_section(hist, base))
+        parts.append(map_section(hist, base, wy))
+        ws = wyoming_section(hist, wy)
+        if ws:
+            parts.append(ws)
         recent = table_recent(hist, rows)
         if recent:
             parts.append(recent)
@@ -549,13 +686,13 @@ def build(hist, base=None):
         "<section><h2>How to read this</h2>",
         '<p class="flock-note">These are cameras volunteers have mapped, not an official inventory. A jump in the line usually means someone surveyed '
         "an area, so it tracks installation but does not measure it, and cameras that were never mapped are missing. "
-        "Counts include only nodes tagged as Flock Safety by manufacturer or brand; the fourth tile counts every plate reader tagged in the box, whatever the maker.</p>",
-        '<p class="flock-note" style="margin-top:12px">Both areas are rectangles (south, west, north, east), not legal boundaries, so the county box takes in a '
-        f"sliver of neighbouring counties on its north and west edges. {esc(bb)}. Earlier snapshots marked <span class=\"mono\">attic</span> are rebuilt from "
+        "Counts include only nodes tagged as Flock Safety by manufacturer or brand; the last tile counts every plate reader tagged in Wyoming, whatever the maker.</p>",
+        '<p class="flock-note" style="margin-top:12px">The county and Cheyenne areas are rectangles (south, west, north, east), not legal boundaries, so the county box takes in a '
+        f"sliver of neighbouring counties on its north and west edges. The Wyoming box is the state border, which is a rectangle. {esc(bb)}. Earlier snapshots marked <span class=\"mono\">attic</span> are rebuilt from "
         "OpenStreetMap edit history, so they show what was mapped by that date and nothing about the days before it was surveyed.</p></section>",
         '  <footer>Map data © <a href="https://www.openstreetmap.org/copyright" rel="noopener noreferrer">OpenStreetMap contributors</a>, '
         'available under the <a href="https://opendatacommons.org/licenses/odbl/" rel="noopener noreferrer">Open Database Licence</a>. '
-        'Collected through the Overpass API. · <a href="/">Home</a> · <a href="/brief/">Current Brief</a></footer>',
+        'Collected through the Overpass API.' + (' Flag image: <a href="https://commons.wikimedia.org/wiki/File:Flag_of_Wyoming.svg" rel="noopener noreferrer">Wikimedia Commons</a>.' if has_flag else '') + ' · <a href="/">Home</a> · <a href="/brief/">Current Brief</a></footer>',
         "</div>", "", "</body>", "</html>",
     ]
     return "\n".join(parts) + "\n"
@@ -566,12 +703,19 @@ def main():
     ap.add_argument("--data", default=str(DATA))
     ap.add_argument("--out", default=str(OUT))
     a = ap.parse_args()
-    hist = json.loads(Path(a.data).read_text(encoding="utf-8"))
+    data_path = Path(a.data)
+    hist = json.loads(data_path.read_text(encoding="utf-8"))
     out = Path(a.out)
     out.parent.mkdir(parents=True, exist_ok=True)
-    base_path = Path(a.data).parent / "basemap.json"
-    base = json.loads(base_path.read_text(encoding="utf-8")) if base_path.exists() else None
-    out.write_text(build(hist, base), encoding="utf-8")
+    wy_path = data_path.parent / "wy-basemap.json"
+    wy = json.loads(wy_path.read_text(encoding="utf-8")) if wy_path.exists() else None
+    base = legacy_base(wy)
+    has_flag = (out.parent / "assets" / "wyoming-flag.svg").exists()
+    out.write_text(build(hist, base, wy, has_flag), encoding="utf-8")
+    if hist["snapshots"]:
+        mp = out.parent / "data" / "map.json"
+        mp.parent.mkdir(parents=True, exist_ok=True)
+        mp.write_text(json.dumps(map_payload(hist), separators=(",", ":")) + "\n", encoding="utf-8")
     print(f"built {out}")
 
 

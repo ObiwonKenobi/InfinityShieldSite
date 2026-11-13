@@ -12,6 +12,11 @@ on:
         description: "Backfill monthly history from YYYY-MM (leave empty for a normal snapshot)"
         required: false
         default: ""
+      refresh_basemap:
+        description: "Re-fetch the map basemap (it is fetched automatically if missing)"
+        required: false
+        default: false
+        type: boolean
 
 permissions:
   contents: write
@@ -38,6 +43,10 @@ jobs:
           else
             python3 -u tools/collect_flock.py
           fi
+      - name: Basemap (county boundary, highways, places)
+        if: ${{ hashFiles('flock/data/basemap.json') == '' || github.event.inputs.refresh_basemap == 'true' }}
+        continue-on-error: true
+        run: python3 -u tools/collect_basemap.py
       - name: Build page
         if: always()
         run: python3 tools/build_flock.py
@@ -45,6 +54,7 @@ jobs:
         if: always()
         run: |
           git add flock/data/history.json flock/index.html
+          git add flock/data/basemap.json 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "no change"
             exit 0

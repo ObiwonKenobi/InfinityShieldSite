@@ -19,6 +19,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from build_archive import ROOT, esc, head, nav  # noqa: E402
 from charts import kpi_row  # noqa: E402
+from collect_flock import AREAS as DEFAULT_AREAS  # noqa: E402
 
 DATA = ROOT / "flock" / "data" / "history.json"
 OUT = ROOT / "flock" / "index.html"
@@ -239,7 +240,7 @@ def build(hist):
     parts.append("  </header>")
 
     if not rows:
-        parts.append('<div class="flock-empty">No snapshots collected yet. Run <span class="mono">tools/collect_flock.py</span> to add the first one.</div>')
+        parts.append('<div class="flock-empty">No data yet. The first snapshot is collected automatically and the charts appear here once it is in.</div>')
     else:
         parts += [kpis(rows), '<section><h2>Over time</h2>', line_chart(rows)]
         if len(rows) < 2:
@@ -252,7 +253,7 @@ def build(hist):
         if recent:
             parts.append(recent)
 
-    areas = hist.get("areas", {})
+    areas = hist.get("areas") or {k: {"label": v["label"], "bbox": list(v["bbox"])} for k, v in DEFAULT_AREAS.items()}
     bb = "; ".join(f'{v["label"]}: {", ".join(str(x) for x in v["bbox"])}' for v in areas.values())
     parts += [
         "<section><h2>How to read this</h2>",

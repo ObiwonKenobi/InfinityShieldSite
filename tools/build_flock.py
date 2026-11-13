@@ -13,6 +13,7 @@ Usage (from the repo root):
 import argparse
 import datetime as dt
 import json
+import math
 import sys
 from pathlib import Path
 
@@ -24,6 +25,7 @@ from collect_flock import AREAS as DEFAULT_AREAS  # noqa: E402
 DATA = ROOT / "flock" / "data" / "history.json"
 OUT = ROOT / "flock" / "index.html"
 
+AREAS_CITY = (41.07, -104.95, 41.24, -104.65)
 W, H = 720, 300
 PAD_L, PAD_R, PAD_T, PAD_B = 46, 16, 14, 34
 
@@ -51,6 +53,19 @@ STYLE = """<style>
 details.flock-data { font-size: .82rem; }
 details.flock-data summary { cursor: pointer; color: var(--muted); margin-bottom: 10px; }
 .scroll-x { overflow-x: auto; }
+.flock-map { width: 100%; height: auto; display: block; background: var(--bg1); border: 1px solid var(--border); }
+.flock-map text { fill: var(--faint); font-family: var(--mono); font-size: 10px; }
+.flock-map .frame { fill: none; stroke: var(--faint); stroke-width: 1; }
+.flock-map .box { fill: none; stroke: var(--high); stroke-width: 1; stroke-dasharray: 4 3; }
+.flock-map .pt { fill: var(--accent); fill-opacity: .85; }
+.flock-map .pt.city { fill: var(--high); }
+.flock-map .new { fill: none; stroke: var(--text); stroke-width: 1.5; }
+.flock-links { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: .82rem; margin-top: 10px; }
+.flock-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 14px; }
+.flock-list li { display: grid; grid-template-columns: 96px 1fr; gap: 4px 16px; font-size: .88rem; }
+.flock-list .when { font-family: var(--mono); font-size: .72rem; letter-spacing: .06em; color: var(--faint); padding-top: 3px; }
+.flock-list .who { color: var(--muted); font-size: .78rem; }
+@media (max-width: 520px) { .flock-list li { grid-template-columns: 1fr; } }
 </style>"""
 
 
@@ -206,6 +221,112 @@ def table_recent(hist, rows):
     )
 
 
+def dot_map(bbox, pts, new_ids, caption, width=520, r=3):
+    """Static point map: lon/lat scaled by cos(latitude), no basemap. pts: [(id, lat, lon, in_city)]."""
+    south, west, north, east = bbox
+    k = math.cos(math.radians((south + north) / 2))
+    ww, hh = (east - west) * k, north - south
+    pad = 8
+    w = width
+    h = round(w * hh / ww)
+    X = lambda lon: pad + (lon - west) / (east - west) * (w - 2 * pad)
+    Y = lambda lat: pad + (north - lat) / (north - south) * (h - 2 * pad)
+    out = [f'<rect class="frame" x="{pad}" y="{pad}" width="{w - 2 * pad}" height="{h - 2 * pad}"/>']
+    out.append(f'<text x="{pad + 4}" y="{pad + 12}">{north:.2f}N</text><text x="{pad + 4}" y="{h - pad - 5}">{south:.2f}N</text>')
+    out.append(f'<text x="{w - pad - 4}" y="{h - pad - 5}" text-anchor="end">{abs(east):.2f}W</text>')
+    out.append(f'<text x="{w - pad - 4}" y="{pad + 12}" text-anchor="end">{abs(west):.2f}W</text>')
+    cs, cw, cn, ce = (v for v in AREAS_CITY)
+    if bbox != AREAS_CITY:
+        out.append(f'<rect class="box" x="{X(cw):.1f}" y="{Y(cn):.1f}" width="{X(ce) - X(cw):.1f}" height="{Y(cs) - Y(cn):.1f}"/>')
+    for i, lat, lon, in_city in pts:
+        if not (south <= lat <= north and west <= lon <= east):
+            continue
+        cls = "pt city" if in_city else "pt"
+        out.append(f'<circle class="{cls}" cx="{X(lon):.1f}" cy="{Y(lat):.1f}" r="{r}"><title>OpenStreetMap node {esc(i)}</title></circle>')
+        if i in new_ids:
+            out.append(f'<circle class="new" cx="{X(lon):.1f}" cy="{Y(lat):.1f}" r="{r + 3}"/>')
+    return (
+        f'<figure class="flock-fig"><figcaption>{esc(caption)}</figcaption>'
+        f'<svg class="flock-map" viewBox="0 0 {w} {h}" role="img" aria-label="{esc(caption)}">{"".join(out)}</svg></figure>'
+    )
+
+
+def map_section(hist):
+    snaps = hist["snapshots"]
+    latest = snaps[-1]
+    prev = set(snaps[-2]["county"]) if len(snaps) > 1 else set()
+    new_ids = set(latest["county"]) - prev if prev else set()
+    city = set(latest["city"])
+    pts = [(i, hist["nodes"][i]["lat"], hist["nodes"][i]["lon"], i in city) for i in latest["county"] if i in hist["nodes"]]
+    areas = hist.get("areas") or {k: {"bbox": list(v["bbox"])} for k, v in DEFAULT_AREAS.items()}
+    county_bb, city_bb = tuple(areas["county"]["bbox"]), tuple(areas["city"]["bbox"])
+    global AREAS_CITY
+    AREAS_CITY = city_bb
+    maps = (
+        dot_map(county_bb, pts, new_ids, f"Laramie County box, {latest['date']}", r=3)
+        + dot_map(city_bb, pts, new_ids, "Cheyenne area box, zoomed", r=4)
+    )
+    legend = (
+        '<div class="flock-legend"><span><i style="border-top-color:var(--high)"></i>Cheyenne area</span>'
+        '<span><i></i>Rest of county</span>'
+        + ('<span>Ringed: newly mapped since the previous snapshot</span>' if new_ids else "")
+        + "</div>"
+    )
+    links = (
+        '<div class="flock-links"><span>Interactive maps:</span>'
+        '<a href="https://flockcamera.app/locations/wyoming/cheyenne" rel="noopener noreferrer">flockcamera.app, Cheyenne</a>'
+        '<a href="https://www.openstreetmap.org/#map=12/41.14/-104.80" rel="noopener noreferrer">OpenStreetMap, Cheyenne</a></div>'
+    )
+    return (
+        "<section><h2>Map</h2>"
+        f'<div class="viz-row">{maps}</div>{legend}'
+        '<p class="flock-note" style="margin-top:12px">Every mapped Flock camera in the latest snapshot, plotted by its OpenStreetMap coordinates. '
+        "There is no street basemap, because the site does not load outside map tiles; use the links for one. The dashed box on the county map is the Cheyenne area.</p>"
+        f"{links}</section>"
+    )
+
+
+ARTICLES = [
+    ("12 Aug 2026", "Cowboy State Daily", "Supporters Say Cheyenne License Plate Readers Work; Opponents Say That\u2019s The Problem",
+     "https://cowboystatedaily.com/2026/08/12/supporters-say-wyoming-license-plate-readers-work-opponents-say-thats-the-problem/"),
+    ("12 Aug 2026", "Semafor", "Flock tightens guardrails aimed at stopping cops from abusing its license plate cameras",
+     "https://semafor.com/article/08/12/2026/flock-adds-guardrails-to-prevent-cops-from-abusing-its-license-plate-cameras"),
+    ("3 Jul 2026", "Cowboy State Daily", "Unlike Other Areas In Wyoming, Glenrock\u2019s Flock Cameras Bring Little Drama",
+     "https://cowboystatedaily.com/2026/07/03/unlike-cheyenne-jackson-and-the-reservation-glenrocks-flock-cameras-bring-little-drama/"),
+    ("19 Jun 2026", "Cowboy State Daily", "We Know Surveillance Cameras Are Being Used, But So Are Surveillance Microphones",
+     "https://cowboystatedaily.com/2026/06/19/we-know-surveillance-cameras-are-being-used-but-so-are-surveillance-microphones/"),
+    ("Dec 2025", "404 Media", "Flock Exposed Its AI-Powered Cameras to the Internet. We Tracked Ourselves",
+     "https://www.404media.co/flock-exposed-its-ai-powered-cameras-to-the-internet-we-tracked-ourselves/"),
+]
+
+
+def capture_section():
+    return (
+        "<section><h2>What the cameras record</h2>"
+        "<p>A Flock license plate camera is a camera. It photographs every vehicle that passes, and the plate read is only the part that gets indexed first. "
+        'Flock describes a "vehicle fingerprint" feature that also records the make, body type, color, decals, bumper stickers and roof racks, '
+        "and whether a plate is missing or temporary, so a search can run on a description with no plate number "
+        '(<a href="https://www.flocksafety.com/blog/vehicle-recognition-software-for-investigation-grade-lpr" rel="noopener noreferrer">Flock\u2019s own description</a>). '
+        "What else shows in an image depends on the camera\u2019s angle and lighting.</p>"
+        '<p style="margin-top:12px">Some Flock models are general video cameras, not plate readers. 404 Media reported in December 2025 that dozens of Flock\u2019s '
+        "Condor pan-tilt-zoom cameras, which can be set to zoom in on people, had live video streams and admin panels reachable from the open internet. "
+        "The product line and its capabilities change, so treat this as a description of what has been reported, not a spec sheet.</p></section>"
+    )
+
+
+def coverage_section():
+    items = "".join(
+        f'<li><span class="when">{esc(when)}</span><span><a href="{esc(url)}" rel="noopener noreferrer">{title}</a>'
+        f'<br><span class="who">{esc(who)}</span></span></li>'
+        for when, who, title, url in ARTICLES
+    )
+    return (
+        "<section><h2>Recent coverage</h2>"
+        '<p class="flock-note" style="margin-bottom:14px">Local and national reporting, newest first. Links go to the publishers; this page does not endorse any article\u2019s conclusions.</p>'
+        f'<ul class="flock-list">{items}</ul></section>'
+    )
+
+
 def kpis(rows):
     last = rows[-1]
     sub_c = f'as of {last["date"]}'
@@ -249,10 +370,12 @@ def build(hist):
         if extra:
             parts.append(extra)
         parts += [table_snapshots(rows), "</section>"]
+        parts.append(map_section(hist))
         recent = table_recent(hist, rows)
         if recent:
             parts.append(recent)
 
+    parts += [capture_section(), coverage_section()]
     areas = hist.get("areas") or {k: {"label": v["label"], "bbox": list(v["bbox"])} for k, v in DEFAULT_AREAS.items()}
     bb = "; ".join(f'{v["label"]}: {", ".join(str(x) for x in v["bbox"])}' for v in areas.values())
     parts += [

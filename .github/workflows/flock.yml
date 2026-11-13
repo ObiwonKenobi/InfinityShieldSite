@@ -34,13 +34,15 @@ jobs:
           BACKFILL_FROM: ${{ github.event.inputs.backfill_from }}
         run: |
           if [ -n "$BACKFILL_FROM" ]; then
-            python3 tools/collect_flock.py --backfill "$BACKFILL_FROM"
+            python3 -u tools/collect_flock.py --backfill "$BACKFILL_FROM" --budget-minutes 40
           else
-            python3 tools/collect_flock.py
+            python3 -u tools/collect_flock.py
           fi
       - name: Build page
+        if: always()
         run: python3 tools/build_flock.py
       - name: Commit if changed
+        if: always()
         run: |
           git add flock/data/history.json flock/index.html
           if git diff --cached --quiet; then

@@ -13,6 +13,11 @@ Usage (from the repo root):
   python3 tools/collect_flock.py --backfill 2023-01 monthly snapshots from that month to today,
                                                     built from OSM edit history (Overpass "attic")
   python3 tools/collect_flock.py --dry-run          print the counts, write nothing
+  python3 tools/collect_flock.py --backfill 2023-01 --budget-minutes 40
+                                                    stop starting new queries after 40 minutes
+
+The file is saved after every snapshot, newest first, and months already in the file are
+skipped, so an interrupted or timed-out run keeps what it got and a rerun continues from there.
 
 A snapshot for a date that is already in the file is replaced, so reruns are safe.
 If the Overpass call fails, nothing is written.
@@ -50,7 +55,7 @@ def build_query(date):
     s, w, n, e = AREAS["county"]["bbox"]
     stamp = f'[date:"{date}T00:00:00Z"]' if date else ""
     return (
-        f"[out:json][timeout:120]{stamp};"
+        f"[out:json][timeout:90]{stamp};"
         f'node["man_made"="surveillance"]["surveillance:type"="ALPR"]({s},{w},{n},{e});'
         "out tags;"
     )
@@ -62,7 +67,7 @@ def call_overpass(query):
     for url in ENDPOINTS:
         req = urllib.request.Request(url, data=body, headers={"User-Agent": USER_AGENT})
         try:
-            with urllib.request.urlopen(req, timeout=180) as r:
+            with urllib.request.urlopen(req, timeout=120) as r:
                 return json.load(r)
         except (urllib.error.URLError, TimeoutError, json.JSONDecodeError) as exc:
             last = f"{url}: {exc}"
@@ -142,43 +147,51 @@ def save(hist):
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--backfill", metavar="YYYY-MM", help="also add monthly snapshots from this month")
+    ap.add_argument("--budget-minutes", type=float, default=0, help="stop starting new queries after this long (0 = no limit)")
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args()
 
     hist = load()
     today = dt.date.today()
-    jobs = []
+    have = {s["date"] for s in hist["snapshots"]}
+    jobs = [(today.isoformat(), "overpass-live")]  # the live count always comes first
     if args.backfill:
         y, m = (int(x) for x in args.backfill.split("-"))
-        jobs += [(d.isoformat(), "overpass-attic") for d in months((y, m), today) if d < today.replace(day=1)]
-    jobs.append((today.isoformat(), "overpass-live"))
+        older = [d.isoformat() for d in months((y, m), today) if d < today.replace(day=1)]
+        jobs += [(d, "overpass-attic") for d in reversed(older) if d not in have]  # newest first, resume-safe
 
-    done = 0
+    t0 = time.monotonic()
+    done = skipped = 0
     for n, (date, source) in enumerate(jobs):
+        if args.budget_minutes and (time.monotonic() - t0) / 60 > args.budget_minutes:
+            skipped = len(jobs) - n
+            print(f"time budget of {args.budget_minutes:g} min used; {skipped} snapshot(s) left for the next run", flush=True)
+            break
         if n:
             time.sleep(PAUSE)
         stamp = None if source == "overpass-live" else date
         try:
             alpr_total, flock = snapshot(stamp)
         except RuntimeError as exc:
-            print(f"{date}: FAILED, {exc}", file=sys.stderr)
+            print(f"{date}: FAILED, {exc}", file=sys.stderr, flush=True)
             continue
         earlier = [s for s in hist["snapshots"] if s["date"] < date]
         if alpr_total == 0 and earlier and earlier[-1].get("alpr_total"):
             print(f"{date}: FAILED, 0 ALPR returned but the previous snapshot had {earlier[-1]['alpr_total']}; "
-                  "treating it as a bad reply, not a drop to zero", file=sys.stderr)
+                  "treating it as a bad reply, not a drop to zero", file=sys.stderr, flush=True)
             continue
         c, k = add_snapshot(hist, date, alpr_total, flock, source)
-        print(f"{date}: {c} Flock in county box, {k} in Cheyenne box, {alpr_total} ALPR of any make ({source})")
+        print(f"{date}: {c} Flock in county box, {k} in Cheyenne box, {alpr_total} ALPR of any make ({source})", flush=True)
         done += 1
+        if not args.dry_run:
+            save(hist)  # keep progress even if a later query hangs
 
     if not done:
         sys.exit("no snapshot succeeded; nothing written")
     if args.dry_run:
         print("dry run: nothing written")
         return
-    save(hist)
-    print(f"wrote {HISTORY.relative_to(ROOT)}")
+    print(f"wrote {HISTORY} ({done} new snapshot(s))", flush=True)
 
 
 if __name__ == "__main__":

@@ -36,6 +36,19 @@
 details.flock-data { font-size: .82rem; }
 details.flock-data summary { cursor: pointer; color: var(--muted); margin-bottom: 10px; }
 .scroll-x { overflow-x: auto; }
+.flock-map { width: 100%; height: auto; display: block; background: var(--bg1); border: 1px solid var(--border); }
+.flock-map text { fill: var(--faint); font-family: var(--mono); font-size: 10px; }
+.flock-map .frame { fill: none; stroke: var(--faint); stroke-width: 1; }
+.flock-map .box { fill: none; stroke: var(--high); stroke-width: 1; stroke-dasharray: 4 3; }
+.flock-map .pt { fill: var(--accent); fill-opacity: .85; }
+.flock-map .pt.city { fill: var(--high); }
+.flock-map .new { fill: none; stroke: var(--text); stroke-width: 1.5; }
+.flock-links { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: .82rem; margin-top: 10px; }
+.flock-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 14px; }
+.flock-list li { display: grid; grid-template-columns: 96px 1fr; gap: 4px 16px; font-size: .88rem; }
+.flock-list .when { font-family: var(--mono); font-size: .72rem; letter-spacing: .06em; color: var(--faint); padding-top: 3px; }
+.flock-list .who { color: var(--muted); font-size: .78rem; }
+@media (max-width: 520px) { .flock-list li { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -58,6 +71,8 @@ details.flock-data summary { cursor: pointer; color: var(--muted); margin-bottom
     <p class="lede">Flock Safety license plate reader cameras mapped in Cheyenne and the rest of Laramie County, counted from OpenStreetMap and tracked over time.</p>
   </header>
 <div class="flock-empty">No data yet. The first snapshot is collected automatically and the charts appear here once it is in.</div>
+<section><h2>What the cameras record</h2><p>A Flock license plate camera is a camera. It photographs every vehicle that passes, and the plate read is only the part that gets indexed first. Flock describes a "vehicle fingerprint" feature that also records the make, body type, color, decals, bumper stickers and roof racks, and whether a plate is missing or temporary, so a search can run on a description with no plate number (<a href="https://www.flocksafety.com/blog/vehicle-recognition-software-for-investigation-grade-lpr" rel="noopener noreferrer">Flock’s own description</a>). What else shows in an image depends on the camera’s angle and lighting.</p><p style="margin-top:12px">Some Flock models are general video cameras, not plate readers. 404 Media reported in December 2025 that dozens of Flock’s Condor pan-tilt-zoom cameras, which can be set to zoom in on people, had live video streams and admin panels reachable from the open internet. The product line and its capabilities change, so treat this as a description of what has been reported, not a spec sheet.</p></section>
+<section><h2>Recent coverage</h2><p class="flock-note" style="margin-bottom:14px">Local and national reporting, newest first. Links go to the publishers; this page does not endorse any article’s conclusions.</p><ul class="flock-list"><li><span class="when">12 Aug 2026</span><span><a href="https://cowboystatedaily.com/2026/08/12/supporters-say-wyoming-license-plate-readers-work-opponents-say-thats-the-problem/" rel="noopener noreferrer">Supporters Say Cheyenne License Plate Readers Work; Opponents Say That’s The Problem</a><br><span class="who">Cowboy State Daily</span></span></li><li><span class="when">12 Aug 2026</span><span><a href="https://semafor.com/article/08/12/2026/flock-adds-guardrails-to-prevent-cops-from-abusing-its-license-plate-cameras" rel="noopener noreferrer">Flock tightens guardrails aimed at stopping cops from abusing its license plate cameras</a><br><span class="who">Semafor</span></span></li><li><span class="when">3 Jul 2026</span><span><a href="https://cowboystatedaily.com/2026/07/03/unlike-cheyenne-jackson-and-the-reservation-glenrocks-flock-cameras-bring-little-drama/" rel="noopener noreferrer">Unlike Other Areas In Wyoming, Glenrock’s Flock Cameras Bring Little Drama</a><br><span class="who">Cowboy State Daily</span></span></li><li><span class="when">19 Jun 2026</span><span><a href="https://cowboystatedaily.com/2026/06/19/we-know-surveillance-cameras-are-being-used-but-so-are-surveillance-microphones/" rel="noopener noreferrer">We Know Surveillance Cameras Are Being Used, But So Are Surveillance Microphones</a><br><span class="who">Cowboy State Daily</span></span></li><li><span class="when">Dec 2025</span><span><a href="https://www.404media.co/flock-exposed-its-ai-powered-cameras-to-the-internet-we-tracked-ourselves/" rel="noopener noreferrer">Flock Exposed Its AI-Powered Cameras to the Internet. We Tracked Ourselves</a><br><span class="who">404 Media</span></span></li></ul></section>
 <section><h2>How to read this</h2>
 <p class="flock-note">These are cameras volunteers have mapped, not an official inventory. A jump in the line usually means someone surveyed an area, so it tracks installation but does not measure it, and cameras that were never mapped are missing. Counts include only nodes tagged as Flock Safety by manufacturer or brand; the fourth tile counts every plate reader tagged in the box, whatever the maker.</p>
 <p class="flock-note" style="margin-top:12px">Both areas are rectangles (south, west, north, east), not legal boundaries, so the county box takes in a sliver of neighbouring counties on its north and west edges. Laramie County (bounding box): 40.99, -105.28, 41.6, -104.05; Cheyenne area (bounding box): 41.07, -104.95, 41.24, -104.65. Earlier snapshots marked <span class="mono">attic</span> are rebuilt from OpenStreetMap edit history, so they show what was mapped by that date and nothing about the days before it was surveyed.</p></section>

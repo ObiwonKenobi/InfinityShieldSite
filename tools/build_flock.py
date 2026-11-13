@@ -336,6 +336,7 @@ def data_section():
     whro = "https://whro.org/business-growth/2026-02-11/a-federal-judge-ruled-norfolks-flock-surveillance-cameras-dont-invade-peoples-privacy-yet"
     lawsuit = "https://www.yahoo.com/news/articles/police-cameras-tracked-one-driver-090000185.html"
     mobility = "https://pmc.ncbi.nlm.nih.gov/articles/PMC3607247"
+    aclu_case = "https://www.aclu.org/cases/schmidt-v-norfolk"
     return (
         "<section><h2>Where the data goes</h2>"
         "<p>Each capture, meaning the plate read, the vehicle attributes, an image, the time and the camera\u2019s location, is uploaded to Flock\u2019s cloud "
@@ -357,9 +358,12 @@ def data_section():
         "A plate also belongs to a registered owner, and most people commute alone, so a vehicle\u2019s trail usually describes one person\u2019s movements. "
         "It describes the vehicle, not the driver, so a shared household car, a rental or a fleet vehicle can break that link.</p>"
 
-        '<p style="margin-top:12px">The courts have not settled it. In January 2026 a federal judge in Virginia held that Norfolk\u2019s Flock system, as it is used there, '
-        f"is not a Fourth Amendment search, and that the plaintiffs lacked standing; they are appealing ({a(whro, 'WHRO, Feb 2026')}). "
-        "That is one district court on one city\u2019s facts, not a rule for Wyoming.</p>"
+        '<p style="margin-top:12px">The legal status is contested, not settled. In January 2026 a federal judge in Virginia held that photographing passing vehicles in Norfolk '
+        "is not a Fourth Amendment search. On whether searching the stored database needs a warrant, the court did not reach the question: it found the plaintiffs could not "
+        "challenge that part because the city had never searched for their vehicles. "
+        f"The plaintiffs are appealing, and the ACLU and EFF have filed in support of them ({a(whro, 'WHRO, Feb 2026')}; {a(aclu_case, 'ACLU case page')}). "
+        "That is one district court on one city\u2019s facts, not a rule for Wyoming. State laws differ, and a ruling that a practice is not a federal \u201csearch\u201d does not make it lawful "
+        f"everywhere: Flock says it has disabled its national lookup in states such as California that bar sharing across state lines ({a(stateline, 'Stateline')}).</p>"
 
         '<p style="margin-top:12px">How the access is used is a separate question from what the cameras can do. '
         f"A Washington Post analysis, {a(wapo_adn, 'reprinted by the Alaska Dispatch News')}, found at least 50 officers charged or accused of misusing license plate readers, "

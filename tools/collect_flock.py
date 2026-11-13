@@ -57,7 +57,7 @@ def build_query(date):
     return (
         f"[out:json][timeout:90]{stamp};"
         f'node["man_made"="surveillance"]["surveillance:type"="ALPR"]({s},{w},{n},{e});'
-        "out tags;"
+        "out body;"
     )
 
 
@@ -97,8 +97,10 @@ def snapshot(date):
     alpr_total = 0
     flock = {}
     for el in data["elements"]:
-        if el.get("type") != "node" or "lat" not in el:
+        if el.get("type") != "node":
             continue
+        if "lat" not in el or "lon" not in el:
+            raise RuntimeError(f"node {el.get('id')} came back without coordinates; the query must use 'out body'")
         alpr_total += 1
         if is_flock(el.get("tags", {})):
             flock[str(el["id"])] = {"lat": round(el["lat"], 5), "lon": round(el["lon"], 5)}
@@ -148,6 +150,7 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--backfill", metavar="YYYY-MM", help="also add monthly snapshots from this month")
     ap.add_argument("--budget-minutes", type=float, default=0, help="stop starting new queries after this long (0 = no limit)")
+    ap.add_argument("--allow-zero", action="store_true", help="accept a live count of zero ALPR (normally treated as a bad reply)")
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args()
 
@@ -174,6 +177,10 @@ def main():
             alpr_total, flock = snapshot(stamp)
         except RuntimeError as exc:
             print(f"{date}: FAILED, {exc}", file=sys.stderr, flush=True)
+            continue
+        if alpr_total == 0 and source == "overpass-live" and not args.allow_zero:
+            print(f"{date}: FAILED, 0 ALPR nodes in the county box today. Cameras are known to be mapped here, "
+                  "so this is treated as a bad query or reply; use --allow-zero if it is real", file=sys.stderr, flush=True)
             continue
         earlier = [s for s in hist["snapshots"] if s["date"] < date]
         if alpr_total == 0 and earlier and earlier[-1].get("alpr_total"):

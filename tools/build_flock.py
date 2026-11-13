@@ -295,14 +295,20 @@ ARTICLES = [
      "https://cowboystatedaily.com/2026/08/12/supporters-say-wyoming-license-plate-readers-work-opponents-say-thats-the-problem/"),
     ("12 Aug 2026", "Semafor", "Flock tightens guardrails aimed at stopping cops from abusing its license plate cameras",
      "https://semafor.com/article/08/12/2026/flock-adds-guardrails-to-prevent-cops-from-abusing-its-license-plate-cameras"),
+    ("2 Aug 2026", "Washington Post, via Alaska Dispatch News", "How rogue officers turned a nationwide camera network into a tool for stalking",
+     "https://www.adn.com/nation-world/2026/08/02/how-rogue-officers-turned-a-nationwide-camera-network-into-a-tool-for-stalking/"),
     ("3 Jul 2026", "Cowboy State Daily", "Unlike Other Areas In Wyoming, Glenrock\u2019s Flock Cameras Bring Little Drama",
      "https://cowboystatedaily.com/2026/07/03/unlike-cheyenne-jackson-and-the-reservation-glenrocks-flock-cameras-bring-little-drama/"),
     ("19 Jun 2026", "Cowboy State Daily", "We Know Surveillance Cameras Are Being Used, But So Are Surveillance Microphones",
      "https://cowboystatedaily.com/2026/06/19/we-know-surveillance-cameras-are-being-used-but-so-are-surveillance-microphones/"),
     ("28 Feb 2026", "Cowboy State Daily", "Privacy Advocates Trying To Get Flock License Plate Cams In Cheyenne Removed",
      "https://cowboystatedaily.com/2026/02/28/petition-says-cheyennes-flock-license-plate-cams-invade-privacy/"),
+    ("11 Feb 2026", "WHRO Public Media", "A federal judge ruled Norfolk\u2019s Flock surveillance cameras don\u2019t invade people\u2019s privacy, yet",
+     "https://whro.org/business-growth/2026-02-11/a-federal-judge-ruled-norfolks-flock-surveillance-cameras-dont-invade-peoples-privacy-yet"),
     ("Dec 2025", "404 Media", "Flock Exposed Its AI-Powered Cameras to the Internet. We Tracked Ourselves",
      "https://www.404media.co/flock-exposed-its-ai-powered-cameras-to-the-internet-we-tracked-ourselves/"),
+    ("Nov 2025", "Electronic Frontier Foundation", "How Cops Are Using Flock Safety\u2019s ALPR Network To Surveil Protesters And Activists",
+     "https://www.eff.org/deeplinks/2025/11/how-cops-are-using-flock-safetys-alpr-network-surveil-protesters-and-activists"),
 ]
 
 
@@ -321,25 +327,44 @@ def capture_section():
 
 
 def data_section():
+    a = lambda url, text: f'<a href="{url}" rel="noopener noreferrer">{text}</a>'
     stateline = "https://www.route-fifty.com/digital-government/2026/08/flock-safety-tightens-safeguards-states-cities-question-surveillance-network/415455/"
     flock_view = "https://flocksafety.com/blog/does-flock-enable-mass-surveillance"
+    wapo_adn = "https://www.adn.com/nation-world/2026/08/02/how-rogue-officers-turned-a-nationwide-camera-network-into-a-tool-for-stalking/"
     adn = "https://adn.com/nation-world/2026/09/23/prosecutors-charge-5-indianapolis-police-officers-accused-of-misusing-access-to-flock-license-plate-reader-cameras"
+    eff = "https://www.eff.org/deeplinks/2025/11/how-cops-are-using-flock-safetys-alpr-network-surveil-protesters-and-activists"
+    whro = "https://whro.org/business-growth/2026-02-11/a-federal-judge-ruled-norfolks-flock-surveillance-cameras-dont-invade-peoples-privacy-yet"
+    lawsuit = "https://www.yahoo.com/news/articles/police-cameras-tracked-one-driver-090000185.html"
     return (
         "<section><h2>Where the data goes</h2>"
         "<p>Each capture, meaning the plate read, the vehicle attributes, an image, the time and the camera\u2019s location, is uploaded to Flock\u2019s cloud "
         "and searched through Flock\u2019s software. The public cannot search it. Access belongs to the agency or business that owns the camera and to whoever "
         "that owner shares with. Flock describes sharing one-to-one between departments, within a radius or across a state, plus a national lookup for one full plate number "
-        f'(<a href="{stateline}" rel="noopener noreferrer">Stateline, Aug 2026</a>). Each owner sets its own sharing and retention. '
+        f"({a(stateline, 'Stateline, Aug 2026')}). Each owner sets its own sharing and retention. "
         "Flock now recommends seven days of retention, down from a 30-day default, and the change does not automatically apply to existing customers.</p>"
+
         '<p style="margin-top:12px">Every read carries a time and a place, so the reads for one plate form a trail. Each camera a vehicle passes adds a point, '
         "and a search on that plate returns where it was and when. The more cameras along someone\u2019s routes, the denser the trail, and shared access carries it past one "
-        "department\u2019s cameras. Privacy groups including the ACLU and EFF argue that a searchable history like this lets someone reconstruct a person\u2019s movements without a warrant. "
-        f'Flock <a href="{flock_view}" rel="noopener noreferrer">argues</a> its cameras cannot track the whole of anyone\u2019s movements and treats misuse as isolated. '
-        "The trail follows the vehicle, not the person, and it has gaps wherever there is no camera, which the map above shows.</p>"
-        '<p style="margin-top:12px">The people with access are the exposure. Every search is logged with a stated reason, and Flock says it will require an audit tool by the end of the year. '
-        f'In September 2026, prosecutors <a href="{adn}" rel="noopener noreferrer">charged five Indianapolis police officers</a> with misusing access to Flock cameras. '
-        "Cheyenne\u2019s own retention and sharing settings were not in the coverage reviewed for this page. The city council\u2019s records, or a public records request "
-        "to the police department, would settle it.</p></section>"
+        "department\u2019s cameras. "
+        f"One lawsuit alleges {a(lawsuit, 'police cameras tracked one driver 526 times in four months')}; the headline does not say whose cameras. "
+        "Privacy groups including the ACLU and EFF argue that a searchable history like this lets someone reconstruct a person\u2019s movements without a warrant. "
+        f"Flock {a(flock_view, 'argues')} its cameras cannot track the whole of anyone\u2019s movements.</p>"
+
+        '<p style="margin-top:12px">The courts have not settled it. In January 2026 a federal judge in Virginia held that Norfolk\u2019s Flock system, as it is used there, '
+        f"is not a Fourth Amendment search, and that the plaintiffs lacked standing; they are appealing ({a(whro, 'WHRO, Feb 2026')}). "
+        "That is one district court on one city\u2019s facts, not a rule for Wyoming.</p>"
+
+        '<p style="margin-top:12px">How the access is used is a separate question from what the cameras can do. '
+        f"A Washington Post analysis, {a(wapo_adn, 'reprinted by the Alaska Dispatch News')}, found at least 50 officers charged or accused of misusing license plate readers, "
+        "and 26 of them used Flock\u2019s cameras to spy on current or former partners or people they hoped to meet. "
+        f"In September 2026 prosecutors {a(adn, 'charged five Indianapolis police officers')} with misusing access to Flock cameras. "
+        f"EFF\u2019s analysis of audit logs covering more than 12 million searches by over 3,900 agencies, December 2024 to October 2025, "
+        f"{a(eff, 'found more than 50 agencies')} that ran hundreds of searches connected to protest activity, often with only \u201cprotest\u201d typed in the reason field. "
+        "Flock\u2019s own post reads the same review as 19 of about 3,900 agencies, so the count depends on what is measured. "
+        "Flock calls misuse unacceptable. It says it will require an audit tool and case codes on searches by the end of the year.</p>"
+
+        '<p style="margin-top:12px">Cheyenne\u2019s own retention and sharing settings were not in the coverage reviewed for this page. '
+        "The city council\u2019s records, or a public records request to the police department, would settle it.</p></section>"
     )
 
 

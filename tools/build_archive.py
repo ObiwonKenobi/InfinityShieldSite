@@ -16,6 +16,9 @@ import json
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from timeline import render_history  # noqa: E402
+
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "archive" / "data"
 OUT = ROOT / "archive"
@@ -262,6 +265,8 @@ def build_index(months):
     parts += [
         '    </ul>',
         '  </section>',
+        '',
+        render_history(None),
         '',
         '  <footer>Compiled from public reporting. Figures are as first reported and may be revised. · '
         '<a href="/brief/">Current 30 day brief</a> · <a href="/">Home</a> · <a href="/about.html">About Infinity Shield</a></footer>',

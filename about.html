@@ -26,9 +26,9 @@
       --ink:        #060b10;
       --surface:    #0b1422;
       --surface2:   #0f1d2e;
-      --muted:      #6a8ba5;
+      --muted:      #93aec4;
       --text:       #e8f0f8;
-      --text-dim:   #4d6a82;
+      --text-dim:   #7d9ab2;
       --border:     rgba(255,255,255,0.07);
       --ff-head:    'Inter', system-ui, sans-serif;
       --ff-body:    'Inter', system-ui, sans-serif;
@@ -560,7 +560,7 @@
     footer p {
       font-size: 0.78rem;
       color: var(--text-dim);
-      opacity: 0.6;
+      opacity: 1;
     }
 
     /* Divider */
@@ -597,17 +597,22 @@
     @media (max-width: 480px) {
       .nav-links li:nth-child(n+2) { display: none; }
     }
-  </style>
+    @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+  .skip{position:absolute;left:8px;top:-60px;z-index:100;background:#4d9fd4;color:#04121c;padding:10px 16px;font-weight:700;border-radius:4px;text-decoration:none}
+  .skip:focus{top:8px}
+  a:focus-visible{outline:3px solid #ffd166;outline-offset:2px}
+</style>
 </head>
 <body>
 
   <!-- Circuit texture -->
   <div class="circuit-bg" aria-hidden="true"></div>
 
+  <a class="skip" href="#main">Skip to main content</a>
   <!-- Navigation -->
-  <nav role="navigation" aria-label="Main navigation">
+  <nav aria-label="Main navigation">
     <a href="/" class="nav-logo">
-      <img src="/logo-transparent.png" alt="Infinity Shield" />
+      <img src="/logo-transparent.png" alt="" />
       <span class="nav-wordmark">Infinity Shield</span>
     </a>
     <ul class="nav-links">
@@ -620,6 +625,7 @@
       <li><a href="#contact">Contact</a></li>
     </ul>
   </nav>
+  <main id="main">
 
   <!-- Hero -->
   <section id="hero" aria-labelledby="hero-name">
@@ -922,6 +928,7 @@
   </section>
 
   <!-- Footer -->
+  </main>
   <footer>
     <p>Dr. Chris Opp, DIT, CISSP, Cheyenne, Wyoming</p>
     <p>&copy; 2026 Infinity Shield L.L.C. All rights reserved. Service-Disabled Veteran-Owned (SDVOSB). Native American-Owned Business, Cherokee (AIAN).</p>

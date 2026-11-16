@@ -178,7 +178,7 @@ def render_kev(k, window):
     ]
     if k["due_soon"]:
         out += [
-            '    <div class="tbl"><table>',
+            '    <div class="tbl" tabindex="0" role="region" aria-label="CISA KEV deadlines, scrollable table"><table>',
             '      <thead><tr><th>CVE</th><th>Vendor and product</th><th>Added</th><th>Due</th><th>Ransomware</th></tr></thead>',
             '      <tbody>',
         ]
@@ -206,7 +206,7 @@ def build_page(d, s, window):
     description = f'Rolling 30 day cybersecurity brief, {d["period"]}. {d["lede"]}'
     # An empty marker element lets CSS switch to the phone layout (":target" with ":has"), so the toggle needs no script and no second page.
     top = head(title, description).replace("<body>", '<body>\n<span id="mobile-view"></span>', 1)
-    parts = [top, nav("brief"), '<div class="wrap wide">', '  <header>']
+    parts = [top, nav("brief"), '<main id="main" class="wrap wide">', '  <header>']
     parts.append(
         '    <div class="marking"><span class="tlp">TLP:CLEAR</span><span>Rolling 30 days</span>'
         f'<span>Period {esc(d["period"])}</span><span>Issued {esc(d["issued"])}</span><span>Refreshed weekly</span>'
@@ -246,7 +246,7 @@ def build_page(d, s, window):
         f'  <footer>Compiled from public reporting as of {esc(d["issued"])}. Figures are as first reported and may be revised. '
         "This brief covers the last 30 days and is refreshed every Monday; the calendar-month record is in the "
         '<a href="/archive/">archive</a>. · <a href="/">Home</a> · <a href="/about.html">About Infinity Shield</a></footer>',
-        "</div>",
+        "</main>",
         "",
         "</body>",
         "</html>",

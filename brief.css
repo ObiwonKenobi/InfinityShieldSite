@@ -5,8 +5,8 @@
   --bg1:     #0b1422;
   --bg2:     #0f1d2e;
   --text:    #e8f0f8;
-  --muted:   #6a8ba5;
-  --faint:   #3d5a72;
+  --muted:   #93aec4;
+  --faint:   #7d9ab2;
   --accent:  #4d9fd4;
   --rule:    rgba(77, 159, 212, 0.15);
   --border:  rgba(255,255,255,0.07);
@@ -54,8 +54,8 @@ header { display: flex; flex-direction: column; gap: 14px; }
 section { display: flex; flex-direction: column; gap: 14px; }
 .tbl { overflow-x: auto; background: var(--bg1); border: 1px solid var(--border); }
 table { border-collapse: collapse; width: 100%; min-width: 640px; font-size: .88rem; font-variant-numeric: tabular-nums; }
-th, td { text-align: left; vertical-align: top; padding: 10px 12px; border-bottom: 1px solid var(--border); }
-th { font-family: var(--mono); font-size: .67rem; letter-spacing: .1em; text-transform: uppercase; color: var(--faint); font-weight: 500; background: var(--bg2); }
+th, td { text-align: left; vertical-align: top; padding: 11px 12px; border-bottom: 1px solid rgba(147,174,196,.28); }
+th { font-family: var(--mono); font-size: .67rem; letter-spacing: .1em; text-transform: uppercase; color: var(--text); font-weight: 600; background: var(--bg2); border-bottom: 2px solid var(--accent); }
 tr:last-child td { border-bottom: 0; }
 td:first-child { font-weight: 600; }
 td .mono { color: var(--muted); }
@@ -193,3 +193,12 @@ body:has(#mobile-view:target) td { border: 0; padding: 6px 14px; }
 body:has(#mobile-view:target) td::before { content: attr(data-label); display: block; font-family: var(--mono); font-size: .62rem; letter-spacing: .1em; text-transform: uppercase; color: var(--faint); }
 body:has(#mobile-view:target) .bar-row { grid-template-columns: 1fr 48px; gap: 4px 8px; }
 body:has(#mobile-view:target) .bar-n { grid-column: 1 / -1; font-size: .8rem; }
+
+/* accessibility: skip link, focus, anchors, table legibility (layout unchanged) */
+.skip { position: absolute; left: 8px; top: -60px; z-index: 100; background: var(--accent); color: #04121c; padding: 10px 16px; font-weight: 700; border-radius: 4px; text-decoration: none; }
+.skip:focus { top: 8px; }
+a:focus-visible, .tbl:focus-visible, [tabindex]:focus-visible { outline: 3px solid #ffd166; outline-offset: 2px; }
+section[id], [id].label, h2[id] { scroll-margin-top: 84px; }
+table { font-size: .93rem; }
+tbody tr:nth-child(even) td { background: rgba(147,174,196,.06); }
+td { color: var(--text); }

@@ -15,6 +15,7 @@
 </head>
 <body>
 
+<a class="skip" href="#main">Skip to main content</a>
 <nav class="site-nav" aria-label="Main navigation">
   <div class="site-nav-inner">
     <a href="/" class="site-brand"><img src="/logo-transparent.png" alt="">Infinity Shield</a>
@@ -26,7 +27,7 @@
     </ul>
   </div>
 </nav>
-<div class="wrap">
+<main id="main" class="wrap">
   <header>
     <div class="marking"><span class="tlp">TLP:CLEAR</span><span>Period 1 – 31 Aug 2026</span><span>Issued 27 Oct 2026</span></div>
     <h1>August 2026 <span>Threat Brief</span></h1>
@@ -38,7 +39,7 @@
 
     <article class="item">
       <div class="item-head"><h3>VMware vCenter directory traversal used for root access and ESXi ransomware</h3><span class="sev crit">Critical · exploited</span></div>
-      <p>A suspected China-nexus actor exploited a vCenter directory-traversal flaw to get root code execution on the vCenter Server Appliance, then created SSO administrator accounts, pulled directory credentials, and ran Babuk-derived ransomware on ESXi hosts. The German incident-response firm QUIRSO, which reported it, suspects the ransomware was partly a smokescreen to destroy ESXi log telemetry, and could not rule out other motives. Broadcom shipped the fix on 29 Jul. The Hacker News reported the campaign on 17 Aug and says exploitation began five calendar days after public disclosure, without giving the disclosure date. QUIRSO counted about 361 victim IPs in 47 countries, most in Germany, the US, Turkey, Iran, and France.</p>
+      <p class="body">A suspected China-nexus actor exploited a vCenter directory-traversal flaw to get root code execution on the vCenter Server Appliance, then created SSO administrator accounts, pulled directory credentials, and ran Babuk-derived ransomware on ESXi hosts. The German incident-response firm QUIRSO, which reported it, suspects the ransomware was partly a smokescreen to destroy ESXi log telemetry, and could not rule out other motives. Broadcom shipped the fix on 29 Jul. The Hacker News reported the campaign on 17 Aug and says exploitation began five calendar days after public disclosure, without giving the disclosure date. QUIRSO counted about 361 victim IPs in 47 countries, most in Germany, the US, Turkey, Iran, and France.</p>
       <dl class="facts">
         <div><dt>CVE</dt><dd class="mono">CVE-2026-59310</dd></div>
         <div><dt>CVSS</dt><dd class="mono">9.8</dd></div>
@@ -50,7 +51,7 @@
 
     <article class="item">
       <div class="item-head"><h3>keyv and cacheable npm packages hijacked, worm spreads to 400+ packages</h3><span class="sev crit">Critical · supply chain</span></div>
-      <p>On 4 Aug a compromised GitHub maintainer account was used to push a trojanized keyv release and malicious versions of related packages. Wiz describes the malware as a descendant of the Mini Shai-Hulud family, based largely on TeamPCP's public code. It steals cloud, CI/CD, and developer secrets, AI-agent credentials (Claude, OpenAI, Codex, Cursor, Gemini), crypto wallets and /etc/shadow, then uses stolen npm tokens to publish further infected packages. Wiz reports it spread to more than 400 distinct npm packages. It persists through Claude Code hooks and VS Code tasks.json files, and its command domains are fetched from an Ethereum smart contract so the operator can change infrastructure without changing the malware.</p>
+      <p class="body">On 4 Aug a compromised GitHub maintainer account was used to push a trojanized keyv release and malicious versions of related packages. Wiz describes the malware as a descendant of the Mini Shai-Hulud family, based largely on TeamPCP's public code. It steals cloud, CI/CD, and developer secrets, AI-agent credentials (Claude, OpenAI, Codex, Cursor, Gemini), crypto wallets and /etc/shadow, then uses stolen npm tokens to publish further infected packages. Wiz reports it spread to more than 400 distinct npm packages. It persists through Claude Code hooks and VS Code tasks.json files, and its command domains are fetched from an Ethereum smart contract so the operator can change infrastructure without changing the malware.</p>
       <dl class="facts">
         <div><dt>Date</dt><dd class="mono">4 Aug 2026</dd></div>
         <div><dt>Seed packages</dt><dd class="mono">keyv 6.0.0, cache-manager 7.2.10, cacheable-request 13.0.20, @cacheable/utils 2.5.1 and others</dd></div>
@@ -62,7 +63,7 @@
 
     <article class="item">
       <div class="item-head"><h3>Windows AFD.sys zero-day used by Lazarus in Operation Dream Job</h3><span class="sev high">High · exploited</span></div>
-      <p>Microsoft's 11 Aug Patch Tuesday fixed one actively exploited flaw, a use-after-free in the Ancillary Function Driver for WinSock that takes a local, low-privileged user to SYSTEM through a race condition. Check Point reported that North Korean attackers used it in a new wave of Operation Dream Job to deploy a kernel-mode rootkit and the ForestTiger and Troy backdoors, against targets in France, Germany, Brazil, and India. Two other flaws, CVE-2026-62832 and CVE-2026-72971, were publicly disclosed before the patch but not reported exploited. Outlets differ on the size of the release: counts run from about 398 to 421 CVEs depending on what each excludes.</p>
+      <p class="body">Microsoft's 11 Aug Patch Tuesday fixed one actively exploited flaw, a use-after-free in the Ancillary Function Driver for WinSock that takes a local, low-privileged user to SYSTEM through a race condition. Check Point reported that North Korean attackers used it in a new wave of Operation Dream Job to deploy a kernel-mode rootkit and the ForestTiger and Troy backdoors, against targets in France, Germany, Brazil, and India. Two other flaws, CVE-2026-62832 and CVE-2026-72971, were publicly disclosed before the patch but not reported exploited. Outlets differ on the size of the release: counts run from about 398 to 421 CVEs depending on what each excludes.</p>
       <dl class="facts">
         <div><dt>CVE</dt><dd class="mono">CVE-2026-68820</dd></div>
         <div><dt>CVSS</dt><dd class="mono">7.0</dd></div>
@@ -74,18 +75,18 @@
 
   <section aria-labelledby="vulns">
     <h2 id="vulns">Exploited vulnerabilities and zero-days</h2>
-    <div class="tbl"><table>
+    <div class="tbl" tabindex="0" role="region" aria-label="Exploited vulnerabilities, scrollable table"><table>
       <thead><tr><th>Product</th><th>CVE</th><th>What it allows</th><th>Status</th></tr></thead>
       <tbody>
-        <tr><td>Metabase (self-hosted)</td><td class="mono">CVE-2026-72898</td><td>Unauthenticated SQL injection into the application database, leading to administrator access. CVSS 10.0. Metabase Cloud was attacked first. Wiz estimated about 2,500 instances are internet-accessible.</td><td><span class="sev crit">Exploited · zero-day</span><br>Fixed in x.58.24, x.59.21, x.60.17, x.61.11, x.62.9 and x.63.5. CISA KEV 11 Aug, due 14 Aug. Framework, n8n, and Kilo Code disclosed impact. Workaround: block /api/session/reset_password.</td></tr>
-        <tr><td>VMware vCenter Server</td><td class="mono">CVE-2026-59310</td><td>Directory traversal leading to root code execution on the appliance. Used to deploy a backdoor and Babuk-derived ransomware on ESXi hosts.</td><td><span class="sev crit">Exploited</span><br>Patched 29 Jul. About 361 victim IPs in 47 countries per QUIRSO.</td></tr>
-        <tr><td>Citrix NetScaler ADC / Gateway</td><td class="mono">CVE-2026-8452 (likely)</td><td>Memory overflow, patched in late June, that watchTowr chained into unauthenticated code execution. Exploitation was seen two calendar days after the technical details became public.</td><td><span class="sev crit">Exploited</span><br>The Hacker News names this CVE as "likely" and does not state it with certainty.</td></tr>
-        <tr><td>GitLab CE/EE</td><td class="mono">CVE-2026-19478</td><td>Code injection through a GraphQL directive. An unauthenticated attacker can modify or delete publicly accessible projects, forge merge records, and ban maintainers. CVSS 9.4.</td><td><span class="sev crit">Exploited</span><br>Fixed in 18.11.11, 19.0.8, 19.1.6 and 19.2.4. watchTowr saw exploitation within days of disclosure.</td></tr>
-        <tr><td>PaperCut NG / MF</td><td class="mono">CVE-2026-81578 + CVE-2026-82078</td><td>Authentication bypass chained to remote code execution. Activity moved from scanning to hands-on-keyboard intrusions with remote access tools and in-memory payloads.</td><td><span class="sev crit">Exploited · zero-day</span><br>Disclosed 27 Aug. The first emergency patch was bypassed and a second was issued. CISA KEV, due 14 Sep. ShadowServer counted more than 1,000 exposed instances.</td></tr>
-        <tr><td>Microsoft Windows (AFD.sys)</td><td class="mono">CVE-2026-68820</td><td>Use-after-free in the WinSock driver giving a local low-privileged user SYSTEM. Used by Lazarus to deploy a kernel-mode rootkit.</td><td><span class="sev high">Exploited</span><br>Patched 11 Aug. CVSS 7.0.</td></tr>
-        <tr><td>Apple macOS Screen Sharing</td><td class="mono">CVE-2026-65400</td><td>Authentication bypass leading to root access. Attackers installed a Monero miner on Macs with port 5900 reachable from the internet. CVSS 9.8.</td><td><span class="sev high">Exploited</span><br>Fixed in macOS Tahoe 26.6.1, Sequoia 15.7.9 and Sonoma 14.8.9 earlier in August. Abuse was observed by the Dutch NCSC.</td></tr>
-        <tr><td>Microsoft SharePoint Server</td><td class="mono">CVE-2026-63520 + CVE-2026-55040</td><td>Rapid7 found that the August bug combined with the previously patched July flaw gives unauthenticated remote code execution.</td><td><span class="sev high">Patched</span><br>No exploitation reported. The source links this bug to a different CVE number in its URL, so confirm the ID against Microsoft's guide.</td></tr>
-        <tr><td>Windows QUIC · Windows DNS Server</td><td class="mono">CVE-2026-62815 · CVE-2026-62878</td><td>QUIC: critical unauthenticated RCE from a crafted packet. DNS: stack buffer overflow leading to unauthenticated RCE.</td><td><span class="sev high">Patched</span><br>11 Aug Patch Tuesday. No exploitation reported.</td></tr>
+        <tr><td data-label="Product">Metabase (self-hosted)</td><td class="mono" data-label="CVE">CVE-2026-72898</td><td data-label="What it allows">Unauthenticated SQL injection into the application database, leading to administrator access. CVSS 10.0. Metabase Cloud was attacked first. Wiz estimated about 2,500 instances are internet-accessible.</td><td data-label="Status"><span class="sev crit">Exploited · zero-day</span><br>Fixed in x.58.24, x.59.21, x.60.17, x.61.11, x.62.9 and x.63.5. CISA KEV 11 Aug, due 14 Aug. Framework, n8n, and Kilo Code disclosed impact. Workaround: block /api/session/reset_password.</td></tr>
+        <tr><td data-label="Product">VMware vCenter Server</td><td class="mono" data-label="CVE">CVE-2026-59310</td><td data-label="What it allows">Directory traversal leading to root code execution on the appliance. Used to deploy a backdoor and Babuk-derived ransomware on ESXi hosts.</td><td data-label="Status"><span class="sev crit">Exploited</span><br>Patched 29 Jul. About 361 victim IPs in 47 countries per QUIRSO.</td></tr>
+        <tr><td data-label="Product">Citrix NetScaler ADC / Gateway</td><td class="mono" data-label="CVE">CVE-2026-8452 (likely)</td><td data-label="What it allows">Memory overflow, patched in late June, that watchTowr chained into unauthenticated code execution. Exploitation was seen two calendar days after the technical details became public.</td><td data-label="Status"><span class="sev crit">Exploited</span><br>The Hacker News names this CVE as "likely" and does not state it with certainty.</td></tr>
+        <tr><td data-label="Product">GitLab CE/EE</td><td class="mono" data-label="CVE">CVE-2026-19478</td><td data-label="What it allows">Code injection through a GraphQL directive. An unauthenticated attacker can modify or delete publicly accessible projects, forge merge records, and ban maintainers. CVSS 9.4.</td><td data-label="Status"><span class="sev crit">Exploited</span><br>Fixed in 18.11.11, 19.0.8, 19.1.6 and 19.2.4. watchTowr saw exploitation within days of disclosure.</td></tr>
+        <tr><td data-label="Product">PaperCut NG / MF</td><td class="mono" data-label="CVE">CVE-2026-81578 + CVE-2026-82078</td><td data-label="What it allows">Authentication bypass chained to remote code execution. Activity moved from scanning to hands-on-keyboard intrusions with remote access tools and in-memory payloads.</td><td data-label="Status"><span class="sev crit">Exploited · zero-day</span><br>Disclosed 27 Aug. The first emergency patch was bypassed and a second was issued. CISA KEV, due 14 Sep. ShadowServer counted more than 1,000 exposed instances.</td></tr>
+        <tr><td data-label="Product">Microsoft Windows (AFD.sys)</td><td class="mono" data-label="CVE">CVE-2026-68820</td><td data-label="What it allows">Use-after-free in the WinSock driver giving a local low-privileged user SYSTEM. Used by Lazarus to deploy a kernel-mode rootkit.</td><td data-label="Status"><span class="sev high">Exploited</span><br>Patched 11 Aug. CVSS 7.0.</td></tr>
+        <tr><td data-label="Product">Apple macOS Screen Sharing</td><td class="mono" data-label="CVE">CVE-2026-65400</td><td data-label="What it allows">Authentication bypass leading to root access. Attackers installed a Monero miner on Macs with port 5900 reachable from the internet. CVSS 9.8.</td><td data-label="Status"><span class="sev high">Exploited</span><br>Fixed in macOS Tahoe 26.6.1, Sequoia 15.7.9 and Sonoma 14.8.9 earlier in August. Abuse was observed by the Dutch NCSC.</td></tr>
+        <tr><td data-label="Product">Microsoft SharePoint Server</td><td class="mono" data-label="CVE">CVE-2026-63520 + CVE-2026-55040</td><td data-label="What it allows">Rapid7 found that the August bug combined with the previously patched July flaw gives unauthenticated remote code execution.</td><td data-label="Status"><span class="sev high">Patched</span><br>No exploitation reported. The source links this bug to a different CVE number in its URL, so confirm the ID against Microsoft's guide.</td></tr>
+        <tr><td data-label="Product">Windows QUIC · Windows DNS Server</td><td class="mono" data-label="CVE">CVE-2026-62815 · CVE-2026-62878</td><td data-label="What it allows">QUIC: critical unauthenticated RCE from a crafted packet. DNS: stack buffer overflow leading to unauthenticated RCE.</td><td data-label="Status"><span class="sev high">Patched</span><br>11 Aug Patch Tuesday. No exploitation reported.</td></tr>
       </tbody>
     </table></div>
   </section>
@@ -106,17 +107,17 @@
 
   <section aria-labelledby="breaches">
     <h2 id="breaches">Data breaches</h2>
-    <div class="tbl"><table>
+    <div class="tbl" tabindex="0" role="region" aria-label="Data breaches, scrollable table"><table>
       <thead><tr><th>Organization</th><th>People / records</th><th>Cause and data</th></tr></thead>
       <tbody>
-        <tr><td>Manchester Airports Group</td><td>About 8.7M customers (some outlets say 8.8M)</td><td>Network breach at Manchester, Stansted, and East Midlands. Email addresses, phone numbers, vehicle registrations, and postcodes. MAG says no bank or payment details were held or accessed. Reported 27 and 28 Aug.</td></tr>
-        <tr><td>McKesson</td><td>Not disclosed. Attacker claims ~284M records.</td><td>McKesson filed an 8-K saying it found an incident on 25 Aug involving third-party applications and data exfiltration, and has not said what was taken or that it is material. See unverified claims.</td></tr>
-        <tr><td>Unlimited Technology Systems</td><td>3.8M+ people</td><td>Healthcare software vendor. Intrusion dated October 2025, with the scale reported in August. SSNs, ID scans, insurance details, claims data, and diagnosis information. Cause not stated.</td></tr>
-        <tr><td>Stripe merchant keys</td><td>659 live keys, ~35 GB claimed</td><td>Live Stripe API keys for 659 merchant accounts and roughly 35 GB of customer and payment data were posted to a data-trading forum on 18 Aug. Other trackers report different key counts, and the source of the leak is not confirmed.</td></tr>
-        <tr><td>Ceva Logistics</td><td>Not stated</td><td>Cyberattack on the logistics provider, reported 10 Aug. Customer names, addresses, phone numbers, and emails of companies including Bol, De Bijenkorf, Ajax, ING, Ace &amp; Tate, and Valve.</td></tr>
-        <tr><td>Framework Computer</td><td>"All customers"</td><td>Third-party business-intelligence incident reported 7 Aug. The Hacker News ties it to the Metabase zero-day. Names, emails, phone numbers, addresses, login IPs. No payment data reported.</td></tr>
-        <tr><td>Trezor</td><td>~14,000 customers</td><td>Hack of its shipping provider ShipMonk. Names, addresses, emails, and phone numbers of customers who ordered between 10 May and 8 Aug.</td></tr>
-        <tr><td>n8n</td><td>136 customer records</td><td>Metabase zero-day. Names and emails, with five records holding bcrypt-hashed n8n Cloud passwords. n8n contacted 25 account holders and rotated credentials.</td></tr>
+        <tr><td data-label="Organization">Manchester Airports Group</td><td data-label="People / records">About 8.7M customers (some outlets say 8.8M)</td><td data-label="Cause and data">Network breach at Manchester, Stansted, and East Midlands. Email addresses, phone numbers, vehicle registrations, and postcodes. MAG says no bank or payment details were held or accessed. Reported 27 and 28 Aug.</td></tr>
+        <tr><td data-label="Organization">McKesson</td><td data-label="People / records">Not disclosed. Attacker claims ~284M records.</td><td data-label="Cause and data">McKesson filed an 8-K saying it found an incident on 25 Aug involving third-party applications and data exfiltration, and has not said what was taken or that it is material. See unverified claims.</td></tr>
+        <tr><td data-label="Organization">Unlimited Technology Systems</td><td data-label="People / records">3.8M+ people</td><td data-label="Cause and data">Healthcare software vendor. Intrusion dated October 2025, with the scale reported in August. SSNs, ID scans, insurance details, claims data, and diagnosis information. Cause not stated.</td></tr>
+        <tr><td data-label="Organization">Stripe merchant keys</td><td data-label="People / records">659 live keys, ~35 GB claimed</td><td data-label="Cause and data">Live Stripe API keys for 659 merchant accounts and roughly 35 GB of customer and payment data were posted to a data-trading forum on 18 Aug. Other trackers report different key counts, and the source of the leak is not confirmed.</td></tr>
+        <tr><td data-label="Organization">Ceva Logistics</td><td data-label="People / records">Not stated</td><td data-label="Cause and data">Cyberattack on the logistics provider, reported 10 Aug. Customer names, addresses, phone numbers, and emails of companies including Bol, De Bijenkorf, Ajax, ING, Ace &amp; Tate, and Valve.</td></tr>
+        <tr><td data-label="Organization">Framework Computer</td><td data-label="People / records">"All customers"</td><td data-label="Cause and data">Third-party business-intelligence incident reported 7 Aug. The Hacker News ties it to the Metabase zero-day. Names, emails, phone numbers, addresses, login IPs. No payment data reported.</td></tr>
+        <tr><td data-label="Organization">Trezor</td><td data-label="People / records">~14,000 customers</td><td data-label="Cause and data">Hack of its shipping provider ShipMonk. Names, addresses, emails, and phone numbers of customers who ordered between 10 May and 8 Aug.</td></tr>
+        <tr><td data-label="Organization">n8n</td><td data-label="People / records">136 customer records</td><td data-label="Cause and data">Metabase zero-day. Names and emails, with five records holding bcrypt-hashed n8n Cloud passwords. n8n contacted 25 account holders and rotated credentials.</td></tr>
       </tbody>
     </table></div>
     <p class="label">Unverified claims: McKesson (ShinyHunters claims about 1 TB taken from Snowflake and Salesforce via vishing, 284 million records counted as lines rather than people, and a $55.2M ransom demand; McKesson has not confirmed any of it). Wesco (ExfilSquad claims 2.6M records; Wesco confirms only a security incident).</p>
@@ -173,7 +174,7 @@
   </section>
 
   <footer>Compiled from public reporting as of 27 Oct 2026. Figures are as first reported and may be revised. · <a href="/archive/">All months</a> · <a href="/brief/">Current 30 day brief</a> · <a href="/">Home</a> · <a href="/about.html">About Infinity Shield</a></footer>
-</div>
+</main>
 
 </body>
 </html>

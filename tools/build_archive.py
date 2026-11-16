@@ -44,6 +44,7 @@ def nav(current):
         cur = ' aria-current="page"' if key == current else ""
         return f'      <li><a href="{href}"{cur}>{label}</a></li>'
     return "\n".join([
+        '<a class="skip" href="#main">Skip to main content</a>',
         '<nav class="site-nav" aria-label="Main navigation">',
         '  <div class="site-nav-inner">',
         '    <a href="/" class="site-brand"><img src="/logo-transparent.png" alt="">Infinity Shield</a>',
@@ -105,7 +106,7 @@ def render_vulns(rows):
     out = [
         '  <section aria-labelledby="vulns">',
         '    <h2 id="vulns">Exploited vulnerabilities and zero-days</h2>',
-        '    <div class="tbl"><table>',
+        '    <div class="tbl" tabindex="0" role="region" aria-label="Exploited vulnerabilities, scrollable table"><table>',
         '      <thead><tr><th>Product</th><th>CVE</th><th>What it allows</th><th>Status</th></tr></thead>',
         '      <tbody>',
     ]
@@ -163,7 +164,7 @@ def render_breaches(rows, unverified):
     out = [
         '  <section aria-labelledby="breaches">',
         '    <h2 id="breaches">Data breaches</h2>',
-        '    <div class="tbl"><table>',
+        '    <div class="tbl" tabindex="0" role="region" aria-label="Data breaches, scrollable table"><table>',
         '      <thead><tr><th>Organization</th><th>People / records</th><th>Cause and data</th></tr></thead>',
         '      <tbody>',
     ]
@@ -197,7 +198,7 @@ def build_month(data):
     label = data["label"]
     title = f"{label} Threat Brief | Infinity Shield"
     description = f'Cybersecurity brief for {data["period"]}. {data["lede"]}'
-    parts = [head(title, description), nav("archive"), '<div class="wrap">', '  <header>']
+    parts = [head(title, description), nav("archive"), '<main id="main" class="wrap">', '  <header>']
     parts.append(
         f'    <div class="marking"><span class="tlp">TLP:CLEAR</span>'
         f'<span>Period {esc(data["period"])}</span><span>Issued {esc(data["issued"])}</span></div>'
@@ -227,7 +228,7 @@ def build_month(data):
         '<a href="/archive/">All months</a> · <a href="/brief/">Current 30 day brief</a> · <a href="/">Home</a> · '
         '<a href="/about.html">About Infinity Shield</a></footer>'
     )
-    parts.append('</div>')
+    parts.append('</main>')
     parts.append('')
     parts.append('</body>')
     parts.append('</html>')
@@ -242,7 +243,7 @@ def build_index(months):
             "Monthly cybersecurity threat briefs, one per calendar month. The rolling 30 day brief is refreshed every Monday.",
         ),
         nav("archive"),
-        '<div class="wrap">',
+        '<main id="main" class="wrap">',
         '  <header>',
         '    <div class="marking"><span class="tlp">TLP:CLEAR</span><span>Calendar month briefs</span></div>',
         '    <h1>Threat Brief <span>Archive</span></h1>',
@@ -264,7 +265,7 @@ def build_index(months):
         '',
         '  <footer>Compiled from public reporting. Figures are as first reported and may be revised. · '
         '<a href="/brief/">Current 30 day brief</a> · <a href="/">Home</a> · <a href="/about.html">About Infinity Shield</a></footer>',
-        '</div>',
+        '</main>',
         '',
         '</body>',
         '</html>',

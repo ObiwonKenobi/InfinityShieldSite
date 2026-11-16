@@ -16,6 +16,7 @@
 <body>
 <span id="mobile-view"></span>
 
+<a class="skip" href="#main">Skip to main content</a>
 <nav class="site-nav" aria-label="Main navigation">
   <div class="site-nav-inner">
     <a href="/" class="site-brand"><img src="/logo-transparent.png" alt="">Infinity Shield</a>
@@ -27,7 +28,7 @@
     </ul>
   </div>
 </nav>
-<div class="wrap wide">
+<main id="main" class="wrap wide">
   <header>
     <div class="marking"><span class="tlp">TLP:CLEAR</span><span>Rolling 30 days</span><span>Period 17 Oct – 15 Nov 2026</span><span>Issued 16 Nov 2026</span><span>Refreshed weekly</span><span class="viewtoggle"><a class="vt-m" href="#mobile-view">Mobile view</a><a class="vt-d" href="#desktop-view">Desktop view</a></span></div>
     <h1>Current <span>Threat Brief</span></h1>
@@ -115,7 +116,7 @@
 
   <section aria-labelledby="vulns">
     <h2 id="vulns">Exploited vulnerabilities and zero-days</h2>
-    <div class="tbl"><table>
+    <div class="tbl" tabindex="0" role="region" aria-label="Exploited vulnerabilities, scrollable table"><table>
       <thead><tr><th>Product</th><th>CVE</th><th>What it allows</th><th>Status</th></tr></thead>
       <tbody>
         <tr><td data-label="Product">Microsoft Outlook · November Patch Tuesday (10 Nov)</td><td class="mono" data-label="CVE">CVE-2026-124194</td><td data-label="What it allows">Spoofing flaw exploited to steal NTLM hashes: an attacker sends a crafted message file and the user opens it in a vulnerable Outlook. Microsoft rates it Moderate (CVSS 6.5), but it needs one click and Outlook runs almost everywhere. The release fixed 1,094 CVEs by Microsoft's count, 63 of them Critical (BleepingComputer reports 1,235 by including 142 Edge flaws, other outlets 1,093). Also fixed: an unauthenticated Windows LDAP remote code execution flaw (CVE-2026-119958, Critical), not reported as exploited.</td><td data-label="Status"><span class="sev high">Exploited</span><br>KEV 10 Nov · patched</td></tr>
@@ -160,7 +161,7 @@
 <div class="col" title="9 Nov to 15 Nov: 12"><span class="col-bar" style="height:85.7%"><span class="col-v">12</span></span></div>
 </div>
 <div class="cols-axis"><span>24 Aug to 30 Aug</span><span>9 Nov to 15 Nov</span></div></figure>
-    <div class="tbl"><table>
+    <div class="tbl" tabindex="0" role="region" aria-label="CISA KEV deadlines, scrollable table"><table>
       <thead><tr><th>CVE</th><th>Vendor and product</th><th>Added</th><th>Due</th><th>Ransomware</th></tr></thead>
       <tbody>
         <tr><td class="mono" data-label="CVE">CVE-2026-123039</td><td data-label="Vendor and product">Check Point Multiple Products</td><td class="mono" data-label="Added">2026-11-13</td><td class="mono" data-label="Due">2026-11-16</td><td data-label="Ransomware"></td></tr>
@@ -189,7 +190,7 @@
 
   <section aria-labelledby="breaches">
     <h2 id="breaches">Data breaches</h2>
-    <div class="tbl"><table>
+    <div class="tbl" tabindex="0" role="region" aria-label="Data breaches, scrollable table"><table>
       <thead><tr><th>Organization</th><th>People / records</th><th>Cause and data</th></tr></thead>
       <tbody>
         <tr><td data-label="Organization">Nitori (Japan)</td><td data-label="People / records">Up to 37.62M records (potentially leaked)</td><td data-label="Cause and data">Confirmed 6 Nov and announced 9 Nov. Unauthorized access in mid to late October may have exposed up to 37.62 million records for individual customers, corporate members, and non-members who ordered through stores and online shops: names, email and home addresses, phone numbers, birth dates, gender, and membership numbers. Passwords and card data were reportedly not included. The intrusion route is not identified, ransomware has not been established, and reports differ on whether the figure counts people or data entries.</td></tr>
@@ -312,7 +313,7 @@
 </div>
 
   <footer>Compiled from public reporting as of 16 Nov 2026. Figures are as first reported and may be revised. This brief covers the last 30 days and is refreshed every Monday; the calendar-month record is in the <a href="/archive/">archive</a>. · <a href="/">Home</a> · <a href="/about.html">About Infinity Shield</a></footer>
-</div>
+</main>
 
 </body>
 </html>

@@ -84,7 +84,8 @@
       "allows": "Unauthenticated command execution (88771). Memory overflow leading to RCE or denial of service when DTLS is on (88772).",
       "sev": "crit",
       "status": "Exploited",
-      "note": "CISA KEV 27 Sep. Exploited since early Sep per Mandiant."
+      "note": "CISA KEV 27 Sep. Exploited since early Sep per Mandiant.",
+      "when": "2026-09-27"
     },
     {
       "product": "Cisco Secure Firewall Management Center",
@@ -100,7 +101,8 @@
       "allows": "Unauthenticated RCE through template injection (CVSS 10.0)",
       "sev": "crit",
       "status": "Exploited",
-      "note": "Hotfix 7 Sep. No fix for versions older than 2.4.4."
+      "note": "Hotfix 7 Sep. No fix for versions older than 2.4.4.",
+      "when": "2026-09-07"
     },
     {
       "product": "Check Point Security Gateway / Spark",
@@ -108,7 +110,8 @@
       "allows": "Pre-authentication bypass and remote code execution",
       "sev": "crit",
       "status": "Exploited",
-      "note": "Patched 9 Sep. Exploitation attempts from 12 Sep. CISA KEV 22 Sep."
+      "note": "Patched 9 Sep. Exploitation attempts from 12 Sep. CISA KEV 22 Sep.",
+      "when": "2026-09-22"
     },
     {
       "product": "Check Point Management Server",
@@ -116,7 +119,8 @@
       "allows": "Pre-authentication path traversal, upload and execution of scripts on the management server",
       "sev": "crit",
       "status": "Exploited",
-      "note": "Attacks since at least 23 Jul against a handful of customers. Hotfix SK1000171. CISA KEV 22 Sep."
+      "note": "Attacks since at least 23 Jul against a handful of customers. Hotfix SK1000171. CISA KEV 22 Sep.",
+      "when": "2026-09-22"
     },
     {
       "product": "F5 BIG-IP APM",
@@ -124,7 +128,8 @@
       "allows": "Unauthenticated heap overflow leading to RCE (CVSS 9.8 v3.1, 9.3 v4.0)",
       "sev": "crit",
       "status": "Exploited",
-      "note": "Advisory 22 Sep. F5 later limited the condition to APM acting as an OAuth authorization server. CISA KEV wording is broader."
+      "note": "Advisory 22 Sep. F5 later limited the condition to APM acting as an OAuth authorization server. CISA KEV wording is broader.",
+      "when": "2026-09-22"
     },
     {
       "product": "Arista VeloCloud Orchestrator",
@@ -132,7 +137,8 @@
       "allows": "Improper input validation in the SD-WAN management platform. Details withheld.",
       "sev": "high",
       "status": "Exploited",
-      "note": "CISA KEV 22 Sep. Arista published indicators of compromise."
+      "note": "CISA KEV 22 Sep. Arista published indicators of compromise.",
+      "when": "2026-09-22"
     },
     {
       "product": "Cisco Secure Email Gateway",
@@ -140,7 +146,8 @@
       "allows": "Unauthenticated root command execution through a crafted email carrying SQL statements (CVSS 9.8)",
       "sev": "crit",
       "status": "Exploited",
-      "note": "Fixed in 15.5.5-0141, 16.0.4-302, 16.5.0-780. No workaround. CISA KEV 14 Sep."
+      "note": "Fixed in 15.5.5-0141, 16.0.4-302, 16.5.0-780. No workaround. CISA KEV 14 Sep.",
+      "when": "2026-09-14"
     },
     {
       "product": "WordPress core",
@@ -148,7 +155,8 @@
       "allows": "Unauthenticated RCE when a theme directory begins with \"page-\" and a readable local PHP file such as pearcmd.php exists (CVSS 9.2)",
       "sev": "high",
       "status": "Exploited",
-      "note": "Fixed in 7.1.2, 7.0.6, 6.9.9, 6.8.10. First attempt 22 Sep, same day as the patch. CISA KEV 25 Sep."
+      "note": "Fixed in 7.1.2, 7.0.6, 6.9.9, 6.8.10. First attempt 22 Sep, same day as the patch. CISA KEV 25 Sep.",
+      "when": "2026-09-25"
     },
     {
       "product": "Windows Update stack · Windows ALPC",
@@ -156,7 +164,8 @@
       "allows": "Local privilege escalation to SYSTEM (CVSS 7.8 each)",
       "sev": "high",
       "status": "Exploited",
-      "note": "Zero-days fixed in the 8 Sep Patch Tuesday."
+      "note": "Zero-days fixed in the 8 Sep Patch Tuesday.",
+      "when": "2026-09-08"
     },
     {
       "product": "Cisco Catalyst SD-WAN Manager",
@@ -164,7 +173,8 @@
       "allows": "Unauthenticated admin access",
       "sev": "crit",
       "status": "Exploited",
-      "note": "Advisory and CISA KEV 30 Sep."
+      "note": "Advisory and CISA KEV 30 Sep.",
+      "when": "2026-09-30"
     },
     {
       "product": "Zammad helpdesk 6.3.0 to 6.5.4",
@@ -172,29 +182,35 @@
       "allows": "Privilege escalation chain used to breach DIVD, the Dutch vulnerability-disclosure institute. Investigators describe the intrusion as agentic-AI-driven.",
       "sev": "high",
       "status": "Exploited",
-      "note": "Reported 30 Sep. CISA KEV."
+      "note": "Reported 30 Sep. CISA KEV.",
+      "when": "2026-09-30"
     }
   ],
   "supply": [
     {
       "label": "Brevo (email platform)",
-      "text": "A flaw in Brevo's SAML single sign-on was used against 138 customer accounts. Trezor warned about 347,000 newsletter addresses after phishing emails went out from its own sending address, and BitBox and CoinTracking were also affected. Reported 9 Sep."
+      "text": "A flaw in Brevo's SAML single sign-on was used against 138 customer accounts. Trezor warned about 347,000 newsletter addresses after phishing emails went out from its own sending address, and BitBox and CoinTracking were also affected. Reported 9 Sep.",
+      "when": "2026-09-09"
     },
     {
       "label": "Dropbox via Lenovo ID",
-      "text": "About 5,000 Dropbox accounts were taken over through a flaw in Lenovo's email verification for Lenovo ID, a legacy integration. Reported 2 Sep. Only an email address was needed to register a Lenovo ID that could sign in to the linked Dropbox account."
+      "text": "About 5,000 Dropbox accounts were taken over through a flaw in Lenovo's email verification for Lenovo ID, a legacy integration. Reported 2 Sep. Only an email address was needed to register a Lenovo ID that could sign in to the linked Dropbox account.",
+      "when": "2026-09-02"
     },
     {
       "label": "BigCommerce / Ribon apps",
-      "text": "A compromised application key for the Ribon apps, tied to a Fastr system breach, was used to inject malicious scripts into a small number of storefronts. BigCommerce says its own platform was not breached. Merchants were notified from 17 to 18 Sep and the number of affected stores and shoppers has not been published."
+      "text": "A compromised application key for the Ribon apps, tied to a Fastr system breach, was used to inject malicious scripts into a small number of storefronts. BigCommerce says its own platform was not breached. Merchants were notified from 17 to 18 Sep and the number of affected stores and shoppers has not been published.",
+      "when": "2026-09-17"
     },
     {
       "label": "npm",
-      "text": "On 7 Sep Aikido Security reported four npm packages published by one account within an hour, carrying a Shai-Hulud payload with the same hash as one used in the 19 May @antv compromise. The payload runs from a preinstall script. The sources do not say how the publishing account was accessed or whether other packages were affected."
+      "text": "On 7 Sep Aikido Security reported four npm packages published by one account within an hour, carrying a Shai-Hulud payload with the same hash as one used in the 19 May @antv compromise. The payload runs from a preinstall script. The sources do not say how the publishing account was accessed or whether other packages were affected.",
+      "when": "2026-09-07"
     },
     {
       "label": "AI coding agents",
-      "text": "More than 13,000 sensitive screenshots taken during agent-driven development workflows were found committed to public GitHub repositories, reported 29 Sep to 1 Oct."
+      "text": "More than 13,000 sensitive screenshots taken during agent-driven development workflows were found committed to public GitHub repositories, reported 29 Sep to 1 Oct.",
+      "when": "2026-09-29"
     },
     {
       "label": "Scope of this section",
@@ -205,17 +221,20 @@
     {
       "org": "Gyazo (Helpfeel)",
       "scale": "~23.62M user records, ~490M image metadata records",
-      "cause": "Vulnerability in the image upload server exploited 11 Sep. Names or nicknames, emails, password hashes, device and session IDs, X integration tokens. Metadata includes upload IPs and EXIF location. No payment data."
+      "cause": "Vulnerability in the image upload server exploited 11 Sep. Names or nicknames, emails, password hashes, device and session IDs, X integration tokens. Metadata includes upload IPs and EXIF location. No payment data.",
+      "when": "2026-09-11"
     },
     {
       "org": "Times Car (Park24 / Times Mobility)",
       "scale": "Up to ~6.6M accounts; ~1.6M confirmed with ID documents",
-      "cause": "Unauthorized access to web systems detected 25 Sep. Names, addresses, dates of birth, driver's license details, passwords stored unrecoverably. 6.6M is a stated maximum and the final count is under investigation. One tracker lists ~1.6M as the confirmed figure."
+      "cause": "Unauthorized access to web systems detected 25 Sep. Names, addresses, dates of birth, driver's license details, passwords stored unrecoverably. 6.6M is a stated maximum and the final count is under investigation. One tracker lists ~1.6M as the confirmed figure.",
+      "when": "2026-09-25"
     },
     {
       "org": "US Defense Manpower Data Center",
       "scale": "~3.05M (2.76M living, 294K deceased)",
-      "cause": "Flaw in a file-sharing system, patched 16 Jul. Unencrypted SSNs and personnel data accessed from Oct 2025. Reporting dates differ: one tracker lists 24 Sep, Help Net Security is dated 1 Oct."
+      "cause": "Flaw in a file-sharing system, patched 16 Jul. Unencrypted SSNs and personnel data accessed from Oct 2025. Reporting dates differ: one tracker lists 24 Sep, Help Net Security is dated 1 Oct.",
+      "when": "2026-09-24"
     },
     {
       "org": "Mathspace",
@@ -225,17 +244,20 @@
     {
       "org": "Seicomart (Secoma)",
       "scale": "572,022 accounts",
-      "cause": "Cause not disclosed. Reported 29 Sep."
+      "cause": "Cause not disclosed. Reported 29 Sep.",
+      "when": "2026-09-29"
     },
     {
       "org": "Ludwig Maximilian University of Munich",
       "scale": "~600,000 data sets",
-      "cause": "Cause not disclosed. Reported 19 Sep."
+      "cause": "Cause not disclosed. Reported 19 Sep.",
+      "when": "2026-09-19"
     },
     {
       "org": "Weverse (HYBE)",
       "scale": "422,584 accounts",
-      "cause": "Vulnerability exploitation. Reported 6 Sep."
+      "cause": "Vulnerability exploitation. Reported 6 Sep.",
+      "when": "2026-09-06"
     },
     {
       "org": "Brevo customers (Trezor, BitBox, CoinTracking)",
@@ -245,17 +267,20 @@
     {
       "org": "Japan Digital Agency (Government Solution Service)",
       "scale": "~246,000 records",
-      "cause": "VPN flaw exploited. Reported 11 Sep."
+      "cause": "VPN flaw exploited. Reported 11 Sep.",
+      "when": "2026-09-11"
     },
     {
       "org": "Veradigm",
       "scale": "Not disclosed. Gentlemen group claims 3.5M patient records.",
-      "cause": "Vendor credentials for a Veradigm API used to copy patient data. 8-K filed 8 Sep. Veradigm says clinical data was not involved and some records may include SSNs."
+      "cause": "Vendor credentials for a Veradigm API used to copy patient data. 8-K filed 8 Sep. Veradigm says clinical data was not involved and some records may include SSNs.",
+      "when": "2026-09-08"
     },
     {
       "org": "DriveWealth (Revolut, Stake, Hatch customers)",
       "scale": "No total. Notices list 62,000+ Rhode Island residents.",
-      "cause": "Social engineering on 4 to 5 Sep. Names, contact details, citizenship, partial account numbers. No passwords or card data."
+      "cause": "Social engineering on 4 to 5 Sep. Names, contact details, citizenship, partial account numbers. No passwords or card data.",
+      "when": "2026-09-05"
     },
     {
       "org": "Dropbox (via Lenovo ID)",
@@ -267,15 +292,18 @@
   "other": [
     {
       "label": "KillSec takedown",
-      "text": "On 30 Sep, in an operation called KillSwitch led by Hamburg police and prosecutors, authorities took control of the ransomware group's leak site and secured at least 110 TB of data. Three people were provisionally arrested and eight searches were carried out in Greece, Romania, Spain, and the United Kingdom. A 16-year-old is named as the suspected main operator. The group is linked to about 1,000 suspected attacks, about 500 of them identified as successful, and the figures may change as evidence is analysed. Ten countries, Europol, and Eurojust took part, with support from Bitdefender and Group-IB. Police announced it on 1 Oct."
+      "text": "On 30 Sep, in an operation called KillSwitch led by Hamburg police and prosecutors, authorities took control of the ransomware group's leak site and secured at least 110 TB of data. Three people were provisionally arrested and eight searches were carried out in Greece, Romania, Spain, and the United Kingdom. A 16-year-old is named as the suspected main operator. The group is linked to about 1,000 suspected attacks, about 500 of them identified as successful, and the figures may change as evidence is analysed. Ten countries, Europol, and Eurojust took part, with support from Bitdefender and Group-IB. Police announced it on 1 Oct.",
+      "when": "2026-09-30"
     },
     {
       "label": "Liquid Network (Blockstream)",
-      "text": "On 6 Sep roughly 4,000 of the 4,200 BTC in the federation wallet was drained after a bug in the Elements code let unbacked L-BTC be redeemed through SideSwap's peg-out. The attackers returned about 3,400 BTC (~$262.6M) and kept about 598 BTC (~$47M). One report says no keys or credentials were stolen."
+      "text": "On 6 Sep roughly 4,000 of the 4,200 BTC in the federation wallet was drained after a bug in the Elements code let unbacked L-BTC be redeemed through SideSwap's peg-out. The attackers returned about 3,400 BTC (~$262.6M) and kept about 598 BTC (~$47M). One report says no keys or credentials were stolen.",
+      "when": "2026-09-06"
     },
     {
       "label": "Bitget",
-      "text": "On 24 Sep the exchange reported unauthorized transfers from a limited number of hot wallets and suspended withdrawals. The loss was first put at about $351.6M and revised to about $387.5M on 25 Sep. The attack method has not been described in the sources reviewed."
+      "text": "On 24 Sep the exchange reported unauthorized transfers from a limited number of hot wallets and suspended withdrawals. The loss was first put at about $351.6M and revised to about $387.5M on 25 Sep. The attack method has not been described in the sources reviewed.",
+      "when": "2026-09-24"
     },
     {
       "label": "Research and disclosure",

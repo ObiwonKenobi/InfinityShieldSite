@@ -94,6 +94,13 @@ wrong date puts an item in the wrong cluster. A `when` before the window start i
 an item that began earlier and is still active; it is drawn on the first day. When carrying an
 item forward, keep its `when` unless the event itself changed. The `top` items are not plotted.
 
+`when` is the reporting or confirmation date, which is what the Timeline plots. When the activity
+began earlier than `when` (an intrusion months before disclosure, exploitation before a patch),
+the item's text must say when it began. The "month by month" view reads `archive/data/*.json`
+for the months already archived and uses this brief only for days after the last archived month,
+so archive items should carry `when` too (the monthly run adds it; items with no supportable date
+are left without one and are counted as not plotted).
+
 ## Rules
 
 - Never invent a CVE number, a record count, a date, a victim name, or a URL.

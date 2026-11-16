@@ -221,3 +221,8 @@ td { color: var(--text); }
 .tl-list summary { cursor: pointer; color: var(--accent); }
 .tl-list ul { margin: 4px 0 12px; padding-left: 1.1em; color: var(--muted); }
 .tl-list .mono { color: var(--text); }
+
+/* new this week */
+.list.newlist li, .wide .list.newlist li, body:has(#mobile-view:target) .list.newlist li { display: block; background: none; border: 0; border-bottom: 1px solid var(--border); padding: 7px 0; }
+.newlist .basis { color: var(--muted); font-size: .84rem; margin-left: 8px; }
+.newlist a { color: var(--text); }

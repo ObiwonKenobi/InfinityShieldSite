@@ -34,8 +34,9 @@ once at the end, or on both dates when the window spans a year boundary:
    `InfinityShieldSite`, access `push`) if it is not already available, then
    clone it once with `git clone --depth 50` and a generous timeout. Do not
    clone twice in parallel. Work on `main`, starting from `origin/main`.
-2. Read `brief/data/current.json`. It is the previous week's brief and your
-   starting point. Read one or two files in `archive/data/` for voice and
+2. Copy `brief/data/current.json` to `/tmp/previous-brief.json` before changing it; step 6
+   needs it for the "New this week" section. Then read it. It is the previous week's brief and
+   your starting point. Read one or two files in `archive/data/` for voice and
    format. Read `tools/build_brief.py` for the validation rules.
 3. Carry forward, then update. Drop every item whose main event or disclosure
    is now older than the window. Keep items still inside the window, and update
@@ -76,8 +77,13 @@ once at the end, or on both dates when the window spans a year boundary:
      scope; drop it once it is older than the window with no confirmation.
 5. Write the new `brief/data/current.json`. Schema and limits are below.
 6. Run `python3 tools/build_brief.py --check` and fix every problem it lists.
-   Then run `python3 tools/build_brief.py` with no flag. It writes
-   `brief/index.html` and updates `index.html`.
+   Then run `python3 tools/build_brief.py --since /tmp/previous-brief.json`. It compares the new
+   brief with last week's, writes a `changes` block and an `added` date on each item into
+   `brief/data/current.json`, then writes `brief/index.html` and updates `index.html`. Read the
+   printed counts. Edit the `changes` block by hand only to improve wording: replace "Left the
+   brief" with the real reason (aged out, merged into another item, superseded) and tighten any
+   "text revised" into what actually changed. Later builds in the same run use no flag. If you
+   skip `--since`, `--check` fails because the old `changes` block is from an earlier run.
 7. Confirm the only changed files are `brief/data/current.json`,
    `brief/index.html`, and `index.html`. Confirm `grep -c "—" brief/ index.html`
    reports zero em dashes.

@@ -285,6 +285,8 @@ body {
   color: var(--accent);
   margin-bottom: .75rem;
 }
+    .brief-meta a { color: var(--accent); }
+    .brief-meta a:hover { text-decoration: underline; }
 .brief-grid h2 {
   font-size: clamp(1.4rem, 3vw, 2.2rem);
   font-weight: 700;
@@ -492,7 +494,8 @@ footer {
           <p class="brief-meta">Rolling 30 days · 17 Oct – 15 Nov 2026 · Refreshed weekly</p>
           <h2>Current Threat Brief</h2>
           <p>Thirty days that opened with the largest cryptocurrency theft on record, about US$6.3 billion taken from Binance on 29 Oct, of which the Justice Department said on 12 Nov it had court authorization to seize more than US$1.2 billion. Around it ran a GitHub credential-stealing campaign across thousands of accounts, FBI and CrowdStrike warnings that AI agents are running parts of live intrusions, and an exploited Outlook zero-day on November Patch Tuesday.</p>
-          <div class="band-stats" aria-label="This brief in numbers"><div class="stat"><div class="stat-v">26</div><div class="stat-l">CVEs tracked</div></div><div class="stat"><div class="stat-v">13 of 15</div><div class="stat-l">Confirmed exploited</div></div><div class="stat"><div class="stat-v">33</div><div class="stat-l">Added to CISA KEV</div></div><div class="stat"><div class="stat-v">10</div><div class="stat-l">Breaches</div></div><div class="stat"><div class="stat-v">14.4M</div><div class="stat-l">Records exposed</div></div></div>
+          <p class="brief-meta"><a href="/brief/#new">New since 2 Nov 2026: 27 added, 5 updated</a></p>
+          <div class="band-stats" role="group" aria-label="This brief in numbers"><div class="stat"><div class="stat-v">26</div><div class="stat-l">CVEs tracked</div></div><div class="stat"><div class="stat-v">13 of 15</div><div class="stat-l">Confirmed exploited</div></div><div class="stat"><div class="stat-v">33</div><div class="stat-l">Added to CISA KEV</div></div><div class="stat"><div class="stat-v">10</div><div class="stat-l">Breaches</div></div><div class="stat"><div class="stat-v">14.4M</div><div class="stat-l">Records exposed</div></div></div>
           <!-- rolling-brief:end -->
         </div>
         <div class="brief-actions">

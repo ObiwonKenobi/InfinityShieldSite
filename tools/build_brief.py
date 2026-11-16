@@ -12,6 +12,7 @@ Usage (from the repo root):
   python3 tools/build_brief.py              build the page and update the home page
   python3 tools/build_brief.py --check      validate brief/data/current.json only
   python3 tools/build_brief.py --no-fetch   build without trying to refresh the KEV feed
+  python3 tools/build_brief.py --since FILE record what changed against last week's current.json (FILE), then build
 """
 import datetime as dt
 import json
@@ -27,6 +28,7 @@ from build_archive import (  # noqa: E402
 )
 import charts  # noqa: E402
 from timeline import render_history  # noqa: E402
+import changes  # noqa: E402
 import kev  # noqa: E402
 
 DATA = ROOT / "brief" / "data" / "current.json"
@@ -118,6 +120,9 @@ def validate(d):
                 continue
             if w > end or (t and t > end):
                 problems.append(f"{cat}[{i}] date is after the end of the window")
+    ch = d.get("changes")
+    if ch and ch.get("run") != d.get("issued"):
+        problems.append("changes block is from an earlier run; rerun with --since <last week's current.json> or remove it")
     unv = d.get("unverified", "")
     if isinstance(unv, list):
         for i, r in enumerate(unv):
@@ -298,7 +303,7 @@ def render_kev(k, window):
 
 
 TOC_LABELS = {
-    "numbers": "By the numbers", "timeline": "Timeline", "history": "Month by month", "top": "Top items", "vulns": "Exploited vulnerabilities", "kev": "CISA KEV",
+    "new": "New this week", "numbers": "By the numbers", "timeline": "Timeline", "history": "Month by month", "top": "Top items", "vulns": "Exploited vulnerabilities", "kev": "CISA KEV",
     "supply": "Supply chain", "breaches": "Data breaches", "other": "Law enforcement, research",
     "outages": "Outages, no attack", "unverified": "Unverified claims", "do": "What to do", "src": "Sources",
 }
@@ -320,6 +325,7 @@ def build_page(d, s, window):
     parts.append('  </header>')
     unv = d.get("unverified", "")
     blocks = [
+        *([changes.render(d)] if d.get("changes") else []),
         render_numbers(d, s),
         render_timeline(d, window),
         render_history(d, window[1]),
@@ -374,7 +380,9 @@ def update_home(d, s):
         f'          <p class="brief-meta">Rolling 30 days · {esc(d["period"])} · Refreshed weekly</p>\n'
         "          <h2>Current Threat Brief</h2>\n"
         f'          <p>{esc(d["lede"])}</p>\n'
-        f'          <div class="band-stats" aria-label="This brief in numbers">{stat_html}</div>\n'
+        + (f'          <p class="brief-meta"><a href="/brief/#new">New since {esc(d["changes"]["since"])}: {len(d["changes"]["added"])} added, {len(d["changes"]["updated"])} updated</a></p>\n' if d.get("changes") else "")
+        +
+        f'          <div class="band-stats" role="group" aria-label="This brief in numbers">{stat_html}</div>\n'
         "          <!-- rolling-brief:end -->"
     )
     text = HOME.read_text(encoding="utf-8")
@@ -396,6 +404,12 @@ def main():
         print("brief/data/current.json is valid")
         return
     window = parse_period(d["period"])
+    if "--since" in sys.argv:
+        prev = json.loads(Path(sys.argv[sys.argv.index("--since") + 1]).read_text(encoding="utf-8"))
+        d["changes"] = changes.compute(prev, d, window[0])
+        DATA.write_text(json.dumps(d, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        ch = d["changes"]
+        print(f'changes since {ch["since"]}: {len(ch["added"])} added, {len(ch["updated"])} updated, {len(ch["dropped"])} dropped')
     if "--no-fetch" not in sys.argv:
         kev.refresh()
     snap = kev.load()

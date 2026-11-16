@@ -22,7 +22,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from build_archive import (  # noqa: E402
-    ROOT, esc, head, nav, render_top, render_vulns, render_list, render_outages,
+    ROOT, esc, head, nav, render_top, render_vulns, render_list, render_outages, render_unverified,
     render_breaches, render_todo, render_sources,
 )
 import charts  # noqa: E402
@@ -90,6 +90,15 @@ def validate(d):
         for k in ("label", "basis", "text"):
             if not r.get(k):
                 problems.append(f"outages[{i}] missing {k}")
+    unv = d.get("unverified", "")
+    if isinstance(unv, list):
+        for i, r in enumerate(unv):
+            if not r.get("item") or not r.get("why"):
+                problems.append(f"unverified[{i}] needs item and why")
+            elif len(r["why"].split()) > 30:
+                problems.append(f"unverified[{i}] why is over 30 words; keep it to one short line")
+    elif not isinstance(unv, str):
+        problems.append("unverified must be a list of {item, why} or a string")
     for i, s in enumerate(d.get("sources", [])):
         if not s.get("title") or not str(s.get("url", "")).startswith("https://"):
             problems.append(f"sources[{i}] needs a title and an https URL")
@@ -176,8 +185,8 @@ def render_kev(k, window):
         for e in k["due_soon"]:
             ransom = "Known" if str(e.get("knownRansomwareCampaignUse", "")).lower() == "known" else ""
             out.append(
-                f'        <tr><td class="mono">{esc(e["cveID"])}</td><td>{esc(e["vendorProject"])} {esc(e["product"])}</td>'
-                f'<td class="mono">{esc(e["dateAdded"])}</td><td class="mono">{esc(e["dueDate"])}</td><td>{ransom}</td></tr>'
+                f'        <tr><td class="mono" data-label="CVE">{esc(e["cveID"])}</td><td data-label="Vendor and product">{esc(e["vendorProject"])} {esc(e["product"])}</td>'
+                f'<td class="mono" data-label="Added">{esc(e["dateAdded"])}</td><td class="mono" data-label="Due">{esc(e["dueDate"])}</td><td data-label="Ransomware">{ransom}</td></tr>'
             )
         out += ['      </tbody>', '    </table></div>']
     out.append(f'    <p class="label">Source: CISA KEV catalog version {esc(k["catalog_version"])}, {esc(k["total_count"])} entries, snapshot {esc(k["snapshot_date"])}.</p>')
@@ -185,17 +194,28 @@ def render_kev(k, window):
     return "\n".join(out)
 
 
+TOC_LABELS = {
+    "numbers": "By the numbers", "top": "Top items", "vulns": "Exploited vulnerabilities", "kev": "CISA KEV",
+    "supply": "Supply chain", "breaches": "Data breaches", "other": "Law enforcement, research",
+    "outages": "Outages, no attack", "unverified": "Unverified claims", "do": "What to do", "src": "Sources",
+}
+
+
 def build_page(d, s, window):
     title = "Current Threat Brief | Infinity Shield"
     description = f'Rolling 30 day cybersecurity brief, {d["period"]}. {d["lede"]}'
-    parts = [head(title, description), nav("brief"), '<div class="wrap">', '  <header>']
+    # An empty marker element lets CSS switch to the phone layout (":target" with ":has"), so the toggle needs no script and no second page.
+    top = head(title, description).replace("<body>", '<body>\n<span id="mobile-view"></span>', 1)
+    parts = [top, nav("brief"), '<div class="wrap wide">', '  <header>']
     parts.append(
         '    <div class="marking"><span class="tlp">TLP:CLEAR</span><span>Rolling 30 days</span>'
-        f'<span>Period {esc(d["period"])}</span><span>Issued {esc(d["issued"])}</span><span>Refreshed weekly</span></div>'
+        f'<span>Period {esc(d["period"])}</span><span>Issued {esc(d["issued"])}</span><span>Refreshed weekly</span>'
+        '<span class="viewtoggle"><a class="vt-m" href="#mobile-view">Mobile view</a><a class="vt-d" href="#desktop-view">Desktop view</a></span></div>'
     )
     parts.append('    <h1>Current <span>Threat Brief</span></h1>')
     parts.append(f'    <p class="lede">{esc(d["lede"])}</p>')
     parts.append('  </header>')
+    unv = d.get("unverified", "")
     blocks = [
         render_numbers(d, s),
         render_top(d["top"]),
@@ -205,14 +225,22 @@ def build_page(d, s, window):
         blocks.append(render_kev(s["kev"], window))
     blocks += [
         render_list("supply", "Supply chain", d["supply"]),
-        render_breaches(d["breaches"], d.get("unverified", "")),
+        render_breaches(d["breaches"], unv if isinstance(unv, str) else ""),
         render_list("other", "Law enforcement and research", d["other"]),
         *([render_outages(d["outages"])] if d.get("outages") else []),
+        *([render_unverified(unv)] if isinstance(unv, list) and unv else []),
         render_todo(d["todo"], "What to do this week"),
         render_sources(d["sources"]),
     ]
+    toc = ['  <nav class="toc" aria-label="On this page"><p class="label">On this page</p><ul>']
+    for block in blocks:
+        for sid, text in re.findall(r'<h2 id="([^"]+)"[^>]*>(.*?)</h2>', block):
+            toc.append(f'    <li><a href="#{sid}">{TOC_LABELS.get(sid, text)}</a></li>')
+    toc.append('  </ul></nav>')
+    parts += ['<div class="layout">', "\n".join(toc), '<div class="content">']
     for block in blocks:
         parts += ["", block]
+    parts += ["</div>", "</div>"]
     parts += [
         "",
         f'  <footer>Compiled from public reporting as of {esc(d["issued"])}. Figures are as first reported and may be revised. '

@@ -277,7 +277,52 @@
       "records": null
     }
   ],
-  "unverified": "JAMIS Prime outage (late October; still no JAMIS statement or press coverage found as of 16 Nov, so cause, timeline, and scope rest on one post by Corporate Results, Inc., a firm that sells recovery and ERP migration services); PwC (Everest claims about 590 GB, posted 22 Oct, while PwC confirms only an incident at a third-party platform that hosts employee learning records); Maileva, a La Poste subsidiary (Security Affairs reports names and postal addresses of about 22 million people, seen in one outlet); Iris Ohyama (a headline reports 7.7 million customers, seen without detail); Sogo Hong Kong (about 820,000 members per a regulator estimate listed in one vendor roundup); Vanderbilt University (the BYOD group claims over one million Social Security numbers, and Vanderbilt had not confirmed it); two CISA KEV additions on 13 Nov, UnrealIRCd (CVE-2026-114713) and a Check Point appliance flaw whose ID (CVE-2026-123039) appears under Check Point Gaia in one report and under Cisco BroadWorks in another, so it is unresolved; ITPro's headline that the Binance attackers abused a flaw in an internal AI tool, with no technical description found; the count of 25 servers compromised through PHP2Shell and Fragnesia, which a November tracker contradicts; a weekly newsletter's list of breaches at DreamHost, WS Audiology, and WorkOS and of APT29 zero-click mobile attacks, none of which was checked.",
+  "unverified": [
+    {
+      "item": "JAMIS Prime outage (late Oct)",
+      "why": "One post from a firm that sells ERP recovery services. No JAMIS statement or press coverage as of 16 Nov."
+    },
+    {
+      "item": "PwC data theft",
+      "why": "Everest claims about 590 GB (posted 22 Oct). PwC confirms only an incident at a third-party platform."
+    },
+    {
+      "item": "Maileva, a La Poste subsidiary",
+      "why": "About 22 million names and postal addresses, seen in one outlet only."
+    },
+    {
+      "item": "Iris Ohyama (Japan)",
+      "why": "A headline says 7.7 million customers. No detail found."
+    },
+    {
+      "item": "Sogo Hong Kong",
+      "why": "About 820,000 members, a regulator estimate seen in one vendor roundup."
+    },
+    {
+      "item": "Vanderbilt University",
+      "why": "The BYOD group claims over 1 million Social Security numbers. Vanderbilt has not confirmed."
+    },
+    {
+      "item": "Check Point appliance flaw, KEV 13 Nov",
+      "why": "CVE-2026-123039 appears under Check Point Gaia in one report and under Cisco BroadWorks in another."
+    },
+    {
+      "item": "UnrealIRCd, KEV 13 Nov",
+      "why": "CVE-2026-114713 reported added to KEV. No detail found."
+    },
+    {
+      "item": "Binance attackers abusing an internal AI tool",
+      "why": "From an ITPro headline. No technical description found."
+    },
+    {
+      "item": "PHP2Shell plus Fragnesia on 25 servers",
+      "why": "Dream's count. A November tracker says no confirmed victim has been named."
+    },
+    {
+      "item": "DreamHost, WS Audiology, WorkOS breaches; APT29 zero-click attacks",
+      "why": "Listed in one weekly newsletter. Not checked."
+    }
+  ],
   "other": [
     {
       "label": "Operation Endgame, 12 Nov",

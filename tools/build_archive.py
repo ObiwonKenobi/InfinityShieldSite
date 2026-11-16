@@ -87,7 +87,7 @@ def render_top(items):
             f'      <div class="item-head"><h3>{esc(it["title"])}</h3>'
             f'<span class="sev {sev_class(it.get("sev"))}">{esc(it["status"])}</span></div>'
         )
-        out.append(f'      <p>{esc(it["body"])}</p>')
+        out.append(f'      <p class="body">{esc(it["body"])}</p>')
         facts = it.get("facts") or []
         if facts:
             out.append('      <dl class="facts">')
@@ -112,9 +112,9 @@ def render_vulns(rows):
     for r in rows:
         note = f'<br>{esc(r["note"])}' if r.get("note") else ""
         out.append(
-            f'        <tr><td>{esc(r["product"])}</td><td class="mono">{esc(r["cve"])}</td>'
-            f'<td>{esc(r["allows"])}</td>'
-            f'<td><span class="sev {sev_class(r.get("sev"))}">{esc(r["status"])}</span>{note}</td></tr>'
+            f'        <tr><td data-label="Product">{esc(r["product"])}</td><td class="mono" data-label="CVE">{esc(r["cve"])}</td>'
+            f'<td data-label="What it allows">{esc(r["allows"])}</td>'
+            f'<td data-label="Status"><span class="sev {sev_class(r.get("sev"))}">{esc(r["status"])}</span>{note}</td></tr>'
         )
     out += ['      </tbody>', '    </table></div>', '  </section>']
     return "\n".join(out)
@@ -145,6 +145,20 @@ def render_outages(rows):
     return "\n".join(out)
 
 
+def render_unverified(rows):
+    """Claims that rest on one source, are disputed, or were not checked: one short line each."""
+    out = [
+        '  <section aria-labelledby="unverified">',
+        '    <h2 id="unverified">Unverified claims</h2>',
+        '    <p>Reported by one source, disputed, or not checked. Treat these as leads, not findings.</p>',
+        '    <ul class="unv">',
+    ]
+    for r in rows:
+        out.append(f'      <li><b>{esc(r["item"])}</b><span>{esc(r["why"])}</span></li>')
+    out += ['    </ul>', '  </section>']
+    return "\n".join(out)
+
+
 def render_breaches(rows, unverified):
     out = [
         '  <section aria-labelledby="breaches">',
@@ -155,10 +169,10 @@ def render_breaches(rows, unverified):
     ]
     for r in rows:
         out.append(
-            f'        <tr><td>{esc(r["org"])}</td><td>{esc(r["scale"])}</td><td>{esc(r["cause"])}</td></tr>'
+            f'        <tr><td data-label="Organization">{esc(r["org"])}</td><td data-label="People / records">{esc(r["scale"])}</td><td data-label="Cause and data">{esc(r["cause"])}</td></tr>'
         )
     out += ['      </tbody>', '    </table></div>']
-    if unverified:
+    if unverified and isinstance(unverified, str):   # monthly archive files still use one string
         out.append(f'    <p class="label">Unverified claims: {esc(unverified)}</p>')
     out.append('  </section>')
     return "\n".join(out)

@@ -121,7 +121,7 @@ intrusion section the next week. Downdetector counts are user reports and are la
   ],
   "supply":   [{"label": "Package or service, date", "text": "One paragraph."}],
   "breaches": [{"org": "Organization", "scale": "4.2M records", "records": 4200000, "cause": "How, when, what data."}],
-  "unverified": "Claims only weak sources report, or an empty string.",
+  "unverified": [{"item": "Short name of the claim", "why": "One line, 30 words at most, on why it is unverified"}],
   "other":    [{"label": "Event, date", "text": "One paragraph."}],
   "outages":  [{"label": "Service, dates", "basis": "Reported cause in one line", "text": "One paragraph."}],
   "todo":     ["Imperative sentence.", "Another."],

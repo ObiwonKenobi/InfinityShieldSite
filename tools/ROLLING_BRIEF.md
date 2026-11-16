@@ -80,9 +80,8 @@ once at the end, or on both dates when the window spans a year boundary:
    Then run `python3 tools/build_brief.py --since /tmp/previous-brief.json`. It compares the new
    brief with last week's, writes a `changes` block and an `added` date on each item into
    `brief/data/current.json`, then writes `brief/index.html` and updates `index.html`. Read the
-   printed counts. Edit the `changes` block by hand only to improve wording: replace "Left the
-   brief" with the real reason (aged out, merged into another item, superseded) and tighten any
-   "text revised" into what actually changed. Later builds in the same run use no flag. If you
+   printed counts. Edit the `changes` block by hand only to improve wording: tighten any
+   "text revised" into what actually changed. Dropped items are not tracked or shown. Later builds in the same run use no flag. If you
    skip `--since`, `--check` fails because the old `changes` block is from an earlier run.
 7. Confirm the only changed files are `brief/data/current.json`,
    `brief/index.html`, and `index.html`. Confirm `grep -c "—" brief/ index.html`

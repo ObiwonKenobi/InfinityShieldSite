@@ -409,7 +409,7 @@ def main():
         d["changes"] = changes.compute(prev, d, window[0])
         DATA.write_text(json.dumps(d, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         ch = d["changes"]
-        print(f'changes since {ch["since"]}: {len(ch["added"])} added, {len(ch["updated"])} updated, {len(ch["dropped"])} dropped')
+        print(f'changes since {ch["since"]}: {len(ch["added"])} added, {len(ch["updated"])} updated')
     if "--no-fetch" not in sys.argv:
         kev.refresh()
     snap = kev.load()

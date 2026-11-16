@@ -51,15 +51,6 @@ def _shorten(v, n=48):
     return v if len(v) <= n else v[: n - 1] + "…"
 
 
-def _name_date(name, window_start):
-    """Latest day named in an item's label, as ISO, for items that predate the `when` field."""
-    days = []
-    for d, m in re.findall(r"(\d{1,2}) (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\b", name):
-        y = window_start.year - (1 if MONTHS.index(m) + 1 > window_start.month + 6 else 0)
-        days.append(dt.date(y, MONTHS.index(m) + 1, int(d)).isoformat())
-    return max(days) if days else None
-
-
 def _what(prev, cur):
     bits = []
     for k in cur:
@@ -82,7 +73,7 @@ def _what(prev, cur):
 def compute(prev, cur, window_start):
     """Return the changes block and set `added` on every current item."""
     since_iso = iso(prev["issued"])
-    block = {"since": prev["issued"], "run": cur["issued"], "added": [], "updated": [], "dropped": []}
+    block = {"since": prev["issued"], "run": cur["issued"], "added": [], "updated": []}
     for cat, name, _sid, field in CATS:
         old = {key_of(cat, it, field): it for it in prev.get(cat, [])}
         seen = set()
@@ -97,11 +88,6 @@ def compute(prev, cur, window_start):
             else:
                 it["added"] = iso(cur["issued"])
                 block["added"].append({"cat": cat, "name": label_of(cat, it, field)})
-        for k, it in old.items():
-            if k not in seen:
-                when = it.get("to") or it.get("when") or _name_date(label_of(cat, it, field), window_start)
-                reason = "Older than the window" if when and when < window_start.isoformat() else "Left the brief"
-                block["dropped"].append({"cat": cat, "name": label_of(cat, it, field), "why": reason})
     return block
 
 
@@ -111,12 +97,11 @@ def render(d):
         return ""
     names = {c: n for c, n, _s, _f in CATS}
     sids = {c: s for c, _n, s, _f in CATS}
-    a, u, x = ch.get("added", []), ch.get("updated", []), ch.get("dropped", [])
+    a, u = ch.get("added", []), ch.get("updated", [])
     out = [
         '  <section aria-labelledby="new">',
         '    <h2 id="new">New this week</h2>',
-        f'    <p>Changes since the brief issued {esc(ch["since"])}: <strong>{len(a)} added</strong>, <strong>{len(u)} updated</strong>, <strong>{len(x)} dropped</strong>. '
-        'Dropped items usually aged out of the 30 day window; the earlier versions stay in the archive.</p>',
+        f'    <p>Changes since the brief issued {esc(ch["since"])}: <strong>{len(a)} added</strong>, <strong>{len(u)} updated</strong>.</p>',
     ]
     def group(title, rows, fmt):
         if not rows:
@@ -128,6 +113,5 @@ def render(d):
         out.append('    </ul>')
     group("Added", a, lambda r: f'<li><a href="#{sids[r["cat"]]}">{esc(r["name"])}</a> <span class="basis">{esc(names[r["cat"]])}</span></li>')
     group("Updated", u, lambda r: f'<li><a href="#{sids[r["cat"]]}">{esc(r["name"])}</a> <span class="basis">{esc(r["what"])}</span></li>')
-    group("Dropped", x, lambda r: f'<li>{esc(r["name"])} <span class="basis">{esc(names[r["cat"]])}: {esc(r["why"])}</span></li>')
     out.append('  </section>')
     return "\n".join(out)

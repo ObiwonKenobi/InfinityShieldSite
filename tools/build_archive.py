@@ -128,6 +128,23 @@ def render_list(section_id, heading, rows):
     return "\n".join(out)
 
 
+def render_outages(rows):
+    """Availability events with no confirmed attack, kept apart from the intrusion sections."""
+    out = [
+        '  <section aria-labelledby="outages">',
+        '    <h2 id="outages">Outages and failures: no attack confirmed</h2>',
+        '    <p>Availability events where the reported cause is operational, or where no cause has been published. These are the operators\' own accounts. '
+        'Where an attack is only claimed, the entry says so; confirmed intrusions are in the sections above.</p>',
+        '    <ul class="list">',
+    ]
+    for r in rows:
+        out.append(
+            f'      <li><span class="label">{esc(r["label"])}</span><div class="outage-body"><p class="basis">{esc(r["basis"])}</p><p>{esc(r["text"])}</p></div></li>'
+        )
+    out += ['    </ul>', '  </section>']
+    return "\n".join(out)
+
+
 def render_breaches(rows, unverified):
     out = [
         '  <section aria-labelledby="breaches">',

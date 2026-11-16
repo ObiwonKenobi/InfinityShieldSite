@@ -22,7 +22,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from build_archive import (  # noqa: E402
-    ROOT, esc, head, nav, render_top, render_vulns, render_list,
+    ROOT, esc, head, nav, render_top, render_vulns, render_list, render_outages,
     render_breaches, render_todo, render_sources,
 )
 import charts  # noqa: E402
@@ -33,7 +33,7 @@ OUT = ROOT / "brief" / "index.html"
 HOME = ROOT / "index.html"
 
 REQUIRED = ["period", "issued", "lede", "top", "vulns", "supply", "breaches", "other", "todo", "sources"]
-LIMITS = {"top": (3, 3), "vulns": (6, 14), "supply": (1, 6), "breaches": (6, 15), "other": (1, 6), "todo": (5, 10), "sources": (10, 40)}
+LIMITS = {"top": (3, 3), "vulns": (6, 14), "supply": (1, 6), "breaches": (6, 15), "other": (1, 6), "outages": (0, 6), "todo": (5, 10), "sources": (10, 40)}
 SEV = {"crit", "high", "med"}
 EM_DASH = "—"
 CVE_RE = r"CVE-\d{4}-\d{4,7}"
@@ -86,6 +86,10 @@ def validate(d):
             problems.append(f"breaches[{i}] missing records (integer, or null when no count was disclosed)")
         elif r["records"] is not None and (not isinstance(r["records"], int) or r["records"] < 0):
             problems.append(f"breaches[{i}] records must be a non-negative integer or null")
+    for i, r in enumerate(d.get("outages", [])):
+        for k in ("label", "basis", "text"):
+            if not r.get(k):
+                problems.append(f"outages[{i}] missing {k}")
     for i, s in enumerate(d.get("sources", [])):
         if not s.get("title") or not str(s.get("url", "")).startswith("https://"):
             problems.append(f"sources[{i}] needs a title and an https URL")
@@ -203,6 +207,7 @@ def build_page(d, s, window):
         render_list("supply", "Supply chain", d["supply"]),
         render_breaches(d["breaches"], d.get("unverified", "")),
         render_list("other", "Law enforcement and research", d["other"]),
+        *([render_outages(d["outages"])] if d.get("outages") else []),
         render_todo(d["todo"], "What to do this week"),
         render_sources(d["sources"]),
     ]

@@ -1,7 +1,7 @@
 {
   "period": "17 Oct – 15 Nov 2026",
   "issued": "16 Nov 2026",
-  "lede": "Thirty days that opened with the largest cryptocurrency theft on record, about US$6.3 billion taken from Binance on 29 Oct, of which the Justice Department said on 14 Nov it had court authorization to seize more than US$1.2 billion. Around it ran a GitHub credential-stealing campaign across thousands of accounts, FBI and CrowdStrike warnings that AI agents are running parts of live intrusions, an exploited Outlook zero-day on November Patch Tuesday, and in the last week three large outages at Microsoft, the FAA, and Workday.",
+  "lede": "Thirty days that opened with the largest cryptocurrency theft on record, about US$6.3 billion taken from Binance on 29 Oct, of which the Justice Department said on 14 Nov it had court authorization to seize more than US$1.2 billion. Around it ran a GitHub credential-stealing campaign across thousands of accounts, FBI and CrowdStrike warnings that AI agents are running parts of live intrusions, and an exploited Outlook zero-day on November Patch Tuesday.",
   "top": [
     {
       "title": "Binance: record US$6.3 billion theft traced to a fake job task and tampered download, US moves to seize US$1.2 billion",
@@ -277,15 +277,11 @@
       "records": null
     }
   ],
-  "unverified": "JAMIS Prime outage (late October; still no JAMIS statement or press coverage found as of 16 Nov, so cause, timeline, and scope rest on one post by Corporate Results, Inc., a firm that sells recovery and ERP migration services); PwC (Everest claims about 590 GB, posted 22 Oct, while PwC confirms only an incident at a third-party platform that hosts employee learning records); Maileva, a La Poste subsidiary (Security Affairs reports names and postal addresses of about 22 million people, seen in one outlet); Iris Ohyama (a headline reports 7.7 million customers, seen without detail); Sogo Hong Kong (about 820,000 members per a regulator estimate listed in one vendor roundup); Vanderbilt University (the BYOD group claims over one million Social Security numbers, and Vanderbilt had not confirmed it); Blizzard and Battle.net outages on 9 and 12 Nov (a DDoS is claimed for 12 Nov by one gaming site, and no Blizzard confirmation was found); a 911 service disruption on 13 Nov (about 300 Downdetector reports, New York most affected, no cause found); a Claude disruption on 13 Nov (about 2,900 Downdetector reports per one aggregator, no cause found); two CISA KEV additions on 13 Nov, UnrealIRCd (CVE-2026-114713) and a Check Point appliance flaw whose ID (CVE-2026-123039) appears under Check Point Gaia in one report and under Cisco BroadWorks in another, so it is unresolved; ITPro's headline that the Binance attackers abused a flaw in an internal AI tool, with no technical description found; the count of 25 servers compromised through PHP2Shell and Fragnesia, which a November tracker contradicts; a weekly newsletter's list of breaches at DreamHost, WS Audiology, and WorkOS and of APT29 zero-click mobile attacks, none of which was checked.",
+  "unverified": "JAMIS Prime outage (late October; still no JAMIS statement or press coverage found as of 16 Nov, so cause, timeline, and scope rest on one post by Corporate Results, Inc., a firm that sells recovery and ERP migration services); PwC (Everest claims about 590 GB, posted 22 Oct, while PwC confirms only an incident at a third-party platform that hosts employee learning records); Maileva, a La Poste subsidiary (Security Affairs reports names and postal addresses of about 22 million people, seen in one outlet); Iris Ohyama (a headline reports 7.7 million customers, seen without detail); Sogo Hong Kong (about 820,000 members per a regulator estimate listed in one vendor roundup); Vanderbilt University (the BYOD group claims over one million Social Security numbers, and Vanderbilt had not confirmed it); two CISA KEV additions on 13 Nov, UnrealIRCd (CVE-2026-114713) and a Check Point appliance flaw whose ID (CVE-2026-123039) appears under Check Point Gaia in one report and under Cisco BroadWorks in another, so it is unresolved; ITPro's headline that the Binance attackers abused a flaw in an internal AI tool, with no technical description found; the count of 25 servers compromised through PHP2Shell and Fragnesia, which a November tracker contradicts; a weekly newsletter's list of breaches at DreamHost, WS Audiology, and WorkOS and of APT29 zero-click mobile attacks, none of which was checked.",
   "other": [
     {
       "label": "Operation Endgame, 12 Nov",
       "text": "Police in nine countries took down infrastructure behind the Gootloader, CastleRAT, and StealC malware families, which feed ransomware and credential theft. Europol reports 235 servers and 257 domains seized and credentials belonging to 6.4 million victims identified. The Justice Department says it removed Gootloader malware from more than 100 servers and links the tool to US$28.8 million in ransomware losses. One source reports no arrests had been announced as of 15 Nov, and the Justice Department named no defendant."
-    },
-    {
-      "label": "Large outages, 12 to 14 Nov",
-      "text": "Microsoft: from about 1 p.m. ET on 12 Nov, Outlook, Teams, Copilot, OneDrive, and Azure were disrupted across 74 countries, with Downdetector logging nearly 130,000 Outlook reports. Microsoft said it did not believe it was hacked, reported sustained recovery by midday on 13 Nov, and had published no root cause in the reporting reviewed. FAA: a nationwide ground stop on 13 Nov lasted more than four hours. Transportation Secretary Duffy attributed it to overloaded switches and routers in an old system and said new technology overloaded older parts, which some controllers dispute; cancellation counts differ by source, from about 9,200 on Friday per FlightAware figures cited by IANS to more than 6,150 by Saturday evening in other counts. Workday: from 13 Nov into 14 Nov customers could not log in, clock in, or see pay and benefits. Workday said the disruption began after a problem found while testing its backup systems, and reports differ on when service returned. None of the three has been tied to an attack."
     },
     {
       "label": "AI agents in live intrusions, earlier reports in the window (20 to 30 Oct)",
@@ -476,6 +472,33 @@
     {
       "title": "The Record: FBI seizes Virtualine",
       "url": "https://therecord.media/fbi-seizure-csam-virtualine"
+    }
+  ],
+  "outages": [
+    {
+      "label": "Microsoft 365, Outlook, Teams, Copilot, OneDrive, and Azure, 12 to 13 Nov",
+      "basis": "Cause not published. Microsoft says it does not believe it was hacked.",
+      "text": "From about 1 p.m. ET on 12 Nov, services were disrupted across 74 countries, and Downdetector logged nearly 130,000 Outlook reports. Microsoft reported sustained recovery by midday on 13 Nov, with email queues near normal. No root cause had been published in the reporting reviewed; the incident ID and post-incident report on Microsoft's service health pages are where the cause will appear."
+    },
+    {
+      "label": "FAA nationwide ground stop, 13 Nov",
+      "basis": "Cause as given by the Transportation Secretary: overloaded network equipment. Some controllers dispute it.",
+      "text": "The stop lasted more than four hours. Secretary Duffy said switches and routers became overloaded with data and went down in an old system, that new technology overloaded older parts, and that it was not a total loss of radar or communications. Cancellation counts differ by source, from about 9,200 on Friday per FlightAware figures cited by IANS to more than 6,150 by Saturday evening in other counts, with disruption continuing into Sunday. This is the administration's account, not an independent finding."
+    },
+    {
+      "label": "Workday, 13 to 14 Nov",
+      "basis": "Cause as given by Workday: a problem found while testing its backup systems.",
+      "text": "Customers could not log in, clock in or out, or see pay, time off, and benefits. Workday described the impact only as \"some of our customers\", and reports differ on when service returned, with one putting it at about 11 a.m. on Saturday. The backup-test cause is Workday's own account as relayed by a few outlets, and this refresh found no independent confirmation."
+    },
+    {
+      "label": "Blizzard and Battle.net, 9 and 12 Nov",
+      "basis": "Attack claimed by one site, not confirmed. Treat the cause as unknown.",
+      "text": "World of Warcraft: Forever servers went offline on 9 Nov for emergency maintenance after an unexpected outage, and the report on that says Blizzard has not confirmed a DDoS. One gaming site reports login problems on 12 Nov with a second wave of disconnections in the Americas that afternoon, and attributes them to a DDoS it says Blizzard confirmed. This refresh found no Blizzard statement saying so, and live status sites disagreed on whether Battle.net was up."
+    },
+    {
+      "label": "Smaller disruptions, 9 to 13 Nov",
+      "basis": "No cause published for any of them.",
+      "text": "A 911 service disruption on the early morning of 13 Nov peaked at about 300 Downdetector reports, New York most affected, and Cybernews reported cyberattack and blackout fears but no source supported either; one county said its own 911 center was unaffected. A Claude disruption on 13 Nov reached about 2,900 Downdetector reports per one aggregator, and a separate 14-minute degraded incident on 8 Nov appears on a status tracker. Microsoft's own status record shows about 4.5 hours of Outlook on the web errors for some users in Europe, the Middle East, and Africa on 9 Nov, classed minor. Downdetector counts are user reports and understate or overstate real impact."
     }
   ]
 }

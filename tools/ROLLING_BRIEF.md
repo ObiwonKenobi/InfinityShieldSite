@@ -73,6 +73,16 @@ once at the end, or on both dates when the window spans a year boundary:
    changed, everything in `unverified`, and any weak spots or single-source
    claims, plus the commit hash.
 
+## Outages versus attacks
+
+Availability events go in `outages`, never in `other`, `supply`, or `breaches`, unless an
+attack is confirmed. Confirmed means the operator, a government agency, or a named security
+firm says it was an attack. An attack claimed only by a hacktivist group, a gaming site, or
+a single aggregator stays in `outages` with `basis` saying "attack claimed, not confirmed".
+`basis` is one line giving the cause as the operator or agency reports it, or "cause not
+published". If a cause is later confirmed as an attack, move the entry to the right
+intrusion section the next week. Downdetector counts are user reports and are labelled so.
+
 ## Rules
 
 - Never invent a CVE number, a record count, a date, a victim name, or a URL.
@@ -113,14 +123,15 @@ once at the end, or on both dates when the window spans a year boundary:
   "breaches": [{"org": "Organization", "scale": "4.2M records", "records": 4200000, "cause": "How, when, what data."}],
   "unverified": "Claims only weak sources report, or an empty string.",
   "other":    [{"label": "Event, date", "text": "One paragraph."}],
+  "outages":  [{"label": "Service, dates", "basis": "Reported cause in one line", "text": "One paragraph."}],
   "todo":     ["Imperative sentence.", "Another."],
   "sources":  [{"title": "Publisher: headline", "url": "https://..."}]
 }
 ```
 
 Limits enforced by `build_brief.py --check`: `top` exactly 3; `vulns` 6 to 14;
-`supply` 1 to 6; `breaches` 6 to 15; `other` 1 to 6; `todo` 5 to 10; `sources`
-10 to 40. `facts` and `note` are optional. `sev` must be `crit`, `high`, or
+`supply` 1 to 6; `breaches` 6 to 15; `other` 1 to 6; `outages` 0 to 6; `todo` 5 to 10;
+`sources` 10 to 40. `facts` and `note` are optional. `sev` must be `crit`, `high`, or
 `med`.
 
 `records` is required on every breach: the number of people or records

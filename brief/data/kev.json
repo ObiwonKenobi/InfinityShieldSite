@@ -1,55 +1,10 @@
 {
- "catalogVersion": "2026.10.30",
- "dateReleased": "2026-10-30T17:02:45.3665Z",
- "totalCount": 1766,
- "fetched": "2026-11-02",
+ "catalogVersion": "2026.11.13",
+ "dateReleased": "2026-11-13T20:24:18.3008Z",
+ "totalCount": 1781,
+ "fetched": "2026-11-16",
  "keepDays": 180,
  "entries": [
-  {
-   "cveID": "CVE-2026-0300",
-   "vendorProject": "Palo Alto Networks",
-   "product": "PAN-OS",
-   "vulnerabilityName": "Palo Alto Networks PAN-OS Out-of-bounds Write Vulnerability",
-   "dateAdded": "2026-05-06",
-   "dueDate": "2026-05-09",
-   "knownRansomwareCampaignUse": "Unknown"
-  },
-  {
-   "cveID": "CVE-2026-6973",
-   "vendorProject": "Ivanti",
-   "product": "Endpoint Manager Mobile (EPMM)",
-   "vulnerabilityName": "Ivanti Endpoint Manager Mobile (EPMM) Improper Input Validation Vulnerability",
-   "dateAdded": "2026-05-07",
-   "dueDate": "2026-05-10",
-   "knownRansomwareCampaignUse": "Unknown"
-  },
-  {
-   "cveID": "CVE-2026-42208",
-   "vendorProject": "BerriAI",
-   "product": "LiteLLM",
-   "vulnerabilityName": "BerriAI LiteLLM SQL Injection Vulnerability",
-   "dateAdded": "2026-05-08",
-   "dueDate": "2026-05-11",
-   "knownRansomwareCampaignUse": "Unknown"
-  },
-  {
-   "cveID": "CVE-2026-20182",
-   "vendorProject": "Cisco",
-   "product": "Catalyst SD-WAN",
-   "vulnerabilityName": "Cisco Catalyst SD-WAN Controller Authentication Bypass Vulnerability",
-   "dateAdded": "2026-05-14",
-   "dueDate": "2026-05-17",
-   "knownRansomwareCampaignUse": "Unknown"
-  },
-  {
-   "cveID": "CVE-2026-42897",
-   "vendorProject": "Microsoft",
-   "product": "Microsoft",
-   "vulnerabilityName": "Microsoft Exchange Server Cross-Site Scripting Vulnerability",
-   "dateAdded": "2026-05-15",
-   "dueDate": "2026-05-29",
-   "knownRansomwareCampaignUse": "Unknown"
-  },
   {
    "cveID": "CVE-2008-4250",
    "vendorProject": "Microsoft",
@@ -287,7 +242,7 @@
   {
    "cveID": "CVE-2026-35273",
    "vendorProject": "Oracle",
-   "product": " PeopleSoft Enterprise PeopleTools",
+   "product": "PeopleSoft Enterprise PeopleTools",
    "vulnerabilityName": "Oracle PeopleSoft Enterprise PeopleTools Missing Authentication for Critical Function Vulnerability",
    "dateAdded": "2026-06-12",
    "dueDate": "2026-06-15",
@@ -314,7 +269,7 @@
   {
    "cveID": "CVE-2026-48907",
    "vendorProject": "Widget Factory",
-   "product": "Joomla Content Editor ",
+   "product": "Joomla Content Editor",
    "vulnerabilityName": "Widget Factory Joomla Content Editor Improper Access Control Vulnerability",
    "dateAdded": "2026-06-16",
    "dueDate": "2026-06-19",
@@ -486,7 +441,7 @@
    "cveID": "CVE-2026-56155",
    "vendorProject": "Microsoft",
    "product": "Active Directory Federation Services",
-   "vulnerabilityName": "Microsoft Active Directory Federation Services Insufficient Granularity of Access Control Vulnerability ",
+   "vulnerabilityName": "Microsoft Active Directory Federation Services Insufficient Granularity of Access Control Vulnerability",
    "dateAdded": "2026-07-14",
    "dueDate": "2026-07-28",
    "knownRansomwareCampaignUse": "Unknown"
@@ -594,7 +549,7 @@
    "cveID": "CVE-2026-50522",
    "vendorProject": "Microsoft",
    "product": "SharePoint",
-   "vulnerabilityName": "Microsoft SharePoint Deserialization of Untrusted Data Vulnerability ",
+   "vulnerabilityName": "Microsoft SharePoint Deserialization of Untrusted Data Vulnerability",
    "dateAdded": "2026-07-22",
    "dueDate": "2026-07-25",
    "knownRansomwareCampaignUse": "Unknown"
@@ -683,7 +638,7 @@
   {
    "cveID": "CVE-2026-20349",
    "vendorProject": "Cisco",
-   "product": "Secure Firewall Adaptive Security Appliance (ASA) and Secure Firewall Threat Defense (FTD) ",
+   "product": "Secure Firewall Adaptive Security Appliance (ASA) and Secure Firewall Threat Defense (FTD)",
    "vulnerabilityName": "Cisco Secure Firewall Adaptive Security Appliance (ASA) and Secure Firewall Threat Defense (FTD) Heap Inspection Vulnerability",
    "dateAdded": "2026-08-11",
    "dueDate": "2026-08-14",
@@ -692,7 +647,7 @@
   {
    "cveID": "CVE-2026-68820",
    "vendorProject": "Microsoft",
-   "product": "Windows Ancillary Function Driver for WinSock ",
+   "product": "Windows Ancillary Function Driver for WinSock",
    "vulnerabilityName": "Microsoft Windows Ancillary Function Driver for WinSock Use-After-Free Vulnerability",
    "dateAdded": "2026-08-11",
    "dueDate": "2026-08-25",
@@ -1215,7 +1170,7 @@
    "cveID": "CVE-2026-5430",
    "vendorProject": "WSO2",
    "product": "Multiple Products",
-   "vulnerabilityName": "WSO2 Multiple Products Path Traversal Vulnerability ",
+   "vulnerabilityName": "WSO2 Multiple Products Path Traversal Vulnerability",
    "dateAdded": "2026-09-24",
    "dueDate": "2026-09-27",
    "knownRansomwareCampaignUse": "Unknown"
@@ -1223,8 +1178,8 @@
   {
    "cveID": "CVE-2026-71362",
    "vendorProject": "Adobe",
-   "product": "Commerce and Magento ",
-   "vulnerabilityName": "Adobe Commerce and Magento Incorrect Authorization Vulnerability ",
+   "product": "Commerce and Magento",
+   "vulnerabilityName": "Adobe Commerce and Magento Incorrect Authorization Vulnerability",
    "dateAdded": "2026-09-24",
    "dueDate": "2026-09-27",
    "knownRansomwareCampaignUse": "Unknown"
@@ -1341,7 +1296,7 @@
    "cveID": "CVE-2015-5477",
    "vendorProject": "ISC",
    "product": "BIND",
-   "vulnerabilityName": " ISC BIND Data Processing Errors Vulnerability",
+   "vulnerabilityName": "ISC BIND Data Processing Errors Vulnerability",
    "dateAdded": "2026-10-08",
    "dueDate": "2026-10-11",
    "knownRansomwareCampaignUse": "Unknown"
@@ -1614,6 +1569,141 @@
    "vulnerabilityName": "Ivanti Connect Secure Generation of Predictable Numbers or Identifiers Vulnerability",
    "dateAdded": "2026-10-30",
    "dueDate": "2026-11-13",
+   "knownRansomwareCampaignUse": "Unknown"
+  },
+  {
+   "cveID": "CVE-2026-119977",
+   "vendorProject": "WordPress",
+   "product": "WordPress Core",
+   "vulnerabilityName": "WordPress WordPress Core Time-of-check Time-of-use (TOCTOU) Race Condition Vulnerability",
+   "dateAdded": "2026-11-03",
+   "dueDate": "2026-11-06",
+   "knownRansomwareCampaignUse": "Unknown"
+  },
+  {
+   "cveID": "CVE-2024-27834",
+   "vendorProject": "Apple",
+   "product": "Multiple Products",
+   "vulnerabilityName": "Apple Multiple Products Improper Authentication Vulnerability",
+   "dateAdded": "2026-11-04",
+   "dueDate": "2026-11-18",
+   "knownRansomwareCampaignUse": "Unknown"
+  },
+  {
+   "cveID": "CVE-2026-19868",
+   "vendorProject": "SonicWall",
+   "product": "SonicOS SSLVPN",
+   "vulnerabilityName": "SonicWall SonicOS SSLVPN Use of Single-factor Authentication Vulnerability",
+   "dateAdded": "2026-11-06",
+   "dueDate": "2026-11-20",
+   "knownRansomwareCampaignUse": "Unknown"
+  },
+  {
+   "cveID": "CVE-2026-102895",
+   "vendorProject": "GPUStack",
+   "product": "GPUStack",
+   "vulnerabilityName": "GPUStack Improper Authentication Vulnerability",
+   "dateAdded": "2026-11-09",
+   "dueDate": "2026-11-12",
+   "knownRansomwareCampaignUse": "Unknown"
+  },
+  {
+   "cveID": "CVE-2026-116779",
+   "vendorProject": "SignalWire",
+   "product": "FreeSwitch",
+   "vulnerabilityName": "SignalWire FreeSwitch Code Injection Vulnerability",
+   "dateAdded": "2026-11-09",
+   "dueDate": "2026-11-12",
+   "knownRansomwareCampaignUse": "Unknown"
+  },
+  {
+   "cveID": "CVE-2026-123158",
+   "vendorProject": "OpenBSD",
+   "product": "OpenSSH",
+   "vulnerabilityName": "OpenBSD OpenSSH Unexpected Status Code or Return Value Vulnerability",
+   "dateAdded": "2026-11-09",
+   "dueDate": "2026-11-12",
+   "knownRansomwareCampaignUse": "Unknown"
+  },
+  {
+   "cveID": "CVE-2026-123218",
+   "vendorProject": "IBM",
+   "product": "Aspera Faspex",
+   "vulnerabilityName": "IBM Aspera Faspex Incorrect Authorization Vulnerability",
+   "dateAdded": "2026-11-09",
+   "dueDate": "2026-11-12",
+   "knownRansomwareCampaignUse": "Unknown"
+  },
+  {
+   "cveID": "CVE-2026-111560",
+   "vendorProject": "Barracuda Networks",
+   "product": "Multiple Products",
+   "vulnerabilityName": "Barracuda Networks Multiple Products OS Command Injection Vulnerability",
+   "dateAdded": "2026-11-10",
+   "dueDate": "2026-11-13",
+   "knownRansomwareCampaignUse": "Unknown"
+  },
+  {
+   "cveID": "CVE-2026-111793",
+   "vendorProject": "Openwave Messaging Limited",
+   "product": "Webtop Media Transcoder",
+   "vulnerabilityName": "Openwave Messaging Limited Webtop Media Transcoder Incorrect Resource Transfer Between Spheres Vulnerability",
+   "dateAdded": "2026-11-10",
+   "dueDate": "2026-11-24",
+   "knownRansomwareCampaignUse": "Unknown"
+  },
+  {
+   "cveID": "CVE-2026-116606",
+   "vendorProject": "Barracuda Networks",
+   "product": "Barracuda Email Security Gateway (ESG)",
+   "vulnerabilityName": "Barracuda Networks Email Security Gateway (ESG) Authentication Bypass Using an Alternate Path or Channel Vulnerability",
+   "dateAdded": "2026-11-10",
+   "dueDate": "2026-11-13",
+   "knownRansomwareCampaignUse": "Unknown"
+  },
+  {
+   "cveID": "CVE-2026-124194",
+   "vendorProject": "Microsoft",
+   "product": "Office",
+   "vulnerabilityName": "Microsoft Office Outlook Missing User Interaction for Potentially Unsafe Action Vulnerability",
+   "dateAdded": "2026-11-10",
+   "dueDate": "2026-11-24",
+   "knownRansomwareCampaignUse": "Unknown"
+  },
+  {
+   "cveID": "CVE-2026-125350",
+   "vendorProject": "Google",
+   "product": "Chromium",
+   "vulnerabilityName": "Google Chromium Use-After-Free Vulnerability",
+   "dateAdded": "2026-11-10",
+   "dueDate": "2026-11-24",
+   "knownRansomwareCampaignUse": "Unknown"
+  },
+  {
+   "cveID": "CVE-2026-20320",
+   "vendorProject": "Cisco",
+   "product": "BroadWorks",
+   "vulnerabilityName": "Cisco BroadWorks Improper Restriction of XML External Entity Reference Vulnerability",
+   "dateAdded": "2026-11-10",
+   "dueDate": "2026-11-24",
+   "knownRansomwareCampaignUse": "Unknown"
+  },
+  {
+   "cveID": "CVE-2026-114713",
+   "vendorProject": "UnrealIRCd",
+   "product": "UnrealIRCd",
+   "vulnerabilityName": "UnrealIRCd Improper Neutralization of Delimiters Vulnerability",
+   "dateAdded": "2026-11-13",
+   "dueDate": "2026-11-16",
+   "knownRansomwareCampaignUse": "Unknown"
+  },
+  {
+   "cveID": "CVE-2026-123039",
+   "vendorProject": "Check Point",
+   "product": "Multiple Products",
+   "vulnerabilityName": "Check Point Multiple Products Incorrect Permission Assignment for Critical Resource Vulnerability",
+   "dateAdded": "2026-11-13",
+   "dueDate": "2026-11-16",
    "knownRansomwareCampaignUse": "Unknown"
   }
  ]

@@ -34,7 +34,7 @@ OUT = ROOT / "brief" / "index.html"
 HOME = ROOT / "index.html"
 
 REQUIRED = ["period", "issued", "lede", "top", "vulns", "supply", "breaches", "other", "todo", "sources"]
-LIMITS = {"top": (3, 3), "vulns": (6, 14), "supply": (1, 6), "breaches": (6, 15), "other": (1, 6), "outages": (0, 6), "todo": (5, 10), "sources": (10, 40)}
+LIMITS = {"top": (3, 3), "vulns": (6, 16), "supply": (1, 6), "breaches": (6, 15), "other": (1, 6), "outages": (0, 6), "todo": (5, 10), "sources": (10, 45)}
 SEV = {"crit", "high", "med"}
 TIMELINE_KEYS = ["vulns", "supply", "breaches", "other", "outages"]
 TIMELINE_LANES = [

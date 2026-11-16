@@ -1,13 +1,13 @@
 {
   "period": "17 Oct – 15 Nov 2026",
   "issued": "16 Nov 2026",
-  "lede": "Thirty days that opened with the largest cryptocurrency theft on record, about US$6.3 billion taken from Binance on 29 Oct, of which the Justice Department said on 14 Nov it had court authorization to seize more than US$1.2 billion. Around it ran a GitHub credential-stealing campaign across thousands of accounts, FBI and CrowdStrike warnings that AI agents are running parts of live intrusions, and an exploited Outlook zero-day on November Patch Tuesday.",
+  "lede": "Thirty days that opened with the largest cryptocurrency theft on record, about US$6.3 billion taken from Binance on 29 Oct, of which the Justice Department said on 12 Nov it had court authorization to seize more than US$1.2 billion. Around it ran a GitHub credential-stealing campaign across thousands of accounts, FBI and CrowdStrike warnings that AI agents are running parts of live intrusions, and an exploited Outlook zero-day on November Patch Tuesday.",
   "top": [
     {
       "title": "Binance: record US$6.3 billion theft traced to a fake job task and tampered download, US moves to seize US$1.2 billion",
       "sev": "crit",
       "status": "Critical · FBI attribution · seizure order",
-      "body": "On 29 Oct attackers moved about US$6.3 billion out of Binance wallets on ten blockchains in roughly 20 minutes, the largest crypto theft on record (TRM Labs says US$6.36 billion, some outlets US$6.34 billion). The FBI attributed it to North Korea's TraderTraitor unit on 31 Oct, and North Korea denied it on 3 Nov, calling the accusation a \"grave political provocation\". Binance's 3 Nov post-mortem says the intrusion ran for months across three engineers' computers: a tampered Homebrew download in June, which Binance says it removed after the attackers had learned who managed wallets, and a fake job process in September in which an engineer was asked to download a coding task that carried malware, ending at the system that signs transactions. Binance says it replaced about 90 percent of the loss from company funds and reopened withdrawals in phases from 1 Nov. On 14 Nov the Justice Department said it had court authorization to seize or restrain more than US$1.2 billion, part of more than US$2.7 billion frozen by US authorities and partners, according to Korea JoongAng Daily. TRM and Elliptic describe laundering through self-minted memecoins and chained bridges on Tron, NEAR, and Solana, and Chainalysis reports more than US$500 million moved through intermediary wallets on Tron. Elliptic notes the laundering has been slower than after the Bybit theft.",
+      "body": "On 29 Oct attackers moved about US$6.3 billion out of Binance wallets on ten blockchains in roughly 20 minutes, the largest crypto theft on record (TRM Labs says US$6.36 billion, some outlets US$6.34 billion). The FBI attributed it to North Korea's TraderTraitor unit on 31 Oct, and North Korea denied it on 3 Nov, calling the accusation a \"grave political provocation\". Binance's 3 Nov post-mortem says the intrusion ran for months across three engineers' computers: a tampered Homebrew download in June, which Binance says it removed after the attackers had learned who managed wallets, and a fake job process in September in which an engineer was asked to download a coding task that carried malware, ending at the system that signs transactions. Binance says it replaced about 90 percent of the loss from company funds and reopened withdrawals in phases from 1 Nov. On 12 Nov the Justice Department announced court-authorized seizure or restraint of more than US$1.2 billion of the stolen funds, and Korea JoongAng Daily reported that this is part of more than US$2.7 billion frozen by US authorities and partners. TRM and Elliptic describe laundering through self-minted memecoins and chained bridges on Tron, NEAR, and Solana, and Chainalysis reports more than US$500 million moved through intermediary wallets on Tron. Elliptic notes the laundering has been slower than after the Bybit theft.",
       "facts": [
         [
           "Stolen (TRM)",
@@ -19,7 +19,7 @@
         ],
         [
           "US seizure order",
-          "14 Nov · more than US$1.2B"
+          "12 Nov · more than US$1.2B"
         ],
         [
           "Entry, per Binance",
@@ -205,6 +205,15 @@
       "status": "Patched",
       "note": "Fixed in 10.6p2",
       "when": "2026-11-05"
+    },
+    {
+      "product": "Citrix NetScaler ADC and Gateway · 28 memory flaws (12 Nov)",
+      "cve": "CVE-2026-120868",
+      "allows": "Cloud Software Group published bulletins on 12 Nov for 28 memory flaws in customer-managed NetScaler ADC and Gateway. CVE-2026-120868 affects every deployment, including the default configuration, and the vendor describes the impact as unpredictable behaviour and denial of service. CERT-EU titled its advisory critical and says to upgrade internet-facing Gateway and AAA appliances first. Earlier NetScaler flaws were exploited in September and October.",
+      "sev": "high",
+      "status": "Patched",
+      "note": "Citrix reports no exploitation and no confirmed public proof of concept (CERT-EU, 12 Nov)",
+      "when": "2026-11-12"
     }
   ],
   "supply": [
@@ -232,6 +241,11 @@
       "label": "LiteLLM 1.107.0, 21 Oct",
       "text": "A poisoned release went out on PyPI and the official Docker images on 21 Oct. The PyPI wheels were live for under two hours and the Docker tags stayed pointed at the bad image for a few hours more. The release pipeline was altered using stolen GitHub credentials from three developer accounts. It ran a credential stealer at every Python startup, even if LiteLLM was never imported, and installed a loader that fetches and runs code from attacker infrastructure every hour. Anyone who installed it should treat every secret on that host as exposed; the clean version is 1.106.2.",
       "when": "2026-10-21"
+    },
+    {
+      "label": "FaceStealer, North Korean social engineering aimed at open-source maintainers, 12 Nov",
+      "text": "The Justice Department and FBI announced on 12 Nov that they had seized cloud infrastructure behind a scheme the FBI calls FaceStealer, which it says has stolen more than US$400 million in cryptocurrency over the last 18 months. Attackers use accounts stolen from earlier victims to invite targets to video meetings, play recorded or deepfake video of people the target knows, then claim a technical error and offer a link that installs malware. The FBI says the scheme is now also aimed at people who develop and maintain open-source software and the repository accounts they control, which it says appears calculated to enable software supply chain attacks. The FBI seized more than 900 webcam videos of victims and published a report and a resource page at fbi.gov/facestealer. DOJ names Sapphire Sleet, UNC1069, BlueNoroff, and APT38 among the tracked actor names.",
+      "when": "2026-11-12"
     }
   ],
   "breaches": [
@@ -378,6 +392,11 @@
       "label": "eMudhra CA: intermediate keys recoverable, Chrome removes a root (27 Oct)",
       "text": "Eight intermediate CA certificates from the Indian certificate authority eMudhra, six for TLS and two for code signing, were generated with far too little randomness, so each private key was smaller than 256 and could be recovered from the public certificate; recovered keys included 4, 56, and 115. A researcher found it with a CCADB check on 17 Oct. eMudhra revoked the certificates on 18 Oct, Apple blocked them on 19 Oct, and Microsoft followed on 20 Oct, the day Mozilla made the incident public. eMudhra says only one of the eight was deployed and none issued end-entity certificates, and on 22 Oct it said it would exit the global SSL/TLS business, blaming a flawed key-generation ceremony in April 2025. Chrome removed the emSign ECC Root CA G3 from its root store on 27 Oct, so sites still chaining to it show warnings. Neither Chrome nor Mozilla had acted on the G1 RSA roots by 1 Nov, and eMudhra says those will keep serving customers until its transition is complete, with no end date published. Status as of 1 Nov; not rechecked in this refresh.",
       "when": "2026-10-27"
+    },
+    {
+      "label": "Johnson Controls False Claims Act cybersecurity settlement, 13 Nov",
+      "text": "Johnson Controls and two subsidiaries agreed to pay US$5 million to resolve allegations that they violated the False Claims Act by not meeting cybersecurity requirements in federal contracts and subcontracts, covering January 2018 to August 2025 and work for NASA and the Departments of Defense, Energy, and Justice. The Justice Department alleges the company did not control access to protected information, and that on contracts requiring NIST SP 800-171, including Defense Department contracts, it did not maintain a System Security Plan that met the contract terms. For contractors, it is another case of the government treating a shortfall in 800-171 paperwork and controls as a claims-act problem.",
+      "when": "2026-11-13"
     }
   ],
   "todo": [
@@ -552,6 +571,18 @@
     {
       "title": "The Record: FBI seizes Virtualine",
       "url": "https://therecord.media/fbi-seizure-csam-virtualine"
+    },
+    {
+      "title": "Justice Department: Actions to disrupt North Korea's massive theft of cryptocurrency",
+      "url": "https://www.justice.gov/opa/pr/justice-department-announces-actions-disrupt-north-koreas-massive-theft-cryptocurrency"
+    },
+    {
+      "title": "Justice Department: Johnson Controls agrees to pay $5 million to settle cybersecurity fraud allegations",
+      "url": "https://www.justice.gov/opa/pr/hvac-supplier-johnson-controls-inc-and-two-subsidiaries-agree-pay-5-million-settle"
+    },
+    {
+      "title": "CERT-EU: 2026-020 Critical vulnerabilities in Citrix NetScaler ADC and Gateway",
+      "url": "https://cert.europa.eu/publications/security-advisories/2026-020/"
     }
   ],
   "outages": [

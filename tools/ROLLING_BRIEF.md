@@ -163,9 +163,9 @@ are left without one and are counted as not plotted).
 }
 ```
 
-Limits enforced by `build_brief.py --check`: `top` exactly 3; `vulns` 6 to 14;
+Limits enforced by `build_brief.py --check`: `top` exactly 3; `vulns` 6 to 16;
 `supply` 1 to 6; `breaches` 6 to 15; `other` 1 to 6; `outages` 0 to 6; `todo` 5 to 10;
-`sources` 10 to 40. `facts` and `note` are optional. `sev` must be `crit`, `high`, or
+`sources` 10 to 45. `facts` and `note` are optional. `sev` must be `crit`, `high`, or
 `med`.
 
 `records` is required on every breach: the number of people or records

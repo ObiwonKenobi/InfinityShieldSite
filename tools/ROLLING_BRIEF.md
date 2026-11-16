@@ -51,6 +51,22 @@ once at the end, or on both dates when the window spans a year boundary:
    failures. Prefer primary sources: the vendor advisory, CISA, the regulator or
    court filing, the victim's own notice. Reputable security press is fine as a
    second source.
+   Primary-source sweep every week, before the general searches (all hosts are on the
+   environment allowlist; if one is blocked, say so in the summary and carry on):
+   - SEC EDGAR (`www.sec.gov`): 8-K filings in the window under Item 1.05 (material
+     cybersecurity incident) and Item 8.01 where the text describes a cyber incident. Take the
+     filing date, what the company says was affected, and whether it calls the impact material.
+   - Breach notification listings: HHS OCR (`ocrportal.hhs.gov`) and the Maine, California, and
+     Texas attorney general sites (`www.maineattorneygeneral.gov`, `oag.ca.gov`,
+     `www.texasattorneygeneral.gov`). Use them to replace estimates with filed counts; a filed
+     count goes in `records`, and a difference from the press figure goes in the text.
+   - Law enforcement and sanctions: DOJ (`www.justice.gov`) and Treasury (`home.treasury.gov`)
+     press releases, plus FBI IC3 PSAs (`www.ic3.gov`) and CISA advisories (`www.cisa.gov`).
+   - Non-US view: JPCERT/CC (`www.jpcert.or.jp`), NCSC UK (`www.ncsc.gov.uk`), CERT-FR
+     (`www.cert.ssi.gouv.fr`), CCCS (`www.cyber.gc.ca`), ACSC (`www.cyber.gov.au`), and CERT-EU
+     (`cert.europa.eu`). Include an item only if the agency itself or a named victim confirms it.
+   - Note in the final summary which sweep sources produced something new and which were empty
+     or unreachable, so a quiet week is distinguishable from a blocked source.
    Standing checks every week, in addition to the general searches:
    - Federal agencies and the Defense Industrial Base: DHS, DoD, USDA, GSA,
      and FedRAMP-authorized providers, including DDoS claims against federal

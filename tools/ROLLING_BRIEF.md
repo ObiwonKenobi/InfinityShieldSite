@@ -83,6 +83,17 @@ a single aggregator stays in `outages` with `basis` saying "attack claimed, not 
 published". If a cause is later confirmed as an attack, move the entry to the right
 intrusion section the next week. Downdetector counts are user reports and are labelled so.
 
+## Dates for the timeline
+
+Every item in `vulns`, `supply`, `breaches`, `other`, and `outages` carries `when`, an ISO date
+(`2026-11-10`): the day the item became public or was confirmed (KEV addition, vendor fix,
+disclosure or announcement, the day an outage began). Add `to` (also ISO) only for an event that
+ran continuously across days, such as a two day outage; do not use it to bridge separate
+events. The build draws these on the Timeline section as a day by day grid per category, so a
+wrong date puts an item in the wrong cluster. A `when` before the window start is accepted for
+an item that began earlier and is still active; it is drawn on the first day. When carrying an
+item forward, keep its `when` unless the event itself changed. The `top` items are not plotted.
+
 ## Rules
 
 - Never invent a CVE number, a record count, a date, a victim name, or a URL.
@@ -117,13 +128,13 @@ intrusion section the next week. Downdetector counts are user reports and are la
     }
   ],
   "vulns": [
-    {"product": "Vendor Product", "cve": "CVE-2026-00000", "allows": "What an attacker gets", "sev": "crit", "status": "Exploited", "note": "KEV 20 Oct. Fixed in 1.2.3."}
+    {"product": "Vendor Product", "cve": "CVE-2026-00000", "allows": "What an attacker gets", "sev": "crit", "status": "Exploited", "note": "KEV 20 Oct. Fixed in 1.2.3.", "when": "2026-10-20"}
   ],
-  "supply":   [{"label": "Package or service, date", "text": "One paragraph."}],
-  "breaches": [{"org": "Organization", "scale": "4.2M records", "records": 4200000, "cause": "How, when, what data."}],
+  "supply":   [{"label": "Package or service, date", "text": "One paragraph.", "when": "2026-10-20"}],
+  "breaches": [{"org": "Organization", "scale": "4.2M records", "records": 4200000, "cause": "How, when, what data.", "when": "2026-10-20"}],
   "unverified": [{"item": "Short name of the claim", "why": "One line, 30 words at most, on why it is unverified"}],
-  "other":    [{"label": "Event, date", "text": "One paragraph."}],
-  "outages":  [{"label": "Service, dates", "basis": "Reported cause in one line", "text": "One paragraph."}],
+  "other":    [{"label": "Event, date", "text": "One paragraph.", "when": "2026-10-20"}],
+  "outages":  [{"label": "Service, dates", "basis": "Reported cause in one line", "text": "One paragraph.", "when": "2026-11-12", "to": "2026-11-13"}],
   "todo":     ["Imperative sentence.", "Another."],
   "sources":  [{"title": "Publisher: headline", "url": "https://..."}]
 }

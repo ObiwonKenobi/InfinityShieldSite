@@ -35,6 +35,11 @@ HOME = ROOT / "index.html"
 REQUIRED = ["period", "issued", "lede", "top", "vulns", "supply", "breaches", "other", "todo", "sources"]
 LIMITS = {"top": (3, 3), "vulns": (6, 14), "supply": (1, 6), "breaches": (6, 15), "other": (1, 6), "outages": (0, 6), "todo": (5, 10), "sources": (10, 40)}
 SEV = {"crit", "high", "med"}
+TIMELINE_KEYS = ["vulns", "supply", "breaches", "other", "outages"]
+TIMELINE_LANES = [
+    ("vulns", "Vulnerabilities", "product"), ("supply", "Supply chain", "label"), ("breaches", "Breaches", "org"),
+    ("other", "Law enforcement, research", "label"), ("outages", "Outages, no attack", "label"),
+]
 EM_DASH = "—"
 CVE_RE = r"CVE-\d{4}-\d{4,7}"
 MONTHS = {m: i for i, m in enumerate(["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], 1)}
@@ -46,6 +51,13 @@ def parse_period(period):
     end = dt.date(int(m[6]), MONTHS[m[5]], int(m[4]))
     y1 = int(m[3]) if m[3] else (end.year if MONTHS[m[2]] <= MONTHS[m[5]] else end.year - 1)
     return dt.date(y1, MONTHS[m[2]], int(m[1])), end
+
+
+def parse_iso(v):
+    try:
+        return dt.date.fromisoformat(v)
+    except (TypeError, ValueError):
+        return None
 
 
 def parse_day(s):
@@ -90,6 +102,21 @@ def validate(d):
         for k in ("label", "basis", "text"):
             if not r.get(k):
                 problems.append(f"outages[{i}] missing {k}")
+    for cat in TIMELINE_KEYS:
+        for i, r in enumerate(d.get(cat, [])):
+            w = parse_iso(r.get("when"))
+            if not w:
+                problems.append(f"{cat}[{i}] needs when as YYYY-MM-DD (the day it became public or confirmed)")
+                continue
+            t = parse_iso(r["to"]) if r.get("to") else None
+            if r.get("to") and (not t or t < w):
+                problems.append(f"{cat}[{i}] to must be YYYY-MM-DD and not before when")
+            try:
+                end = parse_period(d["period"])[1]
+            except Exception:
+                continue
+            if w > end or (t and t > end):
+                problems.append(f"{cat}[{i}] date is after the end of the window")
     unv = d.get("unverified", "")
     if isinstance(unv, list):
         for i, r in enumerate(unv):
@@ -161,6 +188,81 @@ def render_numbers(d, s):
     ])
 
 
+def render_timeline(d, window):
+    start, end = window
+    days = [start + dt.timedelta(n) for n in range((end - start).days + 1)]
+    lanes, total = [], Counter()
+    for cat, name, field in TIMELINE_LANES:
+        by_day, before = {}, 0
+        for it in d.get(cat, []):
+            w = parse_iso(it.get("when"))
+            if not w:
+                continue
+            last = parse_iso(it.get("to")) or w
+            if w < start:
+                before += 1
+            for n in range((max(w, start) - start).days, (min(last, end) - start).days + 1):
+                by_day.setdefault(days[n], []).append(it[field].split(" · ")[0] if cat == "vulns" else it[field])
+        lanes.append((cat, name, by_day, before))
+        for day, names in by_day.items():
+            total[day] += len(names)
+    rows = []
+    for cat, name, by_day, before in lanes:
+        cells = []
+        for day in days:
+            names = by_day.get(day, [])
+            n = len(names)
+            tip = f"{fmt_day(day)}: {n} " + ("item" if n == 1 else "items") + ": " + "; ".join(names) if n else f"{fmt_day(day)}: none"
+            cells.append(f'<span class="tl-c n{min(n, 3)}" title="{esc(tip).replace(chr(34), "&quot;")}">{n or ""}</span>')
+        count = sum(len(v) for v in by_day.values())
+        rows.append(f'        <div class="tl-row"><div class="tl-name">{esc(name)}</div><div class="tl-cells" style="--n:{len(days)}">{"".join(cells)}</div></div>')
+    axis = "".join(
+        f'<span class="tl-a{" we" if day.weekday() >= 5 else ""}">{day.day}{"<b>" + list(MONTHS)[day.month - 1] + "</b>" if day == start or day.day == 1 else ""}</span>'
+        for day in days
+    )
+    busiest = [(day, n) for day, n in sorted(total.items(), key=lambda kv: (-kv[1], kv[0])) if n >= 3][:4]
+    weeks = Counter()
+    for day, n in total.items():
+        weeks[(day - start).days // 7] += n
+    wk_sorted = sorted(weeks.items(), key=lambda kv: -kv[1])
+    out = [
+        '  <section aria-labelledby="timeline">',
+        '    <h2 id="timeline">Timeline</h2>',
+        '    <p>Every dated item in this brief, by day and category. Darker cells mean more items that day, and a range such as an outage across two days fills each day it covers. Dates are when an item became public or was confirmed, not necessarily when the activity began.</p>',
+        '    <div class="tl" tabindex="0" role="region" aria-label="Timeline chart, scrollable. The same information is listed below the chart.">',
+        '      <div class="tl-grid" aria-hidden="true">',
+        *rows,
+        f'        <div class="tl-row"><div class="tl-name"></div><div class="tl-cells tl-axis" style="--n:{len(days)}">{axis}</div></div>',
+        '      </div>',
+        '    </div>',
+    ]
+    notes = []
+    if busiest:
+        notes.append("Busiest days: " + ", ".join(f"{fmt_day(day)} ({n} items)" for day, n in busiest) + ".")
+    if wk_sorted:
+        w0, n0 = wk_sorted[0]
+        ws = start + dt.timedelta(w0 * 7)
+        notes.append(f"Busiest week: {fmt_day(ws)} to {fmt_day(min(ws + dt.timedelta(6), end))} with {n0} dated items.")
+    pre = sum(b for _, _, _, b in lanes)
+    if pre:
+        notes.append(f"{pre} item{'s' if pre != 1 else ''} began before the window and {'are' if pre != 1 else 'is'} drawn on its first day.")
+    if notes:
+        out.append('    <p class="viz-note">' + " ".join(esc(n) for n in notes) + '</p>')
+    out.append('    <details class="tl-list"><summary>Timeline as a list</summary>')
+    for cat, name, field in TIMELINE_LANES:
+        items = sorted((it for it in d.get(cat, []) if parse_iso(it.get("when"))), key=lambda it: it["when"])
+        if not items:
+            continue
+        out.append(f'      <p class="label">{esc(name)}</p><ul>')
+        for it in items:
+            w = parse_iso(it["when"])
+            rng = fmt_day(w) + (f" to {fmt_day(parse_iso(it['to']))}" if it.get("to") else "")
+            out.append(f'        <li><span class="mono">{esc(rng)}</span> {esc(it[field])}</li>')
+        out.append('      </ul>')
+    out += ['    </details>', '  </section>']
+    return "\n".join(out)
+
+
 def render_kev(k, window):
     start, end = window
     tiles = [
@@ -195,7 +297,7 @@ def render_kev(k, window):
 
 
 TOC_LABELS = {
-    "numbers": "By the numbers", "top": "Top items", "vulns": "Exploited vulnerabilities", "kev": "CISA KEV",
+    "numbers": "By the numbers", "timeline": "Timeline", "top": "Top items", "vulns": "Exploited vulnerabilities", "kev": "CISA KEV",
     "supply": "Supply chain", "breaches": "Data breaches", "other": "Law enforcement, research",
     "outages": "Outages, no attack", "unverified": "Unverified claims", "do": "What to do", "src": "Sources",
 }
@@ -218,6 +320,7 @@ def build_page(d, s, window):
     unv = d.get("unverified", "")
     blocks = [
         render_numbers(d, s),
+        render_timeline(d, window),
         render_top(d["top"]),
         render_vulns(d["vulns"]),
     ]

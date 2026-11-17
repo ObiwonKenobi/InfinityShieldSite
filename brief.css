@@ -226,3 +226,8 @@ td { color: var(--text); }
 .list.newlist li, .wide .list.newlist li, body:has(#mobile-view:target) .list.newlist li { display: block; background: none; border: 0; border-bottom: 1px solid var(--border); padding: 7px 0; }
 .newlist .basis { color: var(--muted); font-size: .84rem; margin-left: 8px; }
 .newlist a { color: var(--text); }
+
+/* Obiwon page: screenshots */
+.shots { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; margin-top: 14px; }
+.shot { margin: 0; background: var(--bg1); border: 1px solid var(--border); }
+.shot img { display: block; width: 100%; height: auto; }

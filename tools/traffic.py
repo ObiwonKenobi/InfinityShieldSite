@@ -56,17 +56,25 @@ def refresh():
         return False
     end = dt.datetime.now(dt.timezone.utc)
     start = end - dt.timedelta(days=DAYS)
+    since = None
+    try:
+        since = dt.datetime.fromisoformat(c["since"]).replace(tzinfo=dt.timezone.utc) if c.get("since") else None
+    except ValueError:
+        pass
+    if since and since > start:  # counting began inside the window: do not claim a full 30 days
+        start = since
     try:
         share = _get(f'{c["host"]}/api/share/{urllib.parse.quote(c["share_id"])}')
         token = share.get("token")
         wid = share.get("websiteId") or c["website_id"]
         q = urllib.parse.urlencode({"startAt": int(start.timestamp() * 1000), "endAt": int(end.timestamp() * 1000), "path": c.get("path", "/brief/")})
-        stats = _get(f'{c["host"]}/api/websites/{urllib.parse.quote(wid)}/stats?{q}', {"x-umami-share-token": token or ""})
+        stats = _get(f'{c["host"]}/api/websites/{urllib.parse.quote(wid)}/stats?{q}', {"x-umami-share-token": token or "", "x-umami-share-context": "1"})
     except Exception as e:  # network policy, timeout, bad JSON, wrong share id: keep the old snapshot
         print(f"traffic: not refreshed ({e.__class__.__name__}: {e}); using snapshot if present", file=sys.stderr)
         return False
     snap = {
         "fetched": end.date().isoformat(), "days": DAYS, "path": c.get("path", "/brief/"),
+        "since": start.date().isoformat() if since and since >= end - dt.timedelta(days=DAYS) else None,
         "visitors": _num(stats.get("visitors")), "visits": _num(stats.get("visits")),
         "pageviews": _num(stats.get("pageviews")), "bounces": _num(stats.get("bounces")),
         "totaltime": _num(stats.get("totaltime")),
@@ -101,4 +109,9 @@ def line(snap):
     t = avg_visit(snap)
     when = dt.date.fromisoformat(snap["fetched"])
     stamp = f'{when.day} {["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][when.month - 1]}'
-    return f'Last {snap["days"]} days to {stamp}: {v:,} visitor{"s" if v != 1 else ""}' + (f", average visit {t}" if t else "")
+    if snap.get("since"):
+        d0 = dt.date.fromisoformat(snap["since"])
+        head = f'Since {d0.day} {["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][d0.month - 1]} (counting began that day)'
+    else:
+        head = f'Last {snap["days"]} days to {stamp}'
+    return f'{head}: {v:,} visitor{"s" if v != 1 else ""}' + (f", average visit {t}" if t and snap["visits"] else "")

@@ -1,91 +1,10 @@
 {
- "catalogVersion": "2026.11.13",
- "dateReleased": "2026-11-13T20:24:18.3008Z",
- "totalCount": 1781,
- "fetched": "2026-11-16",
+ "catalogVersion": "2026.11.17",
+ "dateReleased": "2026-11-17T17:53:15.5664Z",
+ "totalCount": 1782,
+ "fetched": "2026-11-18",
  "keepDays": 180,
  "entries": [
-  {
-   "cveID": "CVE-2008-4250",
-   "vendorProject": "Microsoft",
-   "product": "Windows",
-   "vulnerabilityName": "Microsoft Windows Buffer Overflow Vulnerability",
-   "dateAdded": "2026-05-20",
-   "dueDate": "2026-06-03",
-   "knownRansomwareCampaignUse": "Unknown"
-  },
-  {
-   "cveID": "CVE-2009-1537",
-   "vendorProject": "Microsoft",
-   "product": "DirectX",
-   "vulnerabilityName": "Microsoft DirectX NULL Byte Overwrite Vulnerability",
-   "dateAdded": "2026-05-20",
-   "dueDate": "2026-06-03",
-   "knownRansomwareCampaignUse": "Unknown"
-  },
-  {
-   "cveID": "CVE-2009-3459",
-   "vendorProject": "Adobe",
-   "product": "Acrobat and Reader",
-   "vulnerabilityName": "Adobe Acrobat and Reader Heap-Based Buffer Overflow Vulnerability",
-   "dateAdded": "2026-05-20",
-   "dueDate": "2026-06-03",
-   "knownRansomwareCampaignUse": "Unknown"
-  },
-  {
-   "cveID": "CVE-2010-0249",
-   "vendorProject": "Microsoft",
-   "product": "Internet Explorer",
-   "vulnerabilityName": "Microsoft Internet Explorer Use-After-Free Vulnerability",
-   "dateAdded": "2026-05-20",
-   "dueDate": "2026-06-03",
-   "knownRansomwareCampaignUse": "Unknown"
-  },
-  {
-   "cveID": "CVE-2010-0806",
-   "vendorProject": "Microsoft",
-   "product": "Internet Explorer",
-   "vulnerabilityName": "Microsoft Internet Explorer Use-After-Free Vulnerability",
-   "dateAdded": "2026-05-20",
-   "dueDate": "2026-06-03",
-   "knownRansomwareCampaignUse": "Unknown"
-  },
-  {
-   "cveID": "CVE-2026-41091",
-   "vendorProject": "Microsoft",
-   "product": "Defender",
-   "vulnerabilityName": "Microsoft Defender Link Following Vulnerability",
-   "dateAdded": "2026-05-20",
-   "dueDate": "2026-06-03",
-   "knownRansomwareCampaignUse": "Unknown"
-  },
-  {
-   "cveID": "CVE-2026-45498",
-   "vendorProject": "Microsoft",
-   "product": "Defender",
-   "vulnerabilityName": "Microsoft Defender Denial of Service Vulnerability",
-   "dateAdded": "2026-05-20",
-   "dueDate": "2026-06-03",
-   "knownRansomwareCampaignUse": "Unknown"
-  },
-  {
-   "cveID": "CVE-2025-34291",
-   "vendorProject": "Langflow",
-   "product": "Langflow",
-   "vulnerabilityName": "Langflow Origin Validation Error Vulnerability",
-   "dateAdded": "2026-05-21",
-   "dueDate": "2026-06-04",
-   "knownRansomwareCampaignUse": "Unknown"
-  },
-  {
-   "cveID": "CVE-2026-34926",
-   "vendorProject": "Trend Micro",
-   "product": "Apex One",
-   "vulnerabilityName": "Trend Micro Apex One (On-Premise) Directory Traversal Vulnerability",
-   "dateAdded": "2026-05-21",
-   "dueDate": "2026-06-04",
-   "knownRansomwareCampaignUse": "Unknown"
-  },
   {
    "cveID": "CVE-2026-9082",
    "vendorProject": "Drupal",
@@ -340,7 +259,7 @@
   },
   {
    "cveID": "CVE-2026-48558",
-   "vendorProject": "SimpleHelp ",
+   "vendorProject": "SimpleHelp",
    "product": "SimpleHelp",
    "vulnerabilityName": "SimpleHelp Authentication Bypass Vulnerability",
    "dateAdded": "2026-06-29",
@@ -1704,6 +1623,15 @@
    "vulnerabilityName": "Check Point Multiple Products Incorrect Permission Assignment for Critical Resource Vulnerability",
    "dateAdded": "2026-11-13",
    "dueDate": "2026-11-16",
+   "knownRansomwareCampaignUse": "Unknown"
+  },
+  {
+   "cveID": "CVE-2026-115731",
+   "vendorProject": "Perforce",
+   "product": "Puppet Enterprise",
+   "vulnerabilityName": "Perforce Puppet Enterprise Deserialization of Untrusted Data Vulnerability",
+   "dateAdded": "2026-11-17",
+   "dueDate": "2026-12-01",
    "knownRansomwareCampaignUse": "Unknown"
   }
  ]

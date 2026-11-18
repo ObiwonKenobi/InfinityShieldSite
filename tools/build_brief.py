@@ -29,6 +29,7 @@ from build_archive import (  # noqa: E402
 import charts  # noqa: E402
 from timeline import render_history  # noqa: E402
 import changes  # noqa: E402
+import traffic  # noqa: E402
 import kev  # noqa: E402
 
 DATA = ROOT / "brief" / "data" / "current.json"
@@ -313,11 +314,12 @@ def build_page(d, s, window):
     title = "Current Threat Brief | Infinity Shield"
     description = f'Rolling 30 day cybersecurity brief, {d["period"]}. {d["lede"]}'
     # An empty marker element lets CSS switch to the phone layout (":target" with ":has"), so the toggle needs no script and no second page.
-    top = head(title, description).replace("<body>", '<body>\n<span id="mobile-view"></span>', 1)
+    top = head(title, description, traffic.config()).replace("<body>", '<body>\n<span id="mobile-view"></span>', 1)
     parts = [top, nav("brief"), '<main id="main" class="wrap wide">', '  <header>']
     parts.append(
         '    <div class="marking"><span class="tlp">TLP:CLEAR</span><span>Rolling 30 days</span>'
         f'<span>Period {esc(d["period"])}</span><span>Issued {esc(d["issued"])}</span><span>Refreshed weekly</span>'
+        + (f'<span>{esc(traffic.line(traffic.load()))}</span>' if traffic.load() else "") +
         '<span class="viewtoggle"><a class="vt-m" href="#mobile-view">Mobile view</a><a class="vt-d" href="#desktop-view">Desktop view</a></span></div>'
     )
     parts.append('    <h1>Current <span>Threat Brief</span></h1>')
@@ -356,7 +358,9 @@ def build_page(d, s, window):
         "",
         f'  <footer>Compiled from public reporting as of {esc(d["issued"])}. Figures are as first reported and may be revised. '
         "This brief covers the last 30 days and is refreshed every Monday; the calendar-month record is in the "
-        '<a href="/archive/">archive</a>. · <a href="/">Home</a> · <a href="/about.html">About Infinity Shield</a></footer>',
+        '<a href="/archive/">archive</a>. · <a href="/">Home</a> · <a href="/about.html">About Infinity Shield</a>'
+        + (" · Visits to this page are counted with a self-hosted, cookieless analytics tool that stores no personal data and respects Do Not Track. "
+           "A visit that loads the page once and leaves counts as zero seconds." if traffic.config() else "") + '</footer>',
         "</main>",
         "",
         "</body>",
@@ -412,6 +416,7 @@ def main():
         print(f'changes since {ch["since"]}: {len(ch["added"])} added, {len(ch["updated"])} updated')
     if "--no-fetch" not in sys.argv:
         kev.refresh()
+        traffic.refresh()
     snap = kev.load()
     summary = None
     if snap:

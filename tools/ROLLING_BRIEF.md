@@ -84,7 +84,8 @@ once at the end, or on both dates when the window spans a year boundary:
    "text revised" into what actually changed. Dropped items are not tracked or shown. Later builds in the same run use no flag. If you
    skip `--since`, `--check` fails because the old `changes` block is from an earlier run.
 7. Confirm the only changed files are `brief/data/current.json`,
-   `brief/index.html`, and `index.html`. Confirm `grep -c "—" brief/ index.html`
+   `brief/index.html`, and `index.html` (`brief/data/kev.json` and `brief/data/traffic.json`
+   may also change when their feeds were reachable). Confirm `grep -c "—" brief/ index.html`
    reports zero em dashes.
 8. Commit with the message `Rolling brief: refresh to <period>`, then
    `git fetch origin main && git rebase origin/main && git push origin HEAD:main`.
@@ -191,3 +192,12 @@ and which of this brief's CVEs are in the catalog. If the feed is unreachable
 the previous snapshot and prints a notice; the page then shows the snapshot's
 date. Mention a stale snapshot in your final summary. Never edit
 `kev.json` by hand.
+
+## Visitor count
+
+When `tools/analytics.json` has a host, website ID and share ID, the build adds the analytics
+script to the brief page only and refreshes `brief/data/traffic.json` from the self-hosted
+Umami's public share endpoints, then shows "Last 30 days: N visitors, average visit M:SS" in the
+page header. With those fields empty nothing changes. Never edit `traffic.json` by hand. If the
+host is unreachable the build keeps the previous snapshot; mention a stale or missing snapshot
+in your final summary. The numbers undercount anyone who blocks scripts or sends Do Not Track.

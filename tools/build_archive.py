@@ -62,13 +62,24 @@ def nav(current):
     ])
 
 
-def head(title, description):
+def head(title, description, analytics=None):
+    """analytics is a config dict from traffic.config(), or None. With it, the page allows exactly one
+    extra host for one script and its beacon; without it the policy is the strict default."""
+    script_src = ""
+    connect = ""
+    tag = ""
+    if analytics:
+        host = analytics["host"]
+        script_src = f" script-src {host};"
+        connect = f" connect-src {host};"
+        tag = (f'<script defer src="{host}/script.js" data-website-id="{attr(analytics["website_id"])}" '
+               f'data-domains="{attr(analytics.get("domains", ""))}" data-do-not-track="true" data-host-url="{host}"></script>\n')
     return f"""<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self'; base-uri 'none'; form-action 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none';{script_src}{connect} style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self'; base-uri 'none'; form-action 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="description" content="{attr(description)}">
 <style>*,*::before,*::after{{box-sizing:border-box}}body{{margin:0}}img{{max-width:100%}}</style><title>{esc(title)}</title>
@@ -77,7 +88,7 @@ def head(title, description):
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="/brief.css">
-</head>
+{tag}</head>
 <body>
 """
 

@@ -12,6 +12,7 @@ Usage (from the repo root):
   python3 tools/build_brief.py              build the page and update the home page
   python3 tools/build_brief.py --check      validate brief/data/current.json only
   python3 tools/build_brief.py --no-fetch   build without trying to refresh the KEV feed
+  python3 tools/build_brief.py --traffic-only  refresh only the visitor count, then build
   python3 tools/build_brief.py --since FILE record what changed against last week's current.json (FILE), then build
 """
 import datetime as dt
@@ -414,7 +415,9 @@ def main():
         DATA.write_text(json.dumps(d, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         ch = d["changes"]
         print(f'changes since {ch["since"]}: {len(ch["added"])} added, {len(ch["updated"])} updated')
-    if "--no-fetch" not in sys.argv:
+    if "--traffic-only" in sys.argv:
+        traffic.refresh()
+    elif "--no-fetch" not in sys.argv:
         kev.refresh()
         traffic.refresh()
     snap = kev.load()

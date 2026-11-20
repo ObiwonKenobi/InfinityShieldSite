@@ -21,11 +21,11 @@ jobs:
         run: |
           if [ -z "$(git status --porcelain)" ]; then echo "no change"; exit 0; fi
           # Only the traffic snapshot and the pages it appears on may change here.
-          bad=$(git status --porcelain | awk '{print $2}' | grep -v -e '^brief/data/traffic.json$' -e '^brief/index.html$' -e '^index.html$' || true)
+          bad=$(git status --porcelain | awk '{print $2}' | grep -v -e '^brief/data/traffic.json$' -e '^index.html$' -e '^info/index.html$' || true)
           if [ -n "$bad" ]; then echo "unexpected files changed: $bad"; exit 1; fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add brief/data/traffic.json brief/index.html index.html
+          git add brief/data/traffic.json index.html info/index.html
           git commit -m "Brief: refresh visitor count"
           git pull --rebase origin main
           git push origin HEAD:main

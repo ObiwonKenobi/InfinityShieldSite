@@ -6,7 +6,7 @@ Reads one JSON file per calendar month from archive/data/YYYY-MM.json and writes
   archive/YYYY-MM.html   one page per month
   archive/index.html     the archive listing, newest month first
 
-The business home page (index.html) is not touched by this script.
+The business page (info/index.html) is not touched by this script.
 Styling comes from /brief.css, which shares its palette with the home page.
 
 Usage (from the repo root):  python3 tools/build_archive.py
@@ -52,9 +52,9 @@ def nav(current):
         '  <div class="site-nav-inner">',
         '    <a href="/" class="site-brand"><img src="/logo-transparent.png" alt="">Infinity Shield</a>',
         '    <ul class="site-links">',
-        link("/", "Home", "home"),
-        link("/brief/", "Current Brief", "brief"),
+        link("/", "Current Brief", "brief"),
         link("/archive/", "Archive", "archive"),
+        link("/info/", "Infinity Shield", "info"),
         link("/about.html", "About", "about"),
         '    </ul>',
         '  </div>',
@@ -239,7 +239,7 @@ def build_month(data):
     parts.append(
         f'  <footer>Compiled from public reporting as of {esc(data["issued"])}. '
         'Figures are as first reported and may be revised. · '
-        '<a href="/archive/">All months</a> · <a href="/brief/">Current 30 day brief</a> · <a href="/">Home</a> · '
+        '<a href="/archive/">All months</a> · <a href="/">Current 30 day brief</a> · <a href="/info/">Infinity Shield</a> · '
         '<a href="/about.html">About Infinity Shield</a></footer>'
     )
     parts.append('</main>')
@@ -261,7 +261,7 @@ def build_index(months):
         '  <header>',
         '    <div class="marking"><span class="tlp">TLP:CLEAR</span><span>Calendar month briefs</span></div>',
         '    <h1>Threat Brief <span>Archive</span></h1>',
-        '    <p class="lede">One brief for each calendar month, finalized after the month closes. For the latest picture, read the rolling <a href="/brief/">30 day brief</a>, which is refreshed every Monday.</p>',
+        '    <p class="lede">One brief for each calendar month, finalized after the month closes. For the latest picture, read the rolling <a href="/">30 day brief</a>, which is refreshed every Monday.</p>',
         '  </header>',
         '',
         '  <section aria-labelledby="months">',
@@ -280,7 +280,7 @@ def build_index(months):
         render_history(None),
         '',
         '  <footer>Compiled from public reporting. Figures are as first reported and may be revised. · '
-        '<a href="/brief/">Current 30 day brief</a> · <a href="/">Home</a> · <a href="/about.html">About Infinity Shield</a></footer>',
+        '<a href="/">Current 30 day brief</a> · <a href="/info/">Infinity Shield</a> · <a href="/about.html">About Dr. Opp</a></footer>',
         '</main>',
         '',
         '</body>',

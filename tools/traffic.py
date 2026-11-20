@@ -67,13 +67,13 @@ def refresh():
         share = _get(f'{c["host"]}/api/share/{urllib.parse.quote(c["share_id"])}')
         token = share.get("token")
         wid = share.get("websiteId") or c["website_id"]
-        q = urllib.parse.urlencode({"startAt": int(start.timestamp() * 1000), "endAt": int(end.timestamp() * 1000), "path": c.get("path", "/brief/")})
+        q = urllib.parse.urlencode({"startAt": int(start.timestamp() * 1000), "endAt": int(end.timestamp() * 1000), "path": c.get("path", "/")})
         stats = _get(f'{c["host"]}/api/websites/{urllib.parse.quote(wid)}/stats?{q}', {"x-umami-share-token": token or "", "x-umami-share-context": "1"})
     except Exception as e:  # network policy, timeout, bad JSON, wrong share id: keep the old snapshot
         print(f"traffic: not refreshed ({e.__class__.__name__}: {e}); using snapshot if present", file=sys.stderr)
         return False
     snap = {
-        "fetched": end.date().isoformat(), "days": DAYS, "path": c.get("path", "/brief/"),
+        "fetched": end.date().isoformat(), "days": DAYS, "path": c.get("path", "/"),
         "since": start.date().isoformat() if since and since >= end - dt.timedelta(days=DAYS) else None,
         "visitors": _num(stats.get("visitors")), "visits": _num(stats.get("visits")),
         "pageviews": _num(stats.get("pageviews")), "bounces": _num(stats.get("bounces")),

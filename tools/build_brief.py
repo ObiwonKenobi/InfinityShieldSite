@@ -3,9 +3,9 @@
 Build the rolling 30 day threat brief for infinityshield.co.
 
 Reads brief/data/current.json, refreshes the CISA KEV snapshot when the feed is
-reachable (brief/data/kev.json, kept when it is not), writes brief/index.html,
-and refreshes the period, lede, and figures shown on the home page between the
-rolling-brief markers in index.html. Monthly archive pages are built by
+reachable (brief/data/kev.json, kept when it is not), writes index.html
+(the site root, which is the brief), and refreshes the period, lede, and figures shown
+on the business page between the rolling-brief markers in info/index.html. Monthly archive pages are built by
 tools/build_archive.py and are not touched here.
 
 Usage (from the repo root):
@@ -34,8 +34,8 @@ import traffic  # noqa: E402
 import kev  # noqa: E402
 
 DATA = ROOT / "brief" / "data" / "current.json"
-OUT = ROOT / "brief" / "index.html"
-HOME = ROOT / "index.html"
+OUT = ROOT / "index.html"
+HOME = ROOT / "info" / "index.html"
 
 REQUIRED = ["period", "issued", "lede", "top", "vulns", "supply", "breaches", "other", "todo", "sources"]
 LIMITS = {"top": (3, 3), "vulns": (6, 16), "supply": (1, 6), "breaches": (6, 15), "other": (1, 6), "outages": (0, 6), "todo": (5, 10), "sources": (10, 45)}
@@ -359,7 +359,7 @@ def build_page(d, s, window):
         "",
         f'  <footer>Compiled from public reporting as of {esc(d["issued"])}. Figures are as first reported and may be revised. '
         "This brief covers the last 30 days and is refreshed every Monday; the calendar-month record is in the "
-        '<a href="/archive/">archive</a>. · <a href="/">Home</a> · <a href="/about.html">About Infinity Shield</a>'
+        '<a href="/archive/">archive</a>. · <a href="/info/">Infinity Shield</a> · <a href="/about.html">About Dr. Opp</a>'
         + (" · Visits to this page are counted with a self-hosted, cookieless analytics tool that stores no personal data and respects Do Not Track. "
            "A visit that loads the page once and leaves counts as zero seconds." if traffic.config() else "") + '</footer>',
         "</main>",
@@ -385,7 +385,7 @@ def update_home(d, s):
         f'          <p class="brief-meta">Rolling 30 days · {esc(d["period"])} · Refreshed weekly</p>\n'
         "          <h2>Current Threat Brief</h2>\n"
         f'          <p>{esc(d["lede"])}</p>\n'
-        + (f'          <p class="brief-meta"><a href="/brief/#new">New since {esc(d["changes"]["since"])}: {len(d["changes"]["added"])} added, {len(d["changes"]["updated"])} updated</a></p>\n' if d.get("changes") else "")
+        + (f'          <p class="brief-meta"><a href="/#new">New since {esc(d["changes"]["since"])}: {len(d["changes"]["added"])} added, {len(d["changes"]["updated"])} updated</a></p>\n' if d.get("changes") else "")
         +
         f'          <div class="band-stats" role="group" aria-label="This brief in numbers">{stat_html}</div>\n'
         "          <!-- rolling-brief:end -->"
@@ -393,7 +393,7 @@ def update_home(d, s):
     text = HOME.read_text(encoding="utf-8")
     text, n = re.subn(r"<!-- rolling-brief:start -->.*?<!-- rolling-brief:end -->", lambda m: band, text, flags=re.S)
     if n != 1:
-        sys.exit("index.html: rolling-brief markers not found exactly once")
+        sys.exit("info/index.html: rolling-brief markers not found exactly once")
     HOME.write_text(text, encoding="utf-8")
 
 
@@ -428,9 +428,9 @@ def main():
         print("kev: no snapshot available, KEV section omitted", file=sys.stderr)
     s = compute_stats(d, summary)
     OUT.write_text(build_page(d, s, window), encoding="utf-8")
-    print("built brief/index.html")
+    print("built index.html")
     update_home(d, s)
-    print("updated index.html (period, lede, figures)")
+    print("updated info/index.html (period, lede, figures)")
 
 
 if __name__ == "__main__":

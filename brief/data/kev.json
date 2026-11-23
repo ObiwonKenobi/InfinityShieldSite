@@ -1,28 +1,10 @@
 {
- "catalogVersion": "2026.11.17",
- "dateReleased": "2026-11-17T17:53:15.5664Z",
- "totalCount": 1782,
- "fetched": "2026-11-18",
+ "catalogVersion": "2026.11.20",
+ "dateReleased": "2026-11-20T17:48:39.1516Z",
+ "totalCount": 1790,
+ "fetched": "2026-11-23",
  "keepDays": 180,
  "entries": [
-  {
-   "cveID": "CVE-2026-9082",
-   "vendorProject": "Drupal",
-   "product": "Core",
-   "vulnerabilityName": "Drupal Core SQL Injection Vulnerability",
-   "dateAdded": "2026-05-22",
-   "dueDate": "2026-05-27",
-   "knownRansomwareCampaignUse": "Unknown"
-  },
-  {
-   "cveID": "CVE-2026-48172",
-   "vendorProject": "LiteSpeed",
-   "product": "cPanel Plugin",
-   "vulnerabilityName": "LiteSpeed cPanel Plugin Privilege Escalation Vulnerability",
-   "dateAdded": "2026-05-26",
-   "dueDate": "2026-05-29",
-   "knownRansomwareCampaignUse": "Unknown"
-  },
   {
    "cveID": "CVE-2026-45321",
    "vendorProject": "TanStack",
@@ -1632,6 +1614,78 @@
    "vulnerabilityName": "Perforce Puppet Enterprise Deserialization of Untrusted Data Vulnerability",
    "dateAdded": "2026-11-17",
    "dueDate": "2026-12-01",
+   "knownRansomwareCampaignUse": "Unknown"
+  },
+  {
+   "cveID": "CVE-2024-10441",
+   "vendorProject": "Synology",
+   "product": "DiskStation Manager (DSM)",
+   "vulnerabilityName": "Synology DiskStation Manager (DSM) Improper Encoding or Escaping of Output Vulnerability",
+   "dateAdded": "2026-11-18",
+   "dueDate": "2026-11-21",
+   "knownRansomwareCampaignUse": "Unknown"
+  },
+  {
+   "cveID": "CVE-2026-40217",
+   "vendorProject": "BerriAI",
+   "product": "LiteLLM",
+   "vulnerabilityName": "BerriAI LiteLLM Unprotected Alternate Channel Vulnerability",
+   "dateAdded": "2026-11-18",
+   "dueDate": "2026-12-02",
+   "knownRansomwareCampaignUse": "Unknown"
+  },
+  {
+   "cveID": "CVE-2026-90436",
+   "vendorProject": "Apache",
+   "product": "Axis",
+   "vulnerabilityName": "Apache Axis Unsafe Reflection Vulnerability",
+   "dateAdded": "2026-11-18",
+   "dueDate": "2026-11-21",
+   "knownRansomwareCampaignUse": "Unknown"
+  },
+  {
+   "cveID": "CVE-2026-90817",
+   "vendorProject": "Vanderbilt University",
+   "product": "Research Electronic Data Capture (REDCap)",
+   "vulnerabilityName": "Vanderbilt University Research Electronic Data Capture (REDCap) Code Injection Vulnerability",
+   "dateAdded": "2026-11-18",
+   "dueDate": "2026-11-21",
+   "knownRansomwareCampaignUse": "Unknown"
+  },
+  {
+   "cveID": "CVE-2025-42884",
+   "vendorProject": "SAP",
+   "product": "NetWeaver",
+   "vulnerabilityName": "SAP NetWeaver Improper Neutralization of Special Elements in Data Query Logic Vulnerability",
+   "dateAdded": "2026-11-20",
+   "dueDate": "2026-11-23",
+   "knownRansomwareCampaignUse": "Unknown"
+  },
+  {
+   "cveID": "CVE-2026-123890",
+   "vendorProject": "Broadcom",
+   "product": "VMware vCenter",
+   "vulnerabilityName": "VMWare vCenter Authentication Bypass Using an Alternate Path or Channel Vulnerability",
+   "dateAdded": "2026-11-20",
+   "dueDate": "2026-11-23",
+   "knownRansomwareCampaignUse": "Unknown"
+  },
+  {
+   "cveID": "CVE-2026-129448",
+   "vendorProject": "Apache",
+   "product": "Roller",
+   "vulnerabilityName": "Apache Roller Deserialization of Untrusted Data Vulnerability",
+   "dateAdded": "2026-11-20",
+   "dueDate": "2026-11-23",
+   "knownRansomwareCampaignUse": "Unknown"
+  },
+  {
+   "cveID": "CVE-2026-76466",
+   "vendorProject": "Cisco",
+   "product": "Expressway Series",
+   "vulnerabilityName": "Cisco Expressway Series Use of Hard-coded Credentials Vulnerability",
+   "dateAdded": "2026-11-20",
+   "dueDate": "2026-11-23",
    "knownRansomwareCampaignUse": "Unknown"
   }
  ]

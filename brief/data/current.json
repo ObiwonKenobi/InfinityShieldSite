@@ -1,7 +1,7 @@
 {
-  "period": "17 Oct – 15 Nov 2026",
-  "issued": "16 Nov 2026",
-  "lede": "Thirty days that opened with the largest cryptocurrency theft on record, about US$6.3 billion taken from Binance on 29 Oct, of which the Justice Department said on 12 Nov it had court authorization to seize more than US$1.2 billion. Around it ran a GitHub credential-stealing campaign across thousands of accounts, FBI and CrowdStrike warnings that AI agents are running parts of live intrusions, and an exploited Outlook zero-day on November Patch Tuesday.",
+  "period": "24 Oct – 22 Nov 2026",
+  "issued": "23 Nov 2026",
+  "lede": "Thirty days that opened with the largest cryptocurrency theft on record, about US$6.3 billion taken from Binance on 29 Oct, and closed with Broadcom patching a vCenter authentication bypass that Mandiant says a China-linked group used as a zero-day from September. Around them ran a GitHub credential-stealer campaign, Google's first report of a fully automated exploit pipeline, and a week of CISA-confirmed exploitation in VMware, Cisco, and SAP products.",
   "top": [
     {
       "title": "Binance: record US$6.3 billion theft traced to a fake job task and tampered download, US moves to seize US$1.2 billion",
@@ -124,26 +124,6 @@
       "added": "2026-11-16"
     },
     {
-      "product": "Zyxel GS1900 switches",
-      "cve": "CVE-2026-107441",
-      "allows": "Out-of-bounds write in the web management interface that runs operating-system commands through crafted HTTP requests, across ten GS1900 models. Binarly says 996 switches in 48 countries were compromised since about 17 Aug and that the exploit still worked after June's patch for a different flaw (CVE-2026-7273), which GreyNoise had blamed. The real fix shipped 22 Oct as a model-specific V2.90 Patch 3, and no workaround is listed.",
-      "sev": "high",
-      "status": "Exploited",
-      "note": "Fixed in V2.90 Patch 3 per model · check for prior compromise",
-      "when": "2026-10-22",
-      "added": "2026-11-16"
-    },
-    {
-      "product": "WordPress core updater",
-      "cve": "CVE-2026-119977",
-      "allows": "Race condition in the core updater (CVSS 8.1), reported exploited in the wild.",
-      "sev": "high",
-      "status": "Exploited",
-      "note": "KEV 3 Nov · due 6 Nov",
-      "when": "2026-11-03",
-      "added": "2026-11-16"
-    },
-    {
       "product": "PHP (PHP2Shell)",
       "cve": "CVE-2026-109618 · CVE-2026-109619",
       "allows": "Two critical flaws across nearly every PHP version back to 5.4 (CVSS v4 9.2), patched 21 Oct after Amazon logged attempts from 17 Oct. CISA added both to KEV on 26 Oct. Dream reports a suspected China-nexus actor chained PHP2Shell with the Linux kernel flaw Fragnesia (CVE-2026-46300) to gain root on 25 servers, 24 of them PAN-OS perimeter firewalls, on 23 and 24 Oct. A November tracker says no vendor or government source had named a confirmed victim, so the victim count is unverified.",
@@ -161,16 +141,6 @@
       "status": "Exploited",
       "note": "Full chain fixed in 25.1.1.3 and 22.8R2.6 · KEV 13 and 30 Oct",
       "when": "2026-10-30",
-      "added": "2026-11-02"
-    },
-    {
-      "product": "Arista VeloCloud Orchestrator (on-premises)",
-      "cve": "CVE-2026-114625",
-      "allows": "SQL injection, CVSS 9.9, that lets any valid login, including a read-only customer account, reach privileged internal functionality and operator-level control. Arista disclosed it on 22 Oct as exploited in the wild and CISA added it to KEV on 23 Oct. It is the third exploited VeloCloud Orchestrator zero-day in four months after CVE-2026-16812 (July) and CVE-2026-93952 (September), and the earlier patches do not cover it. Hosted instances were patched by Arista; Gateway, Edge, and the 7.0 train are not affected.",
-      "sev": "crit",
-      "status": "Exploited",
-      "note": "KEV 23 Oct · fixed in 5.2.3.18 (6.1 and 6.4 fixes reported, check SA-0199)",
-      "when": "2026-10-23",
       "added": "2026-11-02"
     },
     {
@@ -194,16 +164,6 @@
       "added": "2026-11-02"
     },
     {
-      "product": "Drupal Commerce Core",
-      "cve": "CVE-2026-118539",
-      "allows": "Missing authorization allowing forceful browsing and an access bypass on Commerce Core 2.x before 8.x-2.41 and 3.x before 3.3.13. Drupal said on 31 Oct (advisory SA-CONTRIB-2026-254) that it is being exploited in the wild but gave no start date, CVSS, or scale. Centarro published order-audit guidance covering payment discrepancies, altered prices, and suspicious adjustments. Not in CISA KEV as of 29 Oct.",
-      "sev": "high",
-      "status": "Exploited",
-      "note": "Fixed in 3.3.13 / 8.x-2.41",
-      "when": "2026-10-31",
-      "added": "2026-11-02"
-    },
-    {
       "product": "Linux kernel · Broadcom VMware ESX",
       "cve": "CVE-2026-46300 · CVE-2026-41709",
       "allows": "CVE-2026-46300 (called Fragnesia) lets a local low-privileged user corrupt the page cache and gain root on major distributions; federal due date 31 Oct. CVE-2026-41709 (CVSS 7.6) is insufficient logging in ESX that lets an attacker who already has administrator rights act without records; Broadcom patched it in July, and CrowdStrike says the China-linked Warp Panda used it as a zero-day in early 2026. Both were added to CISA KEV in an alert dated 28 Oct. Earlier claims that Fragnesia was chained with PHP2Shell remain unconfirmed.",
@@ -214,16 +174,6 @@
       "added": "2026-11-02"
     },
     {
-      "product": "OpenSSH (musl libc without PAM)",
-      "cve": "CVE-2026-123158",
-      "allows": "Password authentication bypass nicknamed *sshole, affecting Linux systems built on musl libc without PAM, including Alpine Linux's default setup, and triggered by an unusually long password. Fixed in OpenSSH 10.6p2 on 5 Nov. One source scores it 8.1 and another calls it critical. Not reported as exploited.",
-      "sev": "med",
-      "status": "Patched",
-      "note": "Fixed in 10.6p2",
-      "when": "2026-11-05",
-      "added": "2026-11-16"
-    },
-    {
       "product": "Citrix NetScaler ADC and Gateway · 28 memory flaws (12 Nov)",
       "cve": "CVE-2026-120868",
       "allows": "Cloud Software Group published bulletins on 12 Nov for 28 memory flaws in customer-managed NetScaler ADC and Gateway. CVE-2026-120868 affects every deployment, including the default configuration, and the vendor describes the impact as unpredictable behaviour and denial of service. CERT-EU titled its advisory critical and says to upgrade internet-facing Gateway and AAA appliances first. Earlier NetScaler flaws were exploited in September and October.",
@@ -232,6 +182,66 @@
       "note": "Citrix reports no exploitation and no confirmed public proof of concept (CERT-EU, 12 Nov)",
       "when": "2026-11-12",
       "added": "2026-11-16"
+    },
+    {
+      "product": "VMware vCenter Server",
+      "cve": "CVE-2026-123890",
+      "sev": "crit",
+      "status": "Exploited · zero-day",
+      "allows": "Authentication bypass in the VMware Directory Service (CVSS 9.8) that lets an unauthenticated attacker with network access act as the Administrator user. Broadcom published VMSA-2026-0009 on 19 Nov covering five CVEs across vCenter, SDDC Manager, and VMware Tools, with fixes in vCenter 9.1.1.0200, 9.0.2.0200, and 8.0 U3m and no workaround. Mandiant says the China-linked group ARMORY CASTLE exploited the flaw as a zero-day from as early as September, using a custom tool called BONESAW that created SSO administrator accounts and stole vCenter secrets; the Broadcom bulletin as reported does not mention exploitation.",
+      "note": "KEV 20 Nov · due 23 Nov · fixed in 9.1.1.0200, 9.0.2.0200, 8.0 U3m",
+      "when": "2026-11-19",
+      "added": "2026-11-23"
+    },
+    {
+      "product": "Cisco Expressway Series (clustered)",
+      "cve": "CVE-2026-76466",
+      "sev": "crit",
+      "status": "Exploited",
+      "allows": "Hard-coded credentials (CVSS 9.8) that let an unauthenticated remote attacker with network access run commands as root on clustered Expressway-C and Expressway-E devices. The fix is X15.5.20, X14 and earlier must migrate, and there is no workaround; a standalone device is not affected by this CVE. SecurityWeek reports a Russian organisation's Expressway cluster was compromised soon after public proof-of-concept code appeared, which a French site dates to 12 Nov, while summaries from the time of disclosure said no exploitation was known. Sources also differ on which component is affected.",
+      "note": "KEV 20 Nov · due 23 Nov · fixed in X15.5.20",
+      "when": "2026-11-20",
+      "added": "2026-11-23"
+    },
+    {
+      "product": "SAP NetWeaver",
+      "cve": "CVE-2025-42884",
+      "sev": "high",
+      "status": "Exploited",
+      "allows": "CISA's catalog describes improper neutralization of special elements in data query logic. No SAP statement, CVSS score, or press report of the exploitation was found, so the KEV entry is the only confirmation; check SAP's security notes for the fixed support package.",
+      "note": "KEV 20 Nov · due 23 Nov",
+      "when": "2026-11-20",
+      "added": "2026-11-23"
+    },
+    {
+      "product": "Apache Axis · Apache Roller · Vanderbilt REDCap",
+      "cve": "CVE-2026-90436 · CVE-2026-129448 · CVE-2026-90817",
+      "sev": "high",
+      "status": "Exploited",
+      "allows": "CISA added three flaws on 18 and 20 Nov: unsafe reflection in Apache Axis, deserialization of untrusted data in Apache Roller, and code injection in Vanderbilt's REDCap research data platform. One report says exploiting REDCap needs a valid public survey hash, so instances that expose public surveys are the place to start. The catalog entries give no CVSS scores or fixed versions, so check each project's advisory.",
+      "note": "KEV 18 Nov (Axis, REDCap, due 21 Nov) and 20 Nov (Roller, due 23 Nov)",
+      "when": "2026-11-18",
+      "added": "2026-11-23"
+    },
+    {
+      "product": "Synology DSM · BerriAI LiteLLM · Perforce Puppet Enterprise",
+      "cve": "CVE-2024-10441 · CVE-2026-40217 · CVE-2026-115731",
+      "sev": "high",
+      "status": "Exploited",
+      "allows": "CISA added improper output encoding in Synology DiskStation Manager, an unprotected alternate channel in the LiteLLM AI gateway, and deserialization of untrusted data in Perforce Puppet Enterprise on 17 and 18 Nov. The catalog entries give no CVSS scores or fixed versions, so check each vendor's advisory.",
+      "note": "KEV 17 Nov (Puppet, due 1 Dec) and 18 Nov (Synology, due 21 Nov; LiteLLM, due 2 Dec)",
+      "when": "2026-11-18",
+      "added": "2026-11-23"
+    },
+    {
+      "product": "NGINX (F5)",
+      "cve": "CVE-2026-123007 · CVE-2026-123633 · CVE-2026-121810 · CVE-2026-123634 · CVE-2026-113425",
+      "sev": "high",
+      "status": "Patched",
+      "allows": "Five flaws (CVSS 8.1 each) that let an unauthenticated remote attacker run code with the privileges of the NGINX worker process. One is an integer overflow in HTTP/2 flow control that needs only HTTP/2 enabled on a listening port; four are use-after-free flaws in HTTP/2 connection draining, QUIC draining, the DNS resolver waiting list, and mail proxy authentication lookups, each with its own configuration conditions. Researchers have demonstrated CVE-2026-123007.",
+      "note": "F5 advisory 18 Nov · no exploitation reported as of 18 Nov (CERT-EU)",
+      "when": "2026-11-18",
+      "added": "2026-11-23"
     }
   ],
   "supply": [
@@ -248,21 +258,9 @@
       "added": "2026-11-16"
     },
     {
-      "label": "ConnectWise Cloud Backup (formerly SkyKick), from 15 Oct",
-      "text": "Starting 15 Oct, attackers used a stolen API secret and the backup platform's application identities to sign into customer Microsoft 365 tenants, so MFA never applied. Huntress confirmed unauthorized sign-ins in 162 tenants by 16 Oct and later found nearly 1,000 tenants with sign-in activity from the attacker's address. Microsoft said on 21 Oct that Storm-0940 tried more than 2,250 tenants using the ARTEX AI framework; this refresh could not re-confirm that attribution, though the FBI's ARTEX warning is consistent with it. ConnectWise's advisory, updated 4 Nov, says phased restoration continues with Phases 1 and 2 complete and Phase 3 in progress, and that partners must re-authorize each tenant through the new \"ConnectWise Cloud Backup for M365\" application. Restoration does not remove access already established inside a tenant.",
-      "when": "2026-10-15",
-      "added": "2026-11-16"
-    },
-    {
       "label": "Claude Code extension on the Cursor marketplace, 29 Oct",
       "text": "A tampered build of Anthropic's Claude Code editor extension was served from Cursor's extension marketplace under the legitimate extension ID as versions 2.1.312 and 2.1.313. Cursor says the malicious version was live for about 11 hours on 29 Oct and reached at most 5,000 users. The code appended an attacker public key labelled svc-telemetry to the user's SSH authorized_keys file, opened a reverse tunnel, and sent host details to an attacker-controlled server; enabling the local SSH service needs admin rights that the extension does not have on most macOS and Windows hosts. Cursor pulled the version, took its marketplace offline to audit extensions and rotate keys, and says it found no other tampered extensions. Reporting agrees that Cursor was the only distribution point, and Microsoft's Visual Studio Marketplace and the official Open VSX listing were not affected; the clean release is 2.1.314. Removing the extension is not enough: remove the key, any persistence, and tunnel processes, and decide whether to rebuild the host.",
       "when": "2026-10-29",
-      "added": "2026-11-02"
-    },
-    {
-      "label": "LiteLLM 1.107.0, 21 Oct",
-      "text": "A poisoned release went out on PyPI and the official Docker images on 21 Oct. The PyPI wheels were live for under two hours and the Docker tags stayed pointed at the bad image for a few hours more. The release pipeline was altered using stolen GitHub credentials from three developer accounts. It ran a credential stealer at every Python startup, even if LiteLLM was never imported, and installed a loader that fetches and runs code from attacker infrastructure every hour. Anyone who installed it should treat every secret on that host as exposed; the clean version is 1.106.2.",
-      "when": "2026-10-21",
       "added": "2026-11-02"
     },
     {
@@ -287,22 +285,6 @@
       "cause": "Announced 30 Oct. Unauthorized access to the official MUJI app may have exposed email addresses, dates of birth, and gender for up to about 27.26 million records, including cancelled memberships. The company says it detected and blocked the access and has confirmed no misuse; names and card data are reported as not affected. The entry method, timeline, and how customers can check are not yet disclosed, and the figure is a potential count, not a confirmed one.",
       "records": null,
       "when": "2026-10-30",
-      "added": "2026-11-02"
-    },
-    {
-      "org": "Capcom (CAPCOM ID)",
-      "scale": "11,774,247 records",
-      "cause": "Unauthorized access confirmed 19 Oct and announced 22 to 23 Oct. Mostly email addresses, account creation date, login count and last-login IP; 43 accounts also lost birth date, gender, nickname and country, and attackers changed passwords on 196 accounts. No payment card data. Capcom has not disclosed the entry method and the investigation is ongoing.",
-      "records": 11774247,
-      "when": "2026-10-22",
-      "added": "2026-11-02"
-    },
-    {
-      "org": "Sony Network Communications (So-net, plala)",
-      "scale": "~2.58M customer records",
-      "cause": "Intrusion on 19 Oct at Sony's Japanese ISP subsidiary, found four days later and disclosed 27 to 28 Oct. 2,141,986 So-net and 443,495 plala records: names, phone numbers, email addresses, dates of birth; no card data. Sources conflict on passwords: Help Net Security reports 54,401 email passwords taken, while Sony's statement says no passwords were leaked.",
-      "records": 2580000,
-      "when": "2026-10-23",
       "added": "2026-11-02"
     },
     {
@@ -346,18 +328,34 @@
       "added": "2026-11-02"
     },
     {
-      "org": "Railway (hosting)",
-      "scale": "Limited, not quantified",
-      "cause": "Detected 21 Oct. Encrypted customer environment variables were accessed and some were reportedly decrypted. Railway says the incident may be part of a wider series of attacks on platform companies aimed at AI inference providers.",
+      "org": "JPMorgan Chase (through outside vendors)",
+      "scale": "Not disclosed",
       "records": null,
-      "when": "2026-10-21",
-      "added": "2026-11-16"
+      "when": "2026-11-19",
+      "cause": "Announced 19 Nov. Chase said a cyberattack targeted outside service providers, not its own systems, and reached marketing data those vendors held, which may include customer names and email addresses. Chase says its services were not disrupted, that it will contact affected customers directly, and that it will offer complimentary credit monitoring. It also said the incident is unrelated to the outage on 16 Nov. The reports reviewed name no vendor, customer count, or attacker.",
+      "added": "2026-11-23"
+    },
+    {
+      "org": "Iris Ohyama (Iris Plaza online store, Japan)",
+      "scale": "Up to 7.7M people (potentially exposed)",
+      "records": null,
+      "when": "2026-10-29",
+      "cause": "First notice 29 Oct, after the company found a suspicious file in an external cloud service used by the Iris Plaza store and suspended the store and related systems on 28 Oct. An update in the first week of November said customer data in that service may have been accessed: up to 5.8 million current and former registered members and 1.9 million non-members. Exposed fields vary by person and reportedly include contact details and birth dates; passwords for active members are stored encrypted, none are stored for former members, and no card data was held in the affected service. As of 5 Nov there were no reports of misuse. The company had not named the cloud provider or said how the attackers got in, and the count is records in the service, not confirmed theft.",
+      "added": "2026-11-23"
+    },
+    {
+      "org": "Baker Tilly Advisory Group (third-party provider)",
+      "scale": "Not disclosed",
+      "records": null,
+      "when": "2026-11-09",
+      "cause": "Reported 9 Nov to the California Attorney General with a stated breach date of 2 Sep, and covered by BleepingComputer on 11 Nov. Baker Tilly told clients that personal information about them and their dependents was exposed in a breach at a third-party provider. No count was disclosed.",
+      "added": "2026-11-23"
     }
   ],
   "unverified": [
     {
       "item": "JAMIS Prime outage (late Oct)",
-      "why": "One post from a firm that sells ERP recovery services. No JAMIS statement or press coverage as of 16 Nov."
+      "why": "One post from a firm that sells ERP recovery services. No JAMIS statement or press coverage found as of 23 Nov."
     },
     {
       "item": "PwC data theft",
@@ -368,24 +366,12 @@
       "why": "About 22 million names and postal addresses, seen in one outlet only."
     },
     {
-      "item": "Iris Ohyama (Japan)",
-      "why": "A headline says 7.7 million customers. No detail found."
-    },
-    {
       "item": "Sogo Hong Kong",
       "why": "About 820,000 members, a regulator estimate seen in one vendor roundup."
     },
     {
       "item": "Vanderbilt University",
       "why": "The BYOD group claims over 1 million Social Security numbers. Vanderbilt has not confirmed."
-    },
-    {
-      "item": "Check Point appliance flaw, KEV 13 Nov",
-      "why": "CVE-2026-123039 appears under Check Point Gaia in one report and under Cisco BroadWorks in another."
-    },
-    {
-      "item": "UnrealIRCd, KEV 13 Nov",
-      "why": "CVE-2026-114713 reported added to KEV. No detail found."
     },
     {
       "item": "Binance attackers abusing an internal AI tool",
@@ -398,6 +384,14 @@
     {
       "item": "DreamHost, WS Audiology, WorkOS breaches; APT29 zero-click attacks",
       "why": "Listed in one weekly newsletter. Not checked."
+    },
+    {
+      "item": "Ipsos incident (mid-Nov)",
+      "why": "One report says the market research firm disclosed an incident on 16 Nov. No scope, cause, or primary notice found."
+    },
+    {
+      "item": "Illumifin breach, about 98,000 people",
+      "why": "One trade report cites a 4 Nov attack and notices to the California and Oregon attorneys general. The notices were not reviewed."
     }
   ],
   "other": [
@@ -406,12 +400,6 @@
       "text": "Police in nine countries took down infrastructure behind the Gootloader, CastleRAT, and StealC malware families, which feed ransomware and credential theft. Europol reports 235 servers and 257 domains seized and credentials belonging to 6.4 million victims identified. The Justice Department says it removed Gootloader malware from more than 100 servers and links the tool to US$28.8 million in ransomware losses. One source reports no arrests had been announced as of 15 Nov, and the Justice Department named no defendant.",
       "when": "2026-11-12",
       "added": "2026-11-16"
-    },
-    {
-      "label": "AI agents in live intrusions, earlier reports in the window (20 to 30 Oct)",
-      "text": "Reports in this window moved AI-agent use from single cases to patterns. SOCRadar reported on 20 Oct that affiliates of INC Ransom and The Gentlemen left seven servers exposed holding about 8,257 AI messages across 133 sessions and 46 INC encryptor builds; a human wrote victim-specific prompts and approved each step of a framework called Phantom that drove the OpenCode coding agent, against about 62 organizations, 36 in the US, through FortiClient EMS, SimpleHelp, and cPanel edge systems. Unit 42 described an operator called BUGSTER who ran the Hermes Agent framework on DeepSeek with safety controls disabled to brute-force an Indian university and take more than 5,200 student records, plan VoIP fraud, and crack Wi-Fi passwords, work Unit 42 assesses the actor could not have done without AI tooling. Google's threat intelligence group summarized the pattern on 30 Oct: ARTEX, PentAGI, Hexstrike, and CAIRN have been in use since late August, ARTEX's original repository was taken down in October but forks continue, and the tools trade stealth for speed, with execution bursts of 2 to 25 seconds, 491 rotating webhook.site URLs for command and control, and enumeration of more than 110,000 Active Directory objects in one intrusion. GTIG expects multi-agent attacks with little human input within one to three months.",
-      "when": "2026-10-20",
-      "added": "2026-11-02"
     },
     {
       "label": "Volt Typhoon \"Silent Train\", 29 Oct",
@@ -437,19 +425,25 @@
       "text": "Johnson Controls and two subsidiaries agreed to pay US$5 million to resolve allegations that they violated the False Claims Act by not meeting cybersecurity requirements in federal contracts and subcontracts, covering January 2018 to August 2025 and work for NASA and the Departments of Defense, Energy, and Justice. The Justice Department alleges the company did not control access to protected information, and that on contracts requiring NIST SP 800-171, including Defense Department contracts, it did not maintain a System Security Plan that met the contract terms. For contractors, it is another case of the government treating a shortfall in 800-171 paperwork and controls as a claims-act problem.",
       "when": "2026-11-13",
       "added": "2026-11-16"
+    },
+    {
+      "label": "Google threat tracker: first fully automated exploit pipeline, 16 Nov",
+      "when": "2026-11-16",
+      "text": "Google's threat intelligence group published its Q4 2026 AI Threat Tracker on 16 Nov, reporting what it calls the first observed case of an attacker using an AI agent to find vulnerabilities and write exploits with no human involved. The case centred on a multi-agent framework called exploit_agent, found on a compromised staging server and used against French media, entertainment, and education targets. Coverage of the report also describes the open-source CAIRN framework used in an attack on the US aerospace sector, and Google expects unsophisticated autonomous attacks within one to three months and more capable ones within three to six months. These are secondary summaries; the primary Google report was not opened.",
+      "added": "2026-11-23"
     }
   ],
   "todo": [
     "Apply November Patch Tuesday starting with the exploited Outlook flaw (CVE-2026-124194), update Chrome to the 9 Nov release and the other Chromium browsers, and reset credentials where a user opened a suspicious message file.",
     "Search every GitHub repository you own for workflows or commits added since 1 Nov that you did not write, treat machines that ran npm install on an affected commit as compromised, and rotate the CI, cloud, registry, and AI provider secrets your workflows can read.",
     "Update cPGuard to 5.88.25 or later and reset passwords and rotate database credentials, cloud secrets, and SSH keys on every server that ran 5.88.12 to 5.88.19.",
-    "Patch Barracuda Email Security Gateway, Cisco BroadWorks (federal due date 24 Nov), Zyxel GS1900 switches to the model-specific V2.90 Patch 3, and WordPress core, then check each device for signs of earlier compromise.",
-    "Patch PHP, Ivanti Connect Secure (25.1.1.3 or 22.8R2.6), VeloCloud Orchestrator, GitLab, Cisco ASA and FTD, Brotli consumers, Adobe Commerce, Drupal Commerce, and the Linux kernels listed in KEV; patching does not remove an attacker who is already in.",
+    "Patch Barracuda Email Security Gateway and Cisco BroadWorks (federal due date 24 Nov), then check each device for signs of earlier compromise.",
+    "Patch VMware vCenter to 8.0 U3m, 9.0.2.0200, or 9.1.1.0200 now, since Broadcom lists no workaround and Mandiant reports exploitation since September, and upgrade clustered Cisco Expressway to X15.5.20; treat vCenter administrator accounts and stored secrets as exposed on any server that was reachable from the internet.",
+    "Patch PHP, Ivanti Connect Secure (25.1.1.3 or 22.8R2.6), GitLab, Cisco ASA and FTD, Brotli consumers, Adobe Commerce, SAP NetWeaver, and the Linux kernels listed in KEV; patching does not remove an attacker who is already in.",
+    "Update NGINX against F5's 18 Nov advisory, starting with internet-facing proxies that use HTTP/2, HTTP/3, or mail proxy features, and check Synology DSM, Apache Axis and Roller, REDCap, Puppet Enterprise, and LiteLLM against the KEV entries from 17 to 20 Nov.",
     "Plan for intrusion speed measured in hours: alert on credential access and lateral movement within the first hour of a foothold, limit where service accounts can authenticate, and take any internet-facing security-testing console offline.",
     "Audit third-party app identities in Microsoft 365 (backup, MSP, and RMM tools), rotate their secrets, and review role and credential changes since 13 Oct even if the vendor says its service is restored.",
-    "If anyone installed the Claude Code extension through Cursor on 29 Oct, check ~/.ssh/authorized_keys for a key labelled svc-telemetry, remove tunnel processes, rotate host credentials, and move to 2.1.314 or later; check Python environments for LiteLLM 1.107.0 and move to 1.106.2.",
-    "Block tool installs from search ads on machines that can reach signing or admin systems, run unsolicited job-interview coding tasks only on disposable machines, and require hardware-backed multi-party approval for outbound transfers.",
-    "Replace any certificate chaining to eMudhra, including under the G1 RSA roots that Chrome and Mozilla had not acted on as of 1 Nov, and replace any Android TV set-top box with the XCPE firmware backdoor instead of cleaning it, since the malware reinstalls itself from the /oem/ partition."
+    "If anyone installed the Claude Code extension through Cursor on 29 Oct, check ~/.ssh/authorized_keys for a key labelled svc-telemetry, remove tunnel processes, rotate host credentials, and move to 2.1.314 or later."
   ],
   "sources": [
     {
@@ -467,18 +461,6 @@
     {
       "title": "The Hacker News: Cisco BroadWorks and Openwave flaws exploited",
       "url": "https://thehackernews.com/2026/11/cisco-broadworks-and-openwave-flaws.html"
-    },
-    {
-      "title": "BleepingComputer: Zyxel fixes zero-day exploited against nearly 1,000 switches",
-      "url": "https://bleepingcomputer.com/news/security/zyxel-fixes-zero-day-exploited-to-hack-nearly-1-000-network-switches"
-    },
-    {
-      "title": "SecurityWeek: OpenSSH patches the *sshole authentication bypass",
-      "url": "https://securityweek.com/openssh-rushes-patches-for-sshole-authentication-bypass"
-    },
-    {
-      "title": "Korea JoongAng Daily: US moves to seize US$1.2 billion tied to the Binance hack",
-      "url": "https://www.koreajoongangdaily.com/business/us-moves-to-seize-12-billion-linked-to-north-korean-binance-hack/12972799"
     },
     {
       "title": "BleepingComputer: Binance says a fake job interview led to the heist",
@@ -517,14 +499,6 @@
       "url": "https://cyberscoop.com/operation-endgame-malware-takedown-gootloader-stealc-europol/"
     },
     {
-      "title": "ConnectWise Trust Center: Cloud Backup advisories and restoration status",
-      "url": "https://www.connectwise.com/company/trust/advisories"
-    },
-    {
-      "title": "Microsoft Threat Intelligence: Storm-0940 uses ARTEX in the ConnectWise supply chain compromise, 21 Oct",
-      "url": "https://www.microsoft.com/en-us/security/blog/2026/10/21/storm-0940-uses-artex-agentic-ai-connectwise-supply-chain-compromise/"
-    },
-    {
       "title": "BleepingComputer: Nitori says hackers stole up to 37.6 million customer records",
       "url": "https://bleepingcomputer.com/news/security/japanese-furniture-giant-nitori-says-hackers-stole-376m-customer-records"
     },
@@ -561,16 +535,8 @@
       "url": "https://thehackernews.com/2026/10/attackers-chain-three-ivanti-connect.html"
     },
     {
-      "title": "The Hacker News: Arista warns of exploited VeloCloud SQL injection",
-      "url": "https://thehackernews.com/2026/10/arista-warns-of-critical-velocloud-sql.html"
-    },
-    {
       "title": "Security Affairs: CISA adds GitLab and Cisco flaws to KEV",
       "url": "https://securityaffairs.com/202133/security/u-s-cisa-adds-gitlab-and-cisco-flaws-to-its-known-exploited-vulnerabilities-catalog.html"
-    },
-    {
-      "title": "The Hacker News: Drupal Commerce Core flaw exploited",
-      "url": "https://thehackernews.com/2026/10/hackers-actively-exploit-highly.html"
     },
     {
       "title": "CISA: Linux kernel and VMware ESX flaws added to KEV, 28 Oct",
@@ -581,20 +547,12 @@
       "url": "https://cursor.com/blog/claude-code-extension-security-notice"
     },
     {
-      "title": "Datadog Security Labs: LiteLLM compromised on PyPI and Docker",
-      "url": "https://securitylabs.datadoghq.com/articles/litellm-compromised-pypi-docker/"
-    },
-    {
       "title": "Nextgov: DHS personnel leak exposes contact details and job information",
       "url": "https://www.nextgov.com/cybersecurity/2026/10/dhs-personnel-leak-exposes-contact-details-and-sensitive-job-information/416901/"
     },
     {
       "title": "Chainalysis: security incident notice, 30 Oct",
       "url": "https://www.chainalysis.com/blog/security-incident-october-30/"
-    },
-    {
-      "title": "SOCRadar: INC and The Gentlemen ransomware, exposed AI infrastructure, 20 Oct",
-      "url": "https://socradar.io/blog/inc-gentlemen-ransomware-ai-infrastructure/"
     },
     {
       "title": "Unit 42: how a threat actor used AI to plan and execute multiple types of cybercrime",
@@ -623,6 +581,46 @@
     {
       "title": "CERT-EU: 2026-020 Critical vulnerabilities in Citrix NetScaler ADC and Gateway",
       "url": "https://cert.europa.eu/publications/security-advisories/2026-020/"
+    },
+    {
+      "title": "Rapid7: VMware vCenter authentication bypass CVE-2026-123890",
+      "url": "https://www.rapid7.com/blog/post/etr-cve-2026-123890-critical-authentication-bypass-vmware-vcenter"
+    },
+    {
+      "title": "SecurityWeek: newly patched vCenter flaw exploited as a zero-day by a Chinese APT",
+      "url": "https://securityweek.com/newly-patched-vmware-vcenter-flaw-exploited-as-zero-day-by-chinese-apt"
+    },
+    {
+      "title": "SecurityWeek: hackers exploit Cisco Expressway flaw soon after PoC release",
+      "url": "https://securityweek.com/hackers-exploit-cisco-expressway-vulnerability-soon-after-poc-release"
+    },
+    {
+      "title": "CERT-EU: 2026-022 Critical vulnerabilities in NGINX",
+      "url": "https://cert.europa.eu/publications/security-advisories/2026-022/"
+    },
+    {
+      "title": "Fox 4: J.P. Morgan says third-party service providers were the target of a cyberattack",
+      "url": "https://www.fox4news.com/news/jp-morgan-service-providers-cyberattack-what-we-know"
+    },
+    {
+      "title": "Fortune: Chase, Wells Fargo, and Capital One bank outages, 16 Nov",
+      "url": "https://fortune.com/2026/11/16/chase-bank-wells-fargo-capital-one-bank-outages/"
+    },
+    {
+      "title": "Philadelphia Inquirer: bank outage, Zelle and online accounts, 16 Nov",
+      "url": "https://www.inquirer.com/news/nation-world/bank-outage-online-accounts-jpmorgan-chase-zelle-technical-issue-20261116.html"
+    },
+    {
+      "title": "BleepingComputer: Iris Ohyama data cloud breach",
+      "url": "https://www.bleepingcomputer.com/news/security/iris-ohyama-data-cloud-breach-exposes-info-of-77-million-customers/"
+    },
+    {
+      "title": "California Attorney General: data security breach list",
+      "url": "https://oag.ca.gov/privacy/databreach/list"
+    },
+    {
+      "title": "BleepingComputer: Google warns that fully automated AI attacks are coming soon",
+      "url": "https://bleepingcomputer.com/news/security/google-warns-that-fully-automated-ai-attacks-are-coming-soon"
     }
   ],
   "outages": [
@@ -662,147 +660,64 @@
       "text": "A 911 service disruption on the early morning of 13 Nov peaked at about 300 Downdetector reports, New York most affected, and Cybernews reported cyberattack and blackout fears but no source supported either; one county said its own 911 center was unaffected. A Claude disruption on 13 Nov reached about 2,900 Downdetector reports per one aggregator, and a separate 14-minute degraded incident on 8 Nov appears on a status tracker. Microsoft's own status record shows about 4.5 hours of Outlook on the web errors for some users in Europe, the Middle East, and Africa on 9 Nov, classed minor. Downdetector counts are user reports and understate or overstate real impact.",
       "when": "2026-11-13",
       "added": "2026-11-16"
+    },
+    {
+      "label": "Chase and other US banks, 16 Nov",
+      "basis": "Chase says a technical issue, not a cyberattack",
+      "when": "2026-11-16",
+      "text": "Chase's website and app were unavailable or failing for many customers on 16 Nov, and the problems spread to some branches and to outside apps linked to Chase accounts. Downdetector reports passed 20,000, mostly website logins, and one report put the disruption at nearly eight hours. Wells Fargo, Bank of America, Capital One, and U.S. Bank also saw spikes in user reports, with Chase hit hardest. Chase described a technical issue and said it was not a cyberattack. One report says the bank blamed a software bug in on-premises hardware, while others say it did not name the system, so the cause is unconfirmed. Chase separately announced a vendor data breach on 19 Nov and said the two are unrelated. Downdetector counts are user reports.",
+      "added": "2026-11-23"
     }
   ],
   "changes": {
-    "since": "2 Nov 2026",
-    "run": "16 Nov 2026",
+    "since": "16 Nov 2026",
+    "run": "23 Nov 2026",
     "added": [
       {
-        "cat": "top",
-        "name": "wfx-loot"
-      },
-      {
-        "cat": "top",
-        "name": "AI agents running live intrusions"
+        "cat": "vulns",
+        "name": "VMware vCenter Server"
       },
       {
         "cat": "vulns",
-        "name": "Microsoft Outlook · November Patch Tuesday (10 Nov)"
+        "name": "Cisco Expressway Series (clustered)"
       },
       {
         "cat": "vulns",
-        "name": "Google Chrome (Chromium)"
+        "name": "SAP NetWeaver"
       },
       {
         "cat": "vulns",
-        "name": "Barracuda Email Security Gateway"
+        "name": "Apache Axis · Apache Roller · Vanderbilt REDCap"
       },
       {
         "cat": "vulns",
-        "name": "Cisco BroadWorks · Openwave Webtop"
+        "name": "Synology DSM · BerriAI LiteLLM · Perforce Puppet Enterprise"
       },
       {
         "cat": "vulns",
-        "name": "Zyxel GS1900 switches"
-      },
-      {
-        "cat": "vulns",
-        "name": "WordPress core updater"
-      },
-      {
-        "cat": "vulns",
-        "name": "PHP (PHP2Shell)"
-      },
-      {
-        "cat": "vulns",
-        "name": "OpenSSH (musl libc without PAM)"
-      },
-      {
-        "cat": "vulns",
-        "name": "Citrix NetScaler ADC and Gateway · 28 memory flaws (12 Nov)"
-      },
-      {
-        "cat": "supply",
-        "name": "cPGuard update channel, 2 Nov"
-      },
-      {
-        "cat": "supply",
-        "name": "XCPE botnet in Android TV set-top boxes, disrupted 2 Nov"
-      },
-      {
-        "cat": "supply",
-        "name": "ConnectWise Cloud Backup (formerly SkyKick), from 15 Oct"
-      },
-      {
-        "cat": "supply",
-        "name": "FaceStealer, North Korean social engineering aimed at open-source maintainers, 12 Nov"
+        "name": "NGINX (F5)"
       },
       {
         "cat": "breaches",
-        "name": "Nitori (Japan)"
+        "name": "JPMorgan Chase (through outside vendors)"
       },
       {
         "cat": "breaches",
-        "name": "DigiCert"
+        "name": "Iris Ohyama (Iris Plaza online store, Japan)"
       },
       {
         "cat": "breaches",
-        "name": "Maersk (system from an acquired company)"
-      },
-      {
-        "cat": "breaches",
-        "name": "Railway (hosting)"
+        "name": "Baker Tilly Advisory Group (third-party provider)"
       },
       {
         "cat": "other",
-        "name": "Operation Endgame, 12 Nov"
-      },
-      {
-        "cat": "other",
-        "name": "Volt Typhoon \"Silent Train\", 29 Oct"
-      },
-      {
-        "cat": "other",
-        "name": "Johnson Controls False Claims Act cybersecurity settlement, 13 Nov"
+        "name": "Google threat tracker: first fully automated exploit pipeline, 16 Nov"
       },
       {
         "cat": "outages",
-        "name": "Microsoft 365, Outlook, Teams, Copilot, OneDrive, and Azure, 12 to 13 Nov"
-      },
-      {
-        "cat": "outages",
-        "name": "FAA nationwide ground stop, 13 Nov"
-      },
-      {
-        "cat": "outages",
-        "name": "Workday, 13 to 14 Nov"
-      },
-      {
-        "cat": "outages",
-        "name": "Blizzard and Battle.net, 9 and 12 Nov"
-      },
-      {
-        "cat": "outages",
-        "name": "Smaller disruptions, 9 to 13 Nov"
+        "name": "Chase and other US banks, 16 Nov"
       }
     ],
-    "updated": [
-      {
-        "cat": "top",
-        "name": "Binance",
-        "what": "text revised; status was Critical · FBI attribution, now Critical · FBI attribution · seizure order"
-      },
-      {
-        "cat": "vulns",
-        "name": "Drupal Commerce Core",
-        "what": "text revised"
-      },
-      {
-        "cat": "breaches",
-        "name": "Ryohin Keikaku (MUJI app)",
-        "what": "records was 27260000, now blank"
-      },
-      {
-        "cat": "other",
-        "name": "AI agents in live intrusions, earlier reports in the window (20 to 30 Oct)",
-        "what": "text revised"
-      },
-      {
-        "cat": "other",
-        "name": "eMudhra CA: intermediate keys recoverable, Chrome removes a root (27 Oct)",
-        "what": "text revised"
-      }
-    ]
+    "updated": []
   }
 }
